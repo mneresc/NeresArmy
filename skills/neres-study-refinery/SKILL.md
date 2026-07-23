@@ -35,28 +35,33 @@ submission and provides both credentials and model configuration.
 
 ## Workflow
 
-1. Locate this skill's package root.
-2. Run the CLI help before the first execution in an environment.
-3. Run `build --dry-run` first.
-4. Review scope, files, images, exclusions, output, conflicts, and diagram candidates.
-5. Stop if any source or output escapes the authorized vault.
-6. Continue to transformation only after the dry-run matches the user's request.
-7. Validate every generated fact against evidence before committing output.
-8. Report created files, audit status, uncertainties, and any rejected source.
+1. Resolve the note or folder named by the user and its containing vault root.
+2. Locate this skill's package root.
+3. Run the CLI help before the first execution in an environment.
+4. Run `build --dry-run` first.
+5. Review scope, files, images, exclusions, output, conflicts, and diagram candidates.
+6. Stop if any source or output escapes the authorized vault.
+7. When the user asked to create/reformulate the V2, continue after the dry-run
+   matches that request; do not require a second confirmation unless scope changed.
+8. Validate every generated fact against evidence before committing output.
+9. Report created files, audit status, uncertainties, and any rejected source.
 
 ## Command
 
 ```text
-node dist/cli.js build \
+node dist/neres-study-refinery.mjs build \
   --vault "<vault-root>" \
   --input "<note-or-folder>" \
   --input-type <note|folder>
 ```
 
 Add `--dry-run` for a zero-write plan. A real build creates Markdown V2 plus
-`source-inventory.json`, `content-model.json`, and `classification.json` under the
-separate `_audit` tree. If the installed package has not been built, run the
-repository build command first.
+frontmatter, `claimId` markers, `_Visão Geral.md` for folders,
+`<name>-transformation-report.md`, `source-inventory.json`, `content-model.json`,
+and `classification.json` under the separate `_audit` tree.
+
+Use `--config <yaml>` for a strict partial override. Unknown keys and invalid enum
+values fail before vault processing.
 
 ## Failure behavior
 
@@ -67,10 +72,11 @@ repository build command first.
 
 ## Current implementation boundary
 
-The executable implements scope-safe dry-run, Markdown inventory, deterministic
-source-state/profile classification, literal evidence extraction, and conservative
-textual V2 composition. It also supports hash-bound agent manifests and an explicitly
-authorized OpenAI multimodal adapter. When a trusted external Archify installation is
-available, candidates scoring 5 or more are rendered to checked HTML and canonical
-SVG, then topology-validated before being embedded. Without Archify, textual V2
-generation continues with a warning.
+The executable implements the complete source-safe pipeline: scope-safe dry-run,
+inventory, classification, literal evidence, conservative composition, visual
+evidence, grounding and preservation validators, deterministic reports, overview
+notes, and atomic textual writes. It supports hash-bound agent manifests and an
+explicitly authorized OpenAI multimodal adapter. When a trusted external Archify
+installation is available, candidates scoring 5 or more are rendered to checked HTML
+and canonical SVG, then topology-validated before being embedded. Without Archify,
+textual V2 generation continues with a warning.

@@ -40,15 +40,49 @@ function withoutFirstH1(markdown: string): string {
 }
 
 function traceability(sourcePath: string, model?: ContentModel): string {
-  const sources = [
-    sourcePath,
-    ...(model?.claims.map((claim) => claim.sourcePath) ?? [])
-  ].filter((value, index, values) => values.indexOf(value) === index);
+  const rows = model?.claims
+    .filter((claim) => claim.status === "supported")
+    .map((claim) => {
+      const local = claim.sourceHeading ?? claim.sourceRegion ?? "documento";
+      return `| \`${claim.id}\` | [[${claim.sourcePath}]] | ${local} |`;
+    }) ?? [];
   return [
     "## Rastreabilidade",
     "",
-    ...sources.map((source) => `- Fonte: [[${source}]]`)
+    "| Claim | Fonte | Local |",
+    "|---|---|---|",
+    ...(rows.length > 0
+      ? rows
+      : [`| — | [[${sourcePath}]] | documento |`])
   ].join("\n");
+}
+
+function annotateSupportedClaims(
+  markdown: string,
+  model?: ContentModel
+): string {
+  if (!model) {
+    return markdown;
+  }
+  let annotated = markdown;
+  for (const claim of model.claims) {
+    if (claim.status !== "supported") {
+      continue;
+    }
+    const marker = `<!-- claimId: ${claim.id} -->`;
+    if (annotated.includes(marker)) {
+      continue;
+    }
+    const index = annotated.indexOf(claim.sourceExcerpt);
+    if (index < 0) {
+      continue;
+    }
+    annotated =
+      annotated.slice(0, index) +
+      `${marker}\n` +
+      annotated.slice(index);
+  }
+  return annotated;
 }
 
 function uncertaintySection(model?: ContentModel): string | undefined {
@@ -250,6 +284,7 @@ export function composeMarkdown(input: ComposeInput): CompositionResult {
       output = parts.join("\n\n");
     }
   }
+  output = annotateSupportedClaims(output, input.model);
 
   const visualEvidence = visualEvidenceSection(input);
   if (visualEvidence && !/^##\s+Evidências visuais\s*$/imu.test(output)) {
@@ -259,6 +294,7 @@ export function composeMarkdown(input: ComposeInput): CompositionResult {
   if (uncertainties && !/^##\s+Lacunas e incertezas\s*$/imu.test(output)) {
     output = `${output}\n\n${uncertainties}`;
   }
+  output = annotateSupportedClaims(output, input.model);
   if (!/^##\s+Rastreabilidade\s*$/imu.test(output)) {
     output = `${output}\n\n${traceability(input.sourcePath, input.model)}`;
   }

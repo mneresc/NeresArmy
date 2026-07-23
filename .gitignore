@@ -7,5 +7,6 @@ Thumbs.db
 .env
 .env.*
 !.env.example
+*.skill
 *.skill.zip
 .smoke/

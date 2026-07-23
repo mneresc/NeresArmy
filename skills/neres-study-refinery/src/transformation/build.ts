@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { classifyDomainProfile } from "../classification/domain-profile.ts";
 import { classifySourceState } from "../classification/source-state.ts";
@@ -25,8 +25,23 @@ import type { DiagramCandidate } from "../diagrams/types.ts";
 import { createVisualExtractor, imageMimeType } from "../images/create-extractor.ts";
 import { appendVisualEvidence } from "../images/visual-evidence.ts";
 import { analyzeMarkdown } from "../markdown/analyze.ts";
+import { atomicWriteFile } from "../output/atomic-write.ts";
+import { addStudyFrontmatter } from "../output/frontmatter.ts";
+import {
+  renderOverview,
+  type OverviewEntry
+} from "../output/overview.ts";
+import {
+  renderTransformationReport,
+  type TransformationReportData
+} from "../output/report.ts";
 import { buildDryRunPlan } from "../planning/dry-run.ts";
 import { toVaultRelative } from "../scope/boundary.ts";
+import {
+  assertOutputValidation,
+  validateOutput,
+  type OutputValidationResult
+} from "../validation/validate-output.ts";
 
 function stableJson(value: unknown): string {
   return `${JSON.stringify(value, null, 2)}\n`;
@@ -112,9 +127,32 @@ async function writeOutputFile(
   createdFiles: string[],
   vaultRoot: string
 ): Promise<void> {
-  await mkdir(path.dirname(target), { recursive: true });
-  await writeFile(target, content, "utf8");
+  await atomicWriteFile(target, content);
   createdFiles.push(toVaultRelative(vaultRoot, target));
+}
+
+function unique(values: readonly string[]): string[] {
+  return values.filter((value, index) => values.indexOf(value) === index);
+}
+
+function isImageOnlyMarkdown(markdown: string): boolean {
+  return markdown
+    .replace(/^---[\s\S]*?^---\s*$/mu, "")
+    .replace(/^#{1,6}\s+.*$/gmu, "")
+    .replace(/!\[\[[^\]]+\]\]/gu, "")
+    .replace(/!\[[^\]]*\]\([^)]*\)/gu, "")
+    .trim().length === 0;
+}
+
+function estimateReduction(sourceCharacters: number, outputCharacters: number): string {
+  if (sourceCharacters === 0) {
+    return "0.0%";
+  }
+  const percentage = Math.max(
+    0,
+    (1 - outputCharacters / sourceCharacters) * 100
+  );
+  return `${percentage.toFixed(1)}%`;
 }
 
 export async function buildTransformation(
@@ -149,6 +187,20 @@ export async function buildTransformation(
   }
   const createdFiles: string[] = [];
   const warnings: string[] = [];
+  const profiles = new Set<ContentModel["profile"]>();
+  const overviewEntries: OverviewEntry[] = [];
+  const validations: OutputValidationResult[] = [];
+  let rawNotes = 0;
+  let structuredNotes = 0;
+  let imageOnlyNotes = 0;
+  let tablesFound = 0;
+  let formulasFound = 0;
+  let codeFound = 0;
+  let diagramsFound = 0;
+  let claimCount = 0;
+  let diagramsGenerated = 0;
+  let sourceCharacters = 0;
+  let outputCharacters = 0;
   let archifyAdapter: ArchifyAdapter | undefined;
   let archifyChecked = false;
 
@@ -179,6 +231,14 @@ export async function buildTransformation(
     const analysis = source.markdown ?? analyzeMarkdown(markdown);
     const state = classifySourceState(markdown, analysis);
     const profile = classifyDomainProfile(markdown, request.profile);
+    profiles.add(profile.profile);
+    sourceCharacters += markdown.length;
+    if (state.state === "raw") rawNotes += 1;
+    else structuredNotes += 1;
+    if (isImageOnlyMarkdown(markdown)) imageOnlyNotes += 1;
+    tablesFound += analysis.tables.length;
+    formulasFound += analysis.formulas.length;
+    codeFound += analysis.codeBlocks.length;
     const model: ContentModel = extractContentModel(
       { id: source.id, path: source.path, markdown: analysis },
       markdown,
@@ -195,6 +255,7 @@ export async function buildTransformation(
     for (const result of relevantVisualResults) {
       appendVisualEvidence(model, result, config.images.minimum_confidence);
     }
+    claimCount += model.claims.length;
     const composition = composeMarkdown({
       sourcePath: source.path,
       markdown,
@@ -243,16 +304,80 @@ export async function buildTransformation(
             createdFiles.push(toVaultRelative(plan.scope.vaultRoot, artifact));
           }
           renderedCandidates.push(candidate);
+          diagramsGenerated += 1;
         }
       }
     }
 
+    diagramsFound += candidates.length;
+    const body = diagramSection(composition.markdown, renderedCandidates);
+    const registeredSourcePaths = new Set(
+      inventory.sources.map((candidate) => candidate.path)
+    );
+    const sourceCorpus = [
+      markdown,
+      ...relevantVisualResults
+        .map((result) =>
+          model.claims
+            .filter(
+              (claim) =>
+                claim.sourcePath === result.sourcePath &&
+                claim.status === "supported"
+            )
+            .map((claim) => claim.sourceExcerpt)
+            .join("\n")
+        )
+    ].join("\n\n");
+    const validation = validateOutput({
+      sourceCorpus,
+      markdown: body,
+      model,
+      registeredSourcePaths,
+      config: config.validation
+    });
+    assertOutputValidation(validation);
+    validations.push(validation);
+    const sourceNotes = unique(
+      model.claims
+        .filter((claim) =>
+          inventory.sources.some(
+            (candidate) =>
+              candidate.type === "markdown" &&
+              candidate.path === claim.sourcePath
+          )
+        )
+        .map((claim) => claim.sourcePath)
+    );
+    const sourceImages = unique(
+      model.claims
+        .filter((claim) =>
+          inventory.sources.some(
+            (candidate) =>
+              candidate.type === "image" &&
+              candidate.path === claim.sourcePath
+          )
+        )
+        .map((claim) => claim.sourcePath)
+    );
+    const finalMarkdown = addStudyFrontmatter({
+      markdown: body,
+      profile: profile.profile,
+      sourceScope: plan.scope.inputType === "note"
+        ? source.path
+        : toVaultRelative(plan.scope.vaultRoot, plan.scope.inputPath),
+      sourceNotes,
+      sourceImages,
+      compression: request.compression,
+      diagramCount: renderedCandidates.length
+    });
+    outputCharacters += finalMarkdown.length;
     await writeOutputFile(
       target,
-      diagramSection(composition.markdown, renderedCandidates),
+      finalMarkdown,
       createdFiles,
       plan.scope.vaultRoot
     );
+    overviewEntries.push({ targetPath: target, title: model.topic });
     await writeOutputFile(
       path.join(audit, "source-inventory.json"),
       stableJson(inventory),
@@ -280,6 +405,81 @@ export async function buildTransformation(
       );
     }
     noteCount += 1;
+  }
+
+  if (
+    plan.scope.inputType === "folder" &&
+    config.output.create_overview
+  ) {
+    await writeOutputFile(
+      path.join(plan.scope.outputPath, "_Visão Geral.md"),
+      renderOverview(plan.scope.outputPath, overviewEntries),
+      createdFiles,
+      plan.scope.vaultRoot
+    );
+  }
+
+  if (config.output.create_audit_report) {
+    const reportRoot =
+      plan.scope.inputType === "note"
+        ? path.dirname(plan.scope.outputPath)
+        : plan.scope.outputPath;
+    const inputName = path.basename(
+      plan.scope.inputPath,
+      path.extname(plan.scope.inputPath)
+    );
+    const visualValues = [...visualResults.values()];
+    const reportData: TransformationReportData = {
+      input: toVaultRelative(plan.scope.vaultRoot, plan.scope.inputPath),
+      inputType: plan.scope.inputType,
+      profiles: [...profiles],
+      markdownFiles: inventory.sources.filter((source) => source.type === "markdown").length,
+      images: inventory.sources.filter((source) => source.type === "image").length,
+      ignoredFiles: plan.rejectedEntries.length,
+      ignoredExternalLinks: inventory.sources
+        .filter((source) => source.markdown)
+        .reduce(
+          (total, source) =>
+            total +
+            (source.markdown?.links.filter((link) => /^https?:\/\//iu.test(link))
+              .length ?? 0),
+          0
+        ),
+      rawNotes,
+      structuredNotes,
+      imageOnlyNotes,
+      tablesFound,
+      formulasFound,
+      codeFound,
+      diagramsFound,
+      claims: claimCount,
+      transcribedPassages: visualValues.filter((result) => result.transcription).length,
+      reconstructedTables: visualValues.filter((result) => result.markdownTable).length,
+      transcribedFormulas: visualValues.filter((result) => result.latex).length,
+      interpretedDiagrams: visualValues.filter((result) => result.diagram).length,
+      illegiblePassages: visualValues.filter(
+        (result) => result.status === "illegible"
+      ).length,
+      notesV2: noteCount,
+      diagramsGenerated,
+      tablesCreated:
+        tablesFound +
+        visualValues.filter((result) => result.markdownTable).length,
+      estimatedReduction: estimateReduction(sourceCharacters, outputCharacters),
+      redundanciesRemoved: 0,
+      structuresPreserved: tablesFound + formulasFound + codeFound,
+      validations
+    };
+    await writeOutputFile(
+      path.join(
+        reportRoot,
+        "_audit",
+        `${inputName}-transformation-report.md`
+      ),
+      renderTransformationReport(reportData),
+      createdFiles,
+      plan.scope.vaultRoot
+    );
   }
 
   return {

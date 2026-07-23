@@ -1,9 +1,9 @@
-# {{scope_title}} — V2
+---
+type: study-overview-v2
+generated-from-vault-only: true
+generated-at: ""
+---
 
-## Notas
+# Visão Geral
 
 {{note_links}}
-
-## Auditoria
-
-{{audit_link}}

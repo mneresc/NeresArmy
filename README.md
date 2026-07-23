@@ -10,13 +10,14 @@ Compilador didático de fonte fechada para transformar notas ou pastas autorizad
 um vault Obsidian em versões V2 rastreáveis, sem completar conteúdo com pesquisa ou
 conhecimento externo.
 
-Estado atual: Fase 4 concluída — inclui integração externa com Archify, validação
-topológica, HTML, SVG e incorporação Obsidian.
+Estado atual: implementação completa — inclui escopo fechado, inventário,
+classificação, evidência textual/visual, composição conservadora, validações finais,
+relatório, visão geral, escrita atômica e integração externa opcional com Archify.
 
 ```powershell
 npm install
 npm run build --workspace @neresarmy/neres-study-refinery
-node skills/neres-study-refinery/dist/cli.js build `
+node skills/neres-study-refinery/dist/neres-study-refinery.mjs build `
   --vault "D:\Obsidian\Concursos" `
   --input "AFO" `
   --input-type folder
@@ -27,7 +28,7 @@ Adicione `--dry-run` para inspecionar o plano sem escrita.
 Para evidência visual sem envio externo, forneça um manifest ligado ao SHA-256:
 
 ```powershell
-node skills/neres-study-refinery/dist/cli.js build `
+node skills/neres-study-refinery/dist/neres-study-refinery.mjs build `
   --vault "D:\Obsidian\Concursos" `
   --input "AFO\Nota.md" `
   --input-type note `
@@ -60,7 +61,18 @@ Se ausente, instale a skill `tt-a1i/archify` pelo gerenciador do seu agente e ro
 doctor. A V2 textual continua funcionando sem Archify; candidatos gráficos recebem
 um aviso.
 
-## Compatibilidade planejada
+## Instalação multiagente
+
+```powershell
+npm run build
+node scripts/install-skill.mjs --target all
+```
+
+O instalador cobre Codex, diretório aberto `.agents/skills`, Antigravity e Claude
+Code. Para Claude Desktop ou outro cliente que exija upload, use o pacote `.skill`.
+Veja [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md).
+
+## Compatibilidade
 
 - Codex CLI/Desktop;
 - Antigravity CLI/IDE;

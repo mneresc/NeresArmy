@@ -7,7 +7,7 @@ import {
   InvalidArgumentError,
   Option
 } from "commander";
-import { loadDefaultConfig, type RefineryConfig } from "./config.ts";
+import { loadConfig, type RefineryConfig } from "./config.ts";
 import {
   COMPRESSION_MODES,
   DIAGRAM_MODES,
@@ -66,7 +66,11 @@ function buildCommand(config: RefineryConfig, io: CliIO): Command {
     .description(
       "Compile authorized Obsidian study sources into traceable V2 notes."
     )
-    .version("0.0.0")
+    .version("0.1.0")
+    .option(
+      "--config <path>",
+      "Strict partial YAML configuration (defaults remain closed-source)."
+    )
     .exitOverride()
     .configureOutput({
       writeOut: (value) => io.stdout.write(value),
@@ -169,12 +173,25 @@ function buildCommand(config: RefineryConfig, io: CliIO): Command {
   return program;
 }
 
+function configPathFromArgv(argv: readonly string[]): string | undefined {
+  for (let index = 0; index < argv.length; index += 1) {
+    const value = argv[index] ?? "";
+    if (value === "--config") {
+      return argv[index + 1];
+    }
+    if (value.startsWith("--config=")) {
+      return value.slice("--config=".length);
+    }
+  }
+  return undefined;
+}
+
 export async function runCli(
   argv: string[],
   io: CliIO = { stdout: process.stdout, stderr: process.stderr }
 ): Promise<number> {
   try {
-    const config = await loadDefaultConfig();
+    const config = await loadConfig(configPathFromArgv(argv));
     const program = buildCommand(config, io);
     await program.parseAsync(argv, { from: "user" });
     return 0;

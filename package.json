@@ -6,6 +6,10 @@
     "skills/*"
   ],
   "scripts": {
+    "build": "npm run build --workspace @neresarmy/neres-study-refinery",
+    "check": "npm run check --workspace @neresarmy/neres-study-refinery",
+    "install:skill": "node scripts/install-skill.mjs --target codex",
+    "install:skill:all": "node scripts/install-skill.mjs --target all",
     "test": "npm test --workspace @neresarmy/neres-study-refinery",
     "typecheck": "npm run typecheck --workspace @neresarmy/neres-study-refinery"
   }

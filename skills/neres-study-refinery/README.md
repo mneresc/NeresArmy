@@ -10,6 +10,8 @@ Compilador didático de fonte fechada para notas e pastas de um vault Obsidian.
 - mantém claims ligados a hash, arquivo, heading e trecho;
 - nunca sobrescreve originais;
 - cria uma V2 separada e artifacts de auditoria;
+- valida números, entidades, modalidade normativa, fórmulas e código;
+- cria frontmatter, marcadores `claimId`, relatório e visão geral de pasta;
 - não chama provedor externo sem configuração e autorização explícitas.
 
 ## Desenvolvimento
@@ -22,7 +24,24 @@ npm run build --workspace @neresarmy/neres-study-refinery
 ## Uso local
 
 ```text
-node dist/cli.js build --vault "D:/Vault" --input "AFO" --input-type folder
+node dist/neres-study-refinery.mjs build --vault "D:/Vault" --input "AFO" --input-type folder
 ```
 
 Use `--dry-run` para inspecionar o plano sem escrita.
+
+Use `--config <arquivo.yaml>` para sobrescrever parcialmente a configuração
+padrão. Chaves desconhecidas e valores inválidos são recusados.
+
+## Execução visual
+
+- `none` (padrão): nenhuma chamada externa.
+- `agent-manifest`: o próprio agente descreve as imagens em um manifesto preso ao
+  caminho e SHA-256 de cada arquivo.
+- `openai`: exige simultaneamente `--visual-provider openai`,
+  `--allow-external-ai`, `OPENAI_API_KEY` e um modelo explícito.
+
+## Archify
+
+Diagramas usam uma instalação externa confiável do `tt-a1i/archify`, quando
+detectada. Valide-a com `node <archify>/bin/archify.mjs doctor`. Sem Archify, a
+nota textual continua e recebe um aviso.

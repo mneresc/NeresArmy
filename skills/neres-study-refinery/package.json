@@ -1,11 +1,11 @@
 {
   "name": "@neresarmy/neres-study-refinery",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "description": "Source-bounded didactic compiler for authorized Obsidian study notes.",
   "type": "module",
   "bin": {
-    "neres-study-refinery": "dist/cli.js"
+    "neres-study-refinery": "dist/neres-study-refinery.mjs"
   },
   "files": [
     "config",
@@ -20,7 +20,7 @@
     "node": ">=22.12"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsc -p tsconfig.build.json && node scripts/build-bundle.mjs",
     "check": "npm run typecheck && npm test && npm run build",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
@@ -29,6 +29,7 @@
   "devDependencies": {
     "@types/node": "^24.0.0",
     "@vitest/coverage-v8": "^4.1.6",
+    "esbuild": "^0.25.12",
     "typescript": "^5.9.0",
     "vitest": "^4.1.6"
   },
