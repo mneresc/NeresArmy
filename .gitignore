@@ -1,5 +1,8 @@
 node_modules/
 dist/
+!skills/neres-study-refinery/dist/
+skills/neres-study-refinery/dist/*
+!skills/neres-study-refinery/dist/neres-study-refinery.mjs
 coverage/
 *.log
 .DS_Store
