@@ -17,8 +17,15 @@ Compilador didático de fonte fechada para notas e pastas de um vault Obsidian.
 ## Desenvolvimento
 
 ```text
-npm run check --workspace @neresarmy/neres-study-refinery
-npm run build --workspace @neresarmy/neres-study-refinery
+npm run check --workspace @mneresc/neres-study-refinery
+npm run build --workspace @mneresc/neres-study-refinery
+```
+
+## Instalação via npm
+
+```text
+npm install --global @mneresc/neres-study-refinery
+neres-study-refinery --help
 ```
 
 ## Uso local

@@ -17,7 +17,7 @@ Monorepo público de skills mantidas por `mneresc`.
 npm install
 npm test
 npm run typecheck
-npm run check --workspace @neresarmy/neres-study-refinery
+npm run check --workspace @mneresc/neres-study-refinery
 ```
 
 ## Regras

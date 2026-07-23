@@ -16,7 +16,7 @@ relatório, visão geral, escrita atômica e integração externa opcional com A
 
 ```powershell
 npm install
-npm run build --workspace @neresarmy/neres-study-refinery
+npm run build --workspace @mneresc/neres-study-refinery
 node skills/neres-study-refinery/dist/neres-study-refinery.mjs build `
   --vault "D:\Obsidian\Concursos" `
   --input "AFO" `
@@ -24,6 +24,13 @@ node skills/neres-study-refinery/dist/neres-study-refinery.mjs build `
 ```
 
 Adicione `--dry-run` para inspecionar o plano sem escrita.
+
+### Instalação via npm
+
+```powershell
+npm install --global @mneresc/neres-study-refinery
+neres-study-refinery --help
+```
 
 Para evidência visual sem envio externo, forneça um manifest ligado ao SHA-256:
 
@@ -112,7 +119,7 @@ Veja [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md).
 
 ```powershell
 npm install
-npm run check --workspace @neresarmy/neres-study-refinery
+npm run check --workspace @mneresc/neres-study-refinery
 ```
 
 ## Licença
