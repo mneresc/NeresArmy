@@ -10,7 +10,8 @@ Compilador didático de fonte fechada para transformar notas ou pastas autorizad
 um vault Obsidian em versões V2 rastreáveis, sem completar conteúdo com pesquisa ou
 conhecimento externo.
 
-Estado atual: Fase 1 concluída — escopo seguro e dry-run.
+Estado atual: Fase 2 concluída — escopo seguro, inventário, evidência, classificação
+e composição textual V2.
 
 ```powershell
 npm install
@@ -18,9 +19,10 @@ npm run build --workspace @neresarmy/neres-study-refinery
 node skills/neres-study-refinery/dist/cli.js build `
   --vault "D:\Obsidian\Concursos" `
   --input "AFO" `
-  --input-type folder `
-  --dry-run
+  --input-type folder
 ```
+
+Adicione `--dry-run` para inspecionar o plano sem escrita.
 
 ## Compatibilidade planejada
 

@@ -2,14 +2,19 @@
   "name": "@neresarmy/neres-study-refinery",
   "version": "0.0.0",
   "private": true,
-  "description": "Closed-source didactic compiler for authorized Obsidian study notes.",
+  "description": "Source-bounded didactic compiler for authorized Obsidian study notes.",
   "type": "module",
   "bin": {
     "neres-study-refinery": "dist/cli.js"
   },
   "files": [
     "config",
-    "dist"
+    "dist",
+    "prompts",
+    "schemas",
+    "templates",
+    "README.md",
+    "SKILL.md"
   ],
   "engines": {
     "node": ">=22.12"

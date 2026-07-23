@@ -22,6 +22,7 @@ import {
 import { RefineryError, toSafeErrorMessage } from "./errors.ts";
 import { buildDryRunPlan } from "./planning/dry-run.ts";
 import { formatDryRunPlan } from "./planning/format-plan.ts";
+import { buildTransformation } from "./transformation/build.ts";
 
 interface CliIO {
   stdout: { write(value: string): unknown };
@@ -106,13 +107,6 @@ function buildCommand(config: RefineryConfig, io: CliIO): Command {
     );
 
   build.action(async (options: BuildOptions) => {
-    if (!options.dryRun) {
-      throw new RefineryError(
-        "ERR_DRY_RUN_REQUIRED",
-        "S01 only supports build with --dry-run."
-      );
-    }
-
     const request: BuildRequest = {
       vault: options.vault,
       input: options.input,
@@ -124,8 +118,18 @@ function buildCommand(config: RefineryConfig, io: CliIO): Command {
       diagrams: options.diagrams,
       dryRun: options.dryRun
     };
-    const plan = await buildDryRunPlan(request, config);
-    io.stdout.write(formatDryRunPlan(plan));
+    if (options.dryRun) {
+      const plan = await buildDryRunPlan(request, config);
+      io.stdout.write(formatDryRunPlan(plan));
+      return;
+    }
+    const result = await buildTransformation(request, config);
+    io.stdout.write(
+      `Built ${String(result.noteCount)} note(s) from ${String(result.sourceCount)} source(s).\n`
+    );
+    for (const createdFile of result.createdFiles) {
+      io.stdout.write(`Created: ${createdFile}\n`);
+    }
   });
 
   return program;

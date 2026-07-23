@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://neresarmy.dev/schemas/claim.schema.json",
+  "title": "EvidenceClaim",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "type",
+    "statement",
+    "sourceId",
+    "sourcePath",
+    "sourceHeading",
+    "sourceExcerpt",
+    "sourceRegion",
+    "confidence",
+    "status"
+  ],
+  "properties": {
+    "id": { "type": "string", "pattern": "^claim-[0-9]{3,}$" },
+    "type": {
+      "enum": [
+        "statement",
+        "definition",
+        "rule",
+        "condition",
+        "exception",
+        "prohibition",
+        "competence",
+        "classification",
+        "comparison",
+        "process",
+        "example",
+        "counterexample",
+        "exam-trap",
+        "formula",
+        "code",
+        "question"
+      ]
+    },
+    "statement": { "type": "string", "minLength": 1 },
+    "sourceId": { "type": "string" },
+    "sourcePath": { "type": "string" },
+    "sourceHeading": { "type": ["string", "null"] },
+    "sourceExcerpt": { "type": "string", "minLength": 1 },
+    "sourceRegion": { "type": ["string", "null"] },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "status": {
+      "enum": ["supported", "ambiguous", "conflicting", "missing", "illegible"]
+    }
+  }
+}

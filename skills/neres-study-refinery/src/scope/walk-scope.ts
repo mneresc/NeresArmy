@@ -186,6 +186,10 @@ async function collectFolder(
           rejected.push({ path: relative, reason: "outside-vault" });
           continue;
         }
+        if (!isSameOrDescendant(scope.inputPath, resolved)) {
+          rejected.push({ path: relative, reason: "outside-scope" });
+          continue;
+        }
         const metadata = await stat(resolved);
         if (!metadata.isDirectory()) {
           rejected.push({ path: relative, reason: "unsupported-type" });

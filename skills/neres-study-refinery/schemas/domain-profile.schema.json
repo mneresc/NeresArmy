@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://neresarmy.dev/schemas/domain-profile.schema.json",
+  "title": "DomainProfileResult",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["profile", "source", "scores", "signals"],
+  "properties": {
+    "profile": {
+      "enum": ["law-afo", "mathematics", "technical-it", "hybrid", "generic"]
+    },
+    "source": { "enum": ["manual", "automatic"] },
+    "scores": {
+      "type": "object",
+      "required": ["law-afo", "mathematics", "technical-it"],
+      "properties": {
+        "law-afo": { "type": "integer", "minimum": 0 },
+        "mathematics": { "type": "integer", "minimum": 0 },
+        "technical-it": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "signals": { "type": "array", "items": { "type": "string" } }
+  }
+}

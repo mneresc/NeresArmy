@@ -40,17 +40,18 @@ settings.
 7. Validate every generated fact against evidence before committing output.
 8. Report created files, audit status, uncertainties, and any rejected source.
 
-## Phase 1 command
+## Command
 
 ```text
 node dist/cli.js build \
   --vault "<vault-root>" \
   --input "<note-or-folder>" \
-  --input-type <note|folder> \
-  --dry-run
+  --input-type <note|folder>
 ```
 
-Phase 1 performs no write. If the installed package has not been built, run the
+Add `--dry-run` for a zero-write plan. A real build creates Markdown V2 plus
+`source-inventory.json`, `content-model.json`, and `classification.json` under the
+separate `_audit` tree. If the installed package has not been built, run the
 repository build command first.
 
 ## Failure behavior
@@ -62,6 +63,7 @@ repository build command first.
 
 ## Current implementation boundary
 
-The executable currently implements scope-safe dry-run only. Do not claim that V2
-composition, multimodal extraction, or Archify generation is available until the
-corresponding implementation and tests exist.
+The executable implements scope-safe dry-run, Markdown inventory, deterministic
+source-state/profile classification, literal evidence extraction, and conservative
+textual V2 composition. Multimodal extraction and Archify generation are not
+available until their corresponding phases and tests are complete.

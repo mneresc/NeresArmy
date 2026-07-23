@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://neresarmy.dev/schemas/content-model.schema.json",
+  "title": "ContentModel",
+  "type": "object",
+  "required": ["topic", "profile", "claims", "conflicts", "gaps"],
+  "properties": {
+    "topic": { "type": "string" },
+    "profile": {
+      "enum": ["law-afo", "mathematics", "technical-it", "hybrid", "generic"]
+    },
+    "claims": {
+      "type": "array",
+      "items": { "$ref": "claim.schema.json" }
+    },
+    "conflicts": {
+      "type": "array",
+      "items": { "$ref": "claim.schema.json" }
+    },
+    "gaps": {
+      "type": "array",
+      "items": { "$ref": "claim.schema.json" }
+    }
+  },
+  "additionalProperties": {
+    "type": "array",
+    "items": { "$ref": "claim.schema.json" }
+  }
+}

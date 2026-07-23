@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://neresarmy.dev/schemas/transformation-report.schema.json",
+  "title": "TransformationReport",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "scope", "sources", "outputs", "validations", "status"],
+  "properties": {
+    "version": { "type": "string" },
+    "scope": { "type": "object" },
+    "sources": { "type": "array", "items": { "type": "string" } },
+    "outputs": { "type": "array", "items": { "type": "string" } },
+    "validations": { "type": "array", "items": { "type": "object" } },
+    "status": { "enum": ["passed", "failed", "partial"] }
+  }
+}

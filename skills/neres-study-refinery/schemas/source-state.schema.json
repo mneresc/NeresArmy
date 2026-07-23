@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://neresarmy.dev/schemas/source-state.schema.json",
+  "title": "SourceStateResult",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["state", "score", "signals"],
+  "properties": {
+    "state": { "enum": ["raw", "structured"] },
+    "score": { "type": "number" },
+    "signals": { "type": "array", "items": { "type": "string" } }
+  }
+}

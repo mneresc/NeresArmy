@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://neresarmy.dev/schemas/source-inventory.schema.json",
+  "title": "SourceInventory",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["scope", "sources"],
+  "properties": {
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path", "include_subfolders"],
+      "properties": {
+        "type": { "enum": ["note", "folder"] },
+        "path": { "type": "string" },
+        "include_subfolders": { "type": "boolean" }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "path", "size", "sha256", "status", "origin"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^source-[0-9]{3,}$" },
+          "type": { "enum": ["markdown", "image"] },
+          "path": { "type": "string" },
+          "size": { "type": "integer", "minimum": 0 },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+          "status": { "enum": ["processed", "pending", "excluded", "failed"] },
+          "origin": { "enum": ["input", "folder", "embed"] },
+          "markdown": { "type": "object" },
+          "referencedBy": { "type": "array", "items": { "type": "string" } },
+          "classification": { "type": "string" },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+        }
+      }
+    }
+  }
+}

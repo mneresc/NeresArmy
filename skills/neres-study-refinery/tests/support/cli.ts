@@ -75,3 +75,21 @@ export function buildArgs(options: {
     ...(options.extra ?? [])
   ];
 }
+
+export function buildWriteArgs(options: {
+  vault: string;
+  input: string;
+  inputType: "note" | "folder";
+  extra?: string[];
+}): string[] {
+  return [
+    "build",
+    "--vault",
+    options.vault,
+    "--input",
+    options.input,
+    "--input-type",
+    options.inputType,
+    ...(options.extra ?? [])
+  ];
+}
