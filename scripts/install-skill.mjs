@@ -18,8 +18,8 @@ const home = os.homedir();
 const TARGETS = {
   codex: path.join(home, ".codex", "skills"),
   agents: path.join(home, ".agents", "skills"),
-  devin: path.join(home, ".agents", "skills"),
-  antigravity: path.join(home, ".gemini", "antigravity", "skills"),
+  devin: path.join(process.cwd(), ".agents", "skills"),
+  antigravity: path.join(home, ".gemini", "config", "skills"),
   claude: path.join(home, ".claude", "skills"),
   project: path.join(process.cwd(), ".agents", "skills")
 };
@@ -154,4 +154,3 @@ try {
   );
   process.exitCode = 1;
 }
-

@@ -6,9 +6,10 @@
 
 | Ambiente | Diretório suportado pelo instalador | Observação |
 |---|---|---|
-| Codex CLI/Desktop | `~/.codex/skills/neres-study-refinery` | Destino funcional deste ambiente. |
-| Clientes Agent Skills / OpenCode / Devin | `~/.agents/skills/neres-study-refinery` | Use também instalação por projeto quando o cliente exigir. |
-| Antigravity | `~/.gemini/antigravity/skills/neres-study-refinery` | Pode ser copiado para o workspace conforme a política do cliente. |
+| Codex CLI/Desktop | `~/.agents/skills/neres-study-refinery` e `~/.codex/skills/neres-study-refinery` | O primeiro é o local oficial atual; o segundo é mantido para este ambiente funcional. |
+| Clientes Agent Skills / OpenCode | `~/.agents/skills/neres-study-refinery` | Use também instalação por projeto quando o cliente exigir. |
+| Devin | `<repo>/.agents/skills/neres-study-refinery` | Devin descobre skills versionadas no repositório; NeresArmy inclui esse ponto de entrada. |
+| Antigravity | `~/.gemini/config/skills/neres-study-refinery` | Global oficial; por workspace use `.agents/skills`. |
 | Claude Code | `~/.claude/skills/neres-study-refinery` | Claude Desktop pode exigir upload manual do pacote `.skill`. |
 | Projeto portátil | `<projeto>/.agents/skills/neres-study-refinery` | Melhor denominador comum entre agentes compatíveis. |
 
@@ -21,6 +22,9 @@ node scripts/install-skill.mjs --target all
 
 O instalador falha se o destino já existir. Use `--force` somente quando quiser
 substituir conscientemente uma instalação anterior.
+
+`--target devin` instala no `.agents/skills` do repositório atual, pois Devin não
+oferece skills globais. O próprio NeresArmy já mantém esse ponto de descoberta.
 
 ## Execução pelo agente
 
@@ -39,4 +43,3 @@ Antes de qualquer transformação real, execute `build ... --dry-run`.
 - O adaptador OpenAI continua desativado por padrão em todos os agentes.
 - O Archify é uma instalação externa opcional e confiável; sua ausência não
   impede a V2 textual.
-
