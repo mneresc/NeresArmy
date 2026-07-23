@@ -1,0 +1,78 @@
+input:
+  include_subfolders: true
+
+scope:
+  follow_internal_links: false
+  allow_external_notes: false
+  allow_web: false
+  allow_model_knowledge: false
+  process_embedded_images: true
+  process_folder_images: true
+  excluded_directories:
+    - .obsidian
+    - .trash
+    - .git
+    - node_modules
+    - dist
+    - build
+    - coverage
+    - _V2
+    - V2
+    - .generated
+    - assets-generated
+    - archify-output
+
+classification:
+  profile: auto
+  detect_per_section: true
+  preserve_structured_notes: true
+
+output:
+  mode: separate-folder
+  overwrite_originals: false
+  create_overview: true
+  create_audit_report: true
+  preserve_wikilinks: true
+  remove_empty_sections: true
+  preserve_numeric_order: true
+
+transformation:
+  compression: balanced
+  preserve_examples: true
+  preserve_counterexamples: true
+  preserve_exam_traps: true
+  preserve_edge_cases: true
+  preserve_questions: true
+  preserve_normative_language: true
+  preserve_code: true
+  preserve_formulas: true
+  create_review_questions: true
+
+images:
+  transcribe_text: true
+  reconstruct_tables: true
+  reconstruct_formulas: true
+  reconstruct_diagrams: true
+  ignore_decorative: true
+  mark_uncertainty: true
+  minimum_confidence: 0.85
+
+diagrams:
+  mode: auto
+  provider: archify
+  minimum_score: 5
+  output_svg: true
+  output_html: true
+  output_png: false
+
+validation:
+  require_grounding: true
+  verify_numbers: true
+  verify_entities: true
+  verify_modality: true
+  verify_formulas: true
+  verify_code: true
+  verify_diagram_topology: true
+  fail_on_external_source: true
+  fail_on_unsupported_claim: true
+  fail_on_original_overwrite: true

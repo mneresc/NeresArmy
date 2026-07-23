@@ -1,0 +1,12 @@
+{
+  "name": "neresarmy",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "skills/*"
+  ],
+  "scripts": {
+    "test": "npm test --workspace @neresarmy/neres-study-refinery",
+    "typecheck": "npm run typecheck --workspace @neresarmy/neres-study-refinery"
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Neres Study Refinery"
+  short_description: "Refina notas Obsidian com rastreabilidade"
+  default_prompt: "Use $neres-study-refinery para criar uma V2 rastreável desta nota ou pasta do Obsidian."
