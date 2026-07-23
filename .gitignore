@@ -10,3 +10,4 @@ Thumbs.db
 *.skill
 *.skill.zip
 .smoke/
+.tools/
