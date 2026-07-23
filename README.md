@@ -70,14 +70,17 @@ agente interativamente:
 npx skills add https://github.com/mneresc/NeresArmy/tree/main/skills/neres-study-refinery
 ```
 
-Para disponibilizar a skill globalmente no Codex, Antigravity e Claude Code:
+Para disponibilizar a skill globalmente no Codex, Antigravity, Claude Code e
+Devin for Terminal:
 
 ```powershell
 npx skills add https://github.com/mneresc/NeresArmy/tree/main/skills/neres-study-refinery `
   --global `
   --agent codex `
   --agent antigravity `
-  --agent claude-code
+  --agent antigravity-cli `
+  --agent claude-code `
+  --agent devin
 ```
 
 Confirme a instalação global com:
