@@ -10,8 +10,8 @@ Compilador didático de fonte fechada para transformar notas ou pastas autorizad
 um vault Obsidian em versões V2 rastreáveis, sem completar conteúdo com pesquisa ou
 conhecimento externo.
 
-Estado atual: Fase 2 concluída — escopo seguro, inventário, evidência, classificação
-e composição textual V2.
+Estado atual: Fase 3 concluída — inclui evidência visual por manifest do agente e
+adaptador OpenAI multimodal explicitamente opt-in.
 
 ```powershell
 npm install
@@ -23,6 +23,23 @@ node skills/neres-study-refinery/dist/cli.js build `
 ```
 
 Adicione `--dry-run` para inspecionar o plano sem escrita.
+
+Para evidência visual sem envio externo, forneça um manifest ligado ao SHA-256:
+
+```powershell
+node skills/neres-study-refinery/dist/cli.js build `
+  --vault "D:\Obsidian\Concursos" `
+  --input "AFO\Nota.md" `
+  --input-type note `
+  --visual-provider agent-manifest `
+  --visual-manifest "visual-manifest.json"
+```
+
+O adaptador OpenAI exige `--visual-provider openai`,
+`--allow-external-ai`, `OPENAI_API_KEY` e `--openai-model` (ou
+`NERES_OPENAI_MODEL`). Somente então a imagem selecionada é enviada. O request usa
+`store: false`, mas continua sujeito às políticas da API e não equivale a execução
+local.
 
 ## Compatibilidade planejada
 

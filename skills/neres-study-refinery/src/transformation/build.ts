@@ -8,11 +8,14 @@ import type {
   BuildResult,
   ContentModel,
   InventorySource,
-  SourceInventory
+  SourceInventory,
+  VisualExtractionResult
 } from "../contracts.ts";
 import type { RefineryConfig } from "../config.ts";
 import { extractContentModel } from "../evidence/extract.ts";
 import { buildSourceInventory } from "../inventory/build-inventory.ts";
+import { createVisualExtractor, imageMimeType } from "../images/create-extractor.ts";
+import { appendVisualEvidence } from "../images/visual-evidence.ts";
 import { analyzeMarkdown } from "../markdown/analyze.ts";
 import { buildDryRunPlan } from "../planning/dry-run.ts";
 import { toVaultRelative } from "../scope/boundary.ts";
@@ -87,6 +90,30 @@ export async function buildTransformation(
 ): Promise<BuildResult> {
   const plan = await buildDryRunPlan({ ...request, dryRun: true }, config);
   const inventory = await buildSourceInventory(plan.scope, plan.entries);
+  const extractor = await createVisualExtractor(request, plan.scope);
+  const visualResults = new Map<string, VisualExtractionResult>();
+  if (extractor) {
+    for (const source of inventory.sources) {
+      if (source.type !== "image") {
+        continue;
+      }
+      const entry = plan.entries.find((candidate) => candidate.path === source.path);
+      if (!entry) {
+        continue;
+      }
+      const result = await extractor.extract({
+        sourceId: source.id,
+        sourcePath: source.path,
+        absolutePath: entry.absolutePath,
+        sha256: source.sha256,
+        mimeType: imageMimeType(entry.absolutePath)
+      });
+      source.status = "processed";
+      source.classification = result.classification;
+      source.confidence = result.confidence;
+      visualResults.set(source.path, result);
+    }
+  }
   const createdFiles: string[] = [];
   let noteCount = 0;
 
@@ -104,6 +131,17 @@ export async function buildTransformation(
       markdown,
       profile.profile
     );
+    const relevantVisualResults = inventory.sources
+      .filter(
+        (candidate) =>
+          candidate.type === "image" &&
+          candidate.referencedBy?.includes(source.path)
+      )
+      .map((candidate) => visualResults.get(candidate.path))
+      .filter((result): result is VisualExtractionResult => result !== undefined);
+    for (const result of relevantVisualResults) {
+      appendVisualEvidence(model, result, config.images.minimum_confidence);
+    }
     const composition = composeMarkdown({
       sourcePath: source.path,
       markdown,
@@ -149,6 +187,14 @@ export async function buildTransformation(
       createdFiles,
       plan.scope.vaultRoot
     );
+    if (relevantVisualResults.length > 0) {
+      await writeOutputFile(
+        path.join(audit, "visual-evidence.json"),
+        stableJson(relevantVisualResults),
+        createdFiles,
+        plan.scope.vaultRoot
+      );
+    }
     noteCount += 1;
   }
 

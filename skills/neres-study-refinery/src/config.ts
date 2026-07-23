@@ -29,6 +29,9 @@ export interface RefineryConfig {
   transformation: {
     compression: CompressionMode;
   };
+  images: {
+    minimum_confidence: number;
+  };
   diagrams: {
     mode: DiagramMode;
     provider: "archify";
@@ -76,6 +79,17 @@ function requireString(
   return value;
 }
 
+function requireNumber(
+  record: Record<string, unknown>,
+  key: string
+): number {
+  const value = record[key];
+  if (typeof value !== "number" || !Number.isFinite(value)) {
+    throw new RefineryError("ERR_CONFIG", `Configuration value '${key}' must be a number.`);
+  }
+  return value;
+}
+
 export async function loadDefaultConfig(): Promise<RefineryConfig> {
   let source: string;
   try {
@@ -111,6 +125,7 @@ export async function loadDefaultConfig(): Promise<RefineryConfig> {
   const classification = requireRecord(root.classification, "classification");
   const output = requireRecord(root.output, "output");
   const transformation = requireRecord(root.transformation, "transformation");
+  const images = requireRecord(root.images, "images");
   const diagrams = requireRecord(root.diagrams, "diagrams");
   const excludedDirectories = scope.excluded_directories;
 
@@ -154,6 +169,9 @@ export async function loadDefaultConfig(): Promise<RefineryConfig> {
         transformation,
         "compression"
       ) as CompressionMode
+    },
+    images: {
+      minimum_confidence: requireNumber(images, "minimum_confidence")
     },
     diagrams: {
       mode: requireString(diagrams, "mode") as DiagramMode,

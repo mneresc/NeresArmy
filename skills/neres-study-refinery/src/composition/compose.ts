@@ -39,8 +39,46 @@ function withoutFirstH1(markdown: string): string {
   return normalized.replace(/^#\s+.+?(?:\n+|$)/u, "").trim();
 }
 
-function traceability(sourcePath: string): string {
-  return `## Rastreabilidade\n\n- Fonte: [[${sourcePath}]]`;
+function traceability(sourcePath: string, model?: ContentModel): string {
+  const sources = [
+    sourcePath,
+    ...(model?.claims.map((claim) => claim.sourcePath) ?? [])
+  ].filter((value, index, values) => values.indexOf(value) === index);
+  return [
+    "## Rastreabilidade",
+    "",
+    ...sources.map((source) => `- Fonte: [[${source}]]`)
+  ].join("\n");
+}
+
+function uncertaintySection(model?: ContentModel): string | undefined {
+  if (!model || model.gaps.length === 0) {
+    return undefined;
+  }
+  const callouts = model.gaps.map((gap) => {
+    const region = gap.sourceRegion ? `, região \`${gap.sourceRegion}\`` : "";
+    return [
+      "> [!warning] Trecho visual incerto",
+      `> A fonte \`${gap.sourcePath}\`${region} não contém evidência legível suficiente.`
+    ].join("\n");
+  });
+  return `## Lacunas e incertezas\n\n${callouts.join("\n\n")}`;
+}
+
+function visualEvidenceSection(input: ComposeInput): string | undefined {
+  if (input.state !== "structured" || !input.model) {
+    return undefined;
+  }
+  const excerpts = input.model.claims
+    .filter(
+      (claim) =>
+        claim.status === "supported" && claim.sourcePath !== input.sourcePath
+    )
+    .map((claim) => claim.sourceExcerpt)
+    .filter((value, index, values) => values.indexOf(value) === index);
+  return excerpts.length > 0
+    ? `## Evidências visuais\n\n${excerpts.join("\n\n")}`
+    : undefined;
 }
 
 const SECTION_ORDER: Record<DidacticProfile, string[]> = {
@@ -213,8 +251,16 @@ export function composeMarkdown(input: ComposeInput): CompositionResult {
     }
   }
 
+  const visualEvidence = visualEvidenceSection(input);
+  if (visualEvidence && !/^##\s+Evidências visuais\s*$/imu.test(output)) {
+    output = `${output}\n\n${visualEvidence}`;
+  }
+  const uncertainties = uncertaintySection(input.model);
+  if (uncertainties && !/^##\s+Lacunas e incertezas\s*$/imu.test(output)) {
+    output = `${output}\n\n${uncertainties}`;
+  }
   if (!/^##\s+Rastreabilidade\s*$/imu.test(output)) {
-    output = `${output}\n\n${traceability(input.sourcePath)}`;
+    output = `${output}\n\n${traceability(input.sourcePath, input.model)}`;
   }
 
   return {

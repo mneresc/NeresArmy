@@ -13,11 +13,13 @@ import {
   DIAGRAM_MODES,
   INPUT_TYPES,
   PROFILES,
+  VISUAL_PROVIDERS,
   type BuildRequest,
   type CompressionMode,
   type DiagramMode,
   type InputType,
-  type Profile
+  type Profile,
+  type VisualProvider
 } from "./contracts.ts";
 import { RefineryError, toSafeErrorMessage } from "./errors.ts";
 import { buildDryRunPlan } from "./planning/dry-run.ts";
@@ -39,6 +41,10 @@ interface BuildOptions {
   compression: CompressionMode;
   diagrams: DiagramMode;
   dryRun: boolean;
+  visualProvider: VisualProvider;
+  visualManifest?: string;
+  allowExternalAi: boolean;
+  openaiModel?: string;
 }
 
 function parseBoolean(value: string): boolean {
@@ -100,6 +106,21 @@ function buildCommand(config: RefineryConfig, io: CliIO): Command {
         .choices([...DIAGRAM_MODES])
         .default(config.diagrams.mode)
     )
+    .addOption(
+      new Option("--visual-provider <provider>", "Visual extraction provider.")
+        .choices([...VISUAL_PROVIDERS])
+        .default("none")
+    )
+    .option(
+      "--visual-manifest <path>",
+      "Agent-produced visual evidence manifest inside the vault."
+    )
+    .option(
+      "--allow-external-ai",
+      "Explicitly authorize sending each selected image to the configured AI provider.",
+      false
+    )
+    .option("--openai-model <model>", "Explicit OpenAI multimodal model.")
     .option(
       "--dry-run",
       "Dry-run does not write files.",
@@ -116,7 +137,11 @@ function buildCommand(config: RefineryConfig, io: CliIO): Command {
       output: options.output,
       compression: options.compression,
       diagrams: options.diagrams,
-      dryRun: options.dryRun
+      dryRun: options.dryRun,
+      visualProvider: options.visualProvider,
+      visualManifest: options.visualManifest,
+      allowExternalAi: options.allowExternalAi,
+      openAiModel: options.openaiModel
     };
     if (options.dryRun) {
       const plan = await buildDryRunPlan(request, config);

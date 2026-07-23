@@ -13,11 +13,27 @@ export const COMPRESSION_MODES = [
   "aggressive"
 ] as const;
 export const DIAGRAM_MODES = ["auto", "off"] as const;
+export const VISUAL_PROVIDERS = ["none", "agent-manifest", "openai"] as const;
+export const VISUAL_CLASSIFICATIONS = [
+  "textual-screenshot",
+  "page-photo",
+  "table",
+  "diagram",
+  "flowchart",
+  "mind-map",
+  "formula",
+  "chart",
+  "mixed-content",
+  "decorative",
+  "unknown"
+] as const;
 
 export type InputType = (typeof INPUT_TYPES)[number];
 export type Profile = (typeof PROFILES)[number];
 export type CompressionMode = (typeof COMPRESSION_MODES)[number];
 export type DiagramMode = (typeof DIAGRAM_MODES)[number];
+export type VisualProvider = (typeof VISUAL_PROVIDERS)[number];
+export type VisualClassification = (typeof VISUAL_CLASSIFICATIONS)[number];
 
 export interface BuildRequest {
   vault: string;
@@ -29,6 +45,10 @@ export interface BuildRequest {
   compression: CompressionMode;
   diagrams: DiagramMode;
   dryRun: boolean;
+  visualProvider?: VisualProvider;
+  visualManifest?: string;
+  allowExternalAi?: boolean;
+  openAiModel?: string;
 }
 
 export interface ResolvedScope {
@@ -242,4 +262,74 @@ export interface BuildResult {
   createdFiles: string[];
   sourceCount: number;
   noteCount: number;
+}
+
+export interface VisualInput {
+  sourceId: string;
+  sourcePath: string;
+  absolutePath: string;
+  sha256: string;
+  mimeType: "image/png" | "image/jpeg" | "image/webp";
+}
+
+export interface VisualRegion {
+  id: string;
+  kind: "text" | "table" | "formula" | "node" | "edge" | "unknown";
+  text: string | null;
+  confidence: number;
+  bounds: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  } | null;
+}
+
+export interface VisualDiagramNode {
+  id: string;
+  label: string;
+  confidence: number;
+}
+
+export interface VisualDiagramEdge {
+  from: string;
+  to: string;
+  label: string | null;
+  confidence: number;
+}
+
+export interface VisualDiagramGroup {
+  id: string;
+  label: string | null;
+  nodeIds: string[];
+}
+
+export interface VisualDiagram {
+  nodes: VisualDiagramNode[];
+  edges: VisualDiagramEdge[];
+  groups: VisualDiagramGroup[];
+  uncertainNodes: string[];
+  uncertainEdges: string[];
+}
+
+export interface VisualExtractionResult {
+  provider: Exclude<VisualProvider, "none">;
+  sourceId: string;
+  sourcePath: string;
+  sourceSha256: string;
+  classification: VisualClassification;
+  confidence: number;
+  status: ClaimStatus;
+  transcription: string | null;
+  markdownTable: string | null;
+  latex: string | null;
+  regions: VisualRegion[];
+  diagram: VisualDiagram | null;
+  warnings: string[];
+}
+
+export interface VisualContentExtractor {
+  readonly provider: Exclude<VisualProvider, "none">;
+  readonly requiresExternalAccess: boolean;
+  extract(input: VisualInput): Promise<VisualExtractionResult>;
 }

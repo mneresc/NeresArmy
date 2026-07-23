@@ -29,6 +29,10 @@ Require:
 Accept optional profile, output, compression, diagram mode, and folder-recursion
 settings.
 
+For visual extraction, prefer `agent-manifest`, whose entries must match the image
+path and SHA-256. Use `openai` only when the user explicitly authorizes external
+submission and provides both credentials and model configuration.
+
 ## Workflow
 
 1. Locate this skill's package root.
@@ -65,5 +69,6 @@ repository build command first.
 
 The executable implements scope-safe dry-run, Markdown inventory, deterministic
 source-state/profile classification, literal evidence extraction, and conservative
-textual V2 composition. Multimodal extraction and Archify generation are not
-available until their corresponding phases and tests are complete.
+textual V2 composition. It also supports hash-bound agent manifests and an explicitly
+authorized OpenAI multimodal adapter. Archify generation is not available until its
+corresponding phase and tests are complete.

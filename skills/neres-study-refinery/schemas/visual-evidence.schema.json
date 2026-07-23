@@ -1,20 +1,53 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://neresarmy.dev/schemas/visual-evidence.schema.json",
-  "title": "VisualEvidence",
+  "title": "VisualExtractionResult",
   "type": "object",
   "additionalProperties": false,
-  "required": ["sourceId", "sourcePath", "classification", "confidence", "regions", "status"],
+  "required": [
+    "provider",
+    "sourceId",
+    "sourcePath",
+    "sourceSha256",
+    "classification",
+    "confidence",
+    "status",
+    "transcription",
+    "markdownTable",
+    "latex",
+    "regions",
+    "diagram",
+    "warnings"
+  ],
   "properties": {
+    "provider": { "enum": ["agent-manifest", "openai"] },
     "sourceId": { "type": "string" },
     "sourcePath": { "type": "string" },
+    "sourceSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
     "classification": {
-      "enum": ["text", "table", "formula", "diagram", "mixed", "decorative", "unknown"]
+      "enum": [
+        "textual-screenshot",
+        "page-photo",
+        "table",
+        "diagram",
+        "flowchart",
+        "mind-map",
+        "formula",
+        "chart",
+        "mixed-content",
+        "decorative",
+        "unknown"
+      ]
     },
     "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
-    "regions": { "type": "array", "items": { "type": "object" } },
     "status": {
       "enum": ["supported", "ambiguous", "conflicting", "missing", "illegible"]
-    }
+    },
+    "transcription": { "type": ["string", "null"] },
+    "markdownTable": { "type": ["string", "null"] },
+    "latex": { "type": ["string", "null"] },
+    "regions": { "type": "array", "items": { "type": "object" } },
+    "diagram": { "type": ["object", "null"] },
+    "warnings": { "type": "array", "items": { "type": "string" } }
   }
 }
