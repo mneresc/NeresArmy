@@ -70,5 +70,7 @@ repository build command first.
 The executable implements scope-safe dry-run, Markdown inventory, deterministic
 source-state/profile classification, literal evidence extraction, and conservative
 textual V2 composition. It also supports hash-bound agent manifests and an explicitly
-authorized OpenAI multimodal adapter. Archify generation is not available until its
-corresponding phase and tests are complete.
+authorized OpenAI multimodal adapter. When a trusted external Archify installation is
+available, candidates scoring 5 or more are rendered to checked HTML and canonical
+SVG, then topology-validated before being embedded. Without Archify, textual V2
+generation continues with a warning.

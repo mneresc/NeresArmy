@@ -14,6 +14,14 @@ import type {
 import type { RefineryConfig } from "../config.ts";
 import { extractContentModel } from "../evidence/extract.ts";
 import { buildSourceInventory } from "../inventory/build-inventory.ts";
+import { ArchifyAdapter } from "../diagrams/archify-adapter.ts";
+import {
+  candidateFromVisual,
+  candidatesFromContentModel,
+  scoreDiagramCandidate
+} from "../diagrams/candidates.ts";
+import { detectArchifyPath } from "../diagrams/detect-archify.ts";
+import type { DiagramCandidate } from "../diagrams/types.ts";
 import { createVisualExtractor, imageMimeType } from "../images/create-extractor.ts";
 import { appendVisualEvidence } from "../images/visual-evidence.ts";
 import { analyzeMarkdown } from "../markdown/analyze.ts";
@@ -22,6 +30,31 @@ import { toVaultRelative } from "../scope/boundary.ts";
 
 function stableJson(value: unknown): string {
   return `${JSON.stringify(value, null, 2)}\n`;
+}
+
+function diagramSection(
+  markdown: string,
+  candidates: readonly DiagramCandidate[]
+): string {
+  if (candidates.length === 0) {
+    return markdown;
+  }
+  const blocks = candidates.map((candidate) =>
+    [
+      `![[assets/${candidate.id}.svg]]`,
+      "",
+      "> [!info] Versão interativa",
+      `> [[assets/${candidate.id}.html|Abrir diagrama interativo]]`
+    ].join("\n")
+  );
+  const section = `## Diagramas\n\n${blocks.join("\n\n")}`;
+  if (/^##\s+Rastreabilidade\s*$/imu.test(markdown)) {
+    return markdown.replace(
+      /\n##\s+Rastreabilidade\s*\n/u,
+      `\n\n${section}\n\n## Rastreabilidade\n`
+    );
+  }
+  return `${markdown.trim()}\n\n${section}\n`;
 }
 
 function noteTarget(
@@ -115,6 +148,26 @@ export async function buildTransformation(
     }
   }
   const createdFiles: string[] = [];
+  const warnings: string[] = [];
+  let archifyAdapter: ArchifyAdapter | undefined;
+  let archifyChecked = false;
+
+  async function adapterForCandidates(): Promise<ArchifyAdapter | undefined> {
+    if (archifyChecked) {
+      return archifyAdapter;
+    }
+    archifyChecked = true;
+    const executablePath = await detectArchifyPath(request.archifyPath);
+    if (!executablePath) {
+      warnings.push(
+        "Archify was not found. Install tt-a1i/archify, run `node bin/archify.mjs doctor`, or set --archify-path."
+      );
+      return undefined;
+    }
+    archifyAdapter = new ArchifyAdapter({ executablePath });
+    return archifyAdapter;
+  }
+
   let noteCount = 0;
 
   for (const entry of plan.entries) {
@@ -162,10 +215,41 @@ export async function buildTransformation(
       entry.absolutePath,
       plan.scope.inputType
     );
+    const candidates =
+      request.diagrams === "off"
+        ? []
+        : [
+            ...relevantVisualResults
+              .map((result) => candidateFromVisual(result, model.topic))
+              .filter((candidate): candidate is DiagramCandidate => candidate !== undefined),
+            ...candidatesFromContentModel(model, source.path)
+          ].filter(
+            (candidate) =>
+              candidate.confidence >= config.images.minimum_confidence &&
+              scoreDiagramCandidate(candidate) >= config.diagrams.minimum_score
+          );
+    const renderedCandidates: DiagramCandidate[] = [];
+    if (candidates.length > 0) {
+      const adapter = await adapterForCandidates();
+      if (adapter) {
+        const assetsDirectory = path.join(path.dirname(target), "assets");
+        for (const candidate of candidates) {
+          const result = await adapter.render(candidate, assetsDirectory);
+          for (const artifact of [
+            result.inputPath,
+            result.htmlPath,
+            result.svgPath
+          ]) {
+            createdFiles.push(toVaultRelative(plan.scope.vaultRoot, artifact));
+          }
+          renderedCandidates.push(candidate);
+        }
+      }
+    }
 
     await writeOutputFile(
       target,
-      composition.markdown,
+      diagramSection(composition.markdown, renderedCandidates),
       createdFiles,
       plan.scope.vaultRoot
     );
@@ -201,6 +285,7 @@ export async function buildTransformation(
   return {
     createdFiles,
     sourceCount: inventory.sources.length,
-    noteCount
+    noteCount,
+    warnings
   };
 }

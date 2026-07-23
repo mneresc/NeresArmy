@@ -35,6 +35,7 @@ export interface RefineryConfig {
   diagrams: {
     mode: DiagramMode;
     provider: "archify";
+    minimum_score: number;
   };
 }
 
@@ -175,7 +176,8 @@ export async function loadDefaultConfig(): Promise<RefineryConfig> {
     },
     diagrams: {
       mode: requireString(diagrams, "mode") as DiagramMode,
-      provider: requireString(diagrams, "provider") as "archify"
+      provider: requireString(diagrams, "provider") as "archify",
+      minimum_score: requireNumber(diagrams, "minimum_score")
     }
   };
 }

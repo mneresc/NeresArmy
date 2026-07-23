@@ -45,6 +45,7 @@ interface BuildOptions {
   visualManifest?: string;
   allowExternalAi: boolean;
   openaiModel?: string;
+  archifyPath?: string;
 }
 
 function parseBoolean(value: string): boolean {
@@ -122,6 +123,10 @@ function buildCommand(config: RefineryConfig, io: CliIO): Command {
     )
     .option("--openai-model <model>", "Explicit OpenAI multimodal model.")
     .option(
+      "--archify-path <path>",
+      "Path to an external tt-a1i/archify bin/archify.mjs installation."
+    )
+    .option(
       "--dry-run",
       "Dry-run does not write files.",
       false
@@ -141,7 +146,8 @@ function buildCommand(config: RefineryConfig, io: CliIO): Command {
       visualProvider: options.visualProvider,
       visualManifest: options.visualManifest,
       allowExternalAi: options.allowExternalAi,
-      openAiModel: options.openaiModel
+      openAiModel: options.openaiModel,
+      archifyPath: options.archifyPath
     };
     if (options.dryRun) {
       const plan = await buildDryRunPlan(request, config);
@@ -154,6 +160,9 @@ function buildCommand(config: RefineryConfig, io: CliIO): Command {
     );
     for (const createdFile of result.createdFiles) {
       io.stdout.write(`Created: ${createdFile}\n`);
+    }
+    for (const warning of result.warnings) {
+      io.stdout.write(`Warning: ${warning}\n`);
     }
   });
 

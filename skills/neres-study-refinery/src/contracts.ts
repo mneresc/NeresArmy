@@ -49,6 +49,7 @@ export interface BuildRequest {
   visualManifest?: string;
   allowExternalAi?: boolean;
   openAiModel?: string;
+  archifyPath?: string;
 }
 
 export interface ResolvedScope {
@@ -262,6 +263,7 @@ export interface BuildResult {
   createdFiles: string[];
   sourceCount: number;
   noteCount: number;
+  warnings: string[];
 }
 
 export interface VisualInput {

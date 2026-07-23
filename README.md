@@ -10,8 +10,8 @@ Compilador didático de fonte fechada para transformar notas ou pastas autorizad
 um vault Obsidian em versões V2 rastreáveis, sem completar conteúdo com pesquisa ou
 conhecimento externo.
 
-Estado atual: Fase 3 concluída — inclui evidência visual por manifest do agente e
-adaptador OpenAI multimodal explicitamente opt-in.
+Estado atual: Fase 4 concluída — inclui integração externa com Archify, validação
+topológica, HTML, SVG e incorporação Obsidian.
 
 ```powershell
 npm install
@@ -40,6 +40,25 @@ O adaptador OpenAI exige `--visual-provider openai`,
 `NERES_OPENAI_MODEL`). Somente então a imagem selecionada é enviada. O request usa
 `store: false`, mas continua sujeito às políticas da API e não equivale a execução
 local.
+
+### Archify
+
+A skill detecta instalações em:
+
+- `NERES_ARCHIFY_PATH`;
+- `~/.codex/skills/archify/bin/archify.mjs`;
+- `~/.agents/skills/archify/bin/archify.mjs`.
+
+Também aceita `--archify-path`. Confie apenas em uma instalação conhecida, pois esse
+arquivo será executado como código local. Valide com:
+
+```powershell
+node "<caminho>\bin\archify.mjs" doctor
+```
+
+Se ausente, instale a skill `tt-a1i/archify` pelo gerenciador do seu agente e rode o
+doctor. A V2 textual continua funcionando sem Archify; candidatos gráficos recebem
+um aviso.
 
 ## Compatibilidade planejada
 
