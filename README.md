@@ -61,6 +61,31 @@ Se ausente, instale a skill `tt-a1i/archify` pelo gerenciador do seu agente e ro
 doctor. A V2 textual continua funcionando sem Archify; candidatos gráficos recebem
 um aviso.
 
+## Instalação rápida com npx
+
+O CLI oficial usa `skills` no plural. Para instalar no projeto atual e escolher o
+agente interativamente:
+
+```powershell
+npx skills add https://github.com/mneresc/NeresArmy/tree/main/skills/neres-study-refinery
+```
+
+Para disponibilizar a skill globalmente no Codex, Antigravity e Claude Code:
+
+```powershell
+npx skills add https://github.com/mneresc/NeresArmy/tree/main/skills/neres-study-refinery `
+  --global `
+  --agent codex `
+  --agent antigravity `
+  --agent claude-code
+```
+
+Confirme a instalação global com:
+
+```powershell
+npx skills list --global
+```
+
 ## Instalação multiagente
 
 ```powershell
