@@ -1,5 +1,7 @@
 # Neres Study Refinery
 
+[![npm version](https://img.shields.io/npm/v/%40mneresc%2Fneres-study-refinery?label=npm)](https://www.npmjs.com/package/@mneresc/neres-study-refinery)
+
 Compilador didático de fonte fechada para notas e pastas de um vault Obsidian.
 
 ## Garantias
@@ -30,8 +32,15 @@ neres-study-refinery --help
 
 ## Uso local
 
-```text
-node dist/neres-study-refinery.mjs build --vault "D:/Vault" --input "AFO" --input-type folder
+```powershell
+$Vault = "<CAMINHO_ABSOLUTO_DO_VAULT>"
+$Entrada = "<PASTA_RELATIVA_NO_VAULT>"
+
+neres-study-refinery build `
+  --vault $Vault `
+  --input $Entrada `
+  --input-type folder `
+  --dry-run
 ```
 
 Use `--dry-run` para inspecionar o plano sem escrita.
@@ -52,3 +61,5 @@ padrão. Chaves desconhecidas e valores inválidos são recusados.
 Diagramas usam uma instalação externa confiável do `tt-a1i/archify`, quando
 detectada. Valide-a com `node <archify>/bin/archify.mjs doctor`. Sem Archify, a
 nota textual continua e recebe um aviso.
+
+Consulte o [Cookbook](../../docs/COOKBOOK.md) para receitas completas.

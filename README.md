@@ -1,5 +1,8 @@
 # NeresArmy
 
+[![npm version](https://img.shields.io/npm/v/%40mneresc%2Fneres-study-refinery?label=npm)](https://www.npmjs.com/package/@mneresc/neres-study-refinery)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 Skills de código e estudo mantidas por `mneresc`.
 
 ## Skills
@@ -14,33 +17,49 @@ Estado atual: implementação completa — inclui escopo fechado, inventário,
 classificação, evidência textual/visual, composição conservadora, validações finais,
 relatório, visão geral, escrita atômica e integração externa opcional com Archify.
 
-```powershell
-npm install
-npm run build --workspace @mneresc/neres-study-refinery
-node skills/neres-study-refinery/dist/neres-study-refinery.mjs build `
-  --vault "D:\Obsidian\Concursos" `
-  --input "AFO" `
-  --input-type folder
-```
+Pacote público: [`@mneresc/neres-study-refinery`](https://www.npmjs.com/package/@mneresc/neres-study-refinery).
+Veja o [Cookbook](docs/COOKBOOK.md) para receitas completas de instalação, execução,
+imagens, OpenAI opcional, Archify e diagnóstico.
 
-Adicione `--dry-run` para inspecionar o plano sem escrita.
-
-### Instalação via npm
+### Instalação do CLI
 
 ```powershell
 npm install --global @mneresc/neres-study-refinery
-neres-study-refinery --help
+neres-study-refinery --version
 ```
+
+### Primeiro dry-run
+
+Defina valores locais apenas na sua sessão:
+
+```powershell
+$Vault = "<CAMINHO_ABSOLUTO_DO_VAULT>"
+$Entrada = "<PASTA_RELATIVA_NO_VAULT>"
+
+neres-study-refinery build `
+  --vault $Vault `
+  --input $Entrada `
+  --input-type folder `
+  --dry-run
+```
+
+Remova `--dry-run` somente depois de revisar o plano. A saída é sempre separada;
+os originais não são sobrescritos.
 
 Para evidência visual sem envio externo, forneça um manifest ligado ao SHA-256:
 
 ```powershell
-node skills/neres-study-refinery/dist/neres-study-refinery.mjs build `
-  --vault "D:\Obsidian\Concursos" `
-  --input "AFO\Nota.md" `
+$Vault = "<CAMINHO_ABSOLUTO_DO_VAULT>"
+$Nota = "<NOTA_RELATIVA.md>"
+$Manifesto = "<MANIFESTO_RELATIVO.json>"
+
+neres-study-refinery build `
+  --vault $Vault `
+  --input $Nota `
   --input-type note `
   --visual-provider agent-manifest `
-  --visual-manifest "visual-manifest.json"
+  --visual-manifest $Manifesto `
+  --dry-run
 ```
 
 O adaptador OpenAI exige `--visual-provider openai`,

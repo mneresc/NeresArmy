@@ -18,7 +18,7 @@ build       passed
 Instalação detectada:
 
 ```text
-C:\Users\marce\.agents\skills\archify\bin\archify.mjs
+<ARCHIFY_SKILL_ROOT>\bin\archify.mjs
 ```
 
 Provas:
