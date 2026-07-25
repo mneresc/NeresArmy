@@ -26,6 +26,10 @@ Never use a clinical label as a shortcut for a functional recommendation.
    only the functional adaptation needed when a diagnosis is not necessary.
 4. If a profile exists, offer update versus new profile and preserve supported claims.
 
+Never request a full name, identification number, address, medical record,
+medication, or clinical detail that is not indispensable to the pedagogical goal.
+If the same adaptation can be expressed as a functional need, omit the condition.
+
 ## One-question interview protocol
 
 For every assistant turn:
@@ -103,8 +107,11 @@ anterior”, update `updated_at`, and never accumulate irrelevant clinical histo
 Run:
 
 ```powershell
-python scripts/validate_profile.py learning/LEARNING_PROFILE.md
+python "<skill-root>/scripts/validate_profile.py" learning/LEARNING_PROFILE.md
 ```
+
+Resolve `<skill-root>` to this skill's installed directory; do not assume the user's
+workspace contains the validator script.
 
 The output is consultative, not a clinical order. Read [profile-contract.md](references/profile-contract.md)
 for the stable `consumer_contract`; consumer skills may use confirmed goals, observed

@@ -16,6 +16,14 @@ autoriza a skill a consultar fontes externas durante a anamnese de um usuário.
 - combinar autorrelato com amostras observáveis, tamanho de amostra e incerteza;
 - manter decisões transparentes como `evidência → regra → ação`.
 
+## Expertise reversal
+
+Ajuda intensa pode beneficiar iniciantes e se tornar redundante ou prejudicial
+quando o conhecimento prévio cresce. Ajuste exemplos resolvidos, pistas e divisão de
+passos pela MDAR observada; retire apoio progressivamente quando independência,
+qualidade, retenção e transferência melhorarem. Isso é o *expertise reversal
+effect*, não uma justificativa para retirar acessibilidade funcional.
+
 ## Proibições
 
 - não usar VARK, modalidade sensorial ou estilo fixo como prescrição;
@@ -35,10 +43,28 @@ organização, memória funcional, fadiga, ambiente, acesso sensorial/motor ou f
 de resposta. Separe sempre conteúdo não dominado, formato inacessível, execução
 condicionada e evidência insuficiente.
 
-## Fontes anotadas
+## Fontes rastreáveis
 
-As bases locais consultadas incluem Dunlosky et al. (2013), Cepeda et al. (2006),
-Adesope et al. (2017), Pan & Rickard (2018), Wisniewski et al. (2020), Bisra et al.
-(2018), Shao et al. (2023), Pashler et al. (2008), Cuevas & Dawson (2018), Boosman
-et al. (2016), Shanahan et al. (2024), Mislevy (2006) e AERA/APA/NCME (2014). As
-referências e limitações completas permanecem no dossiê científico de origem.
+- [Dunlosky et al. (2013)](https://pubmed.ncbi.nlm.nih.gov/26173288/) — revisão de
+  técnicas de aprendizagem.
+- [Cepeda et al. (2006)](https://pubmed.ncbi.nlm.nih.gov/16719566/) — prática
+  distribuída.
+- [Adesope, Trevisan & Sundararajan (2017)](https://journals.sagepub.com/doi/10.3102/0034654316689306)
+  e [Pan & Rickard (2018)](https://pubmed.ncbi.nlm.nih.gov/29733621/) — recuperação
+  e transferência.
+- [Wisniewski, Zierer & Hattie (2020)](https://pubmed.ncbi.nlm.nih.gov/32038429/)
+  — feedback.
+- [Bisra et al. (2018)](https://eric.ed.gov/?id=EJ1186664) e
+  [Shao et al. (2023)](https://pubmed.ncbi.nlm.nih.gov/37034913/) — autoexplicação
+  e autorregulação.
+- [Meta-análise do expertise reversal effect (2025)](https://www.sciencedirect.com/science/article/pii/S0959475225000660).
+- [Pashler et al. (2008)](https://pubmed.ncbi.nlm.nih.gov/26162104/) e
+  [Cuevas & Dawson (2018)](https://pubmed.ncbi.nlm.nih.gov/30186209/) — ausência de
+  suporte para prescrição por estilo sensorial.
+- [Boosman et al. (2016)](https://pubmed.ncbi.nlm.nih.gov/25491903/) e
+  [Shanahan et al. (2024)](https://pmc.ncbi.nlm.nih.gov/articles/PMC11636021/) —
+  avaliação dinâmica e individualização baseada em dados.
+- [Mislevy (2006)](https://csaa.wested.org/wp-content/uploads/2020/01/2006_Implications_of_Evidence_Centered_Design_for_Educational_Testing.pdf)
+  e [Standards for Educational and Psychological Testing (2014)](https://www.testingstandards.net/uploads/7/6/6/4/76643089/standards_2014edition.pdf).
+
+As limitações e a síntese completa permanecem no dossiê científico de origem.

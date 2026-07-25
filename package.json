@@ -7,11 +7,12 @@
   ],
   "scripts": {
     "build": "npm run build --workspaces --if-present",
-    "check": "npm run check --workspaces --if-present",
+    "check": "npm run validate:skills && npm run test:skill-scripts && node --test scripts/tests/*.test.mjs && npm run check --workspaces --if-present",
     "generate:catalog": "node scripts/generate-catalog.mjs",
     "install:skill": "node scripts/install-skill.mjs",
     "install:skill:all": "node scripts/install-skill.mjs --all --target all",
-    "test": "node --test scripts/tests/*.test.mjs && npm test --workspaces --if-present",
+    "test": "npm run test:skill-scripts && node --test scripts/tests/*.test.mjs && npm test --workspaces --if-present",
+    "test:skill-scripts": "node scripts/test-python-skills.mjs",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "validate:skills": "node scripts/validate-skills.mjs"
   }

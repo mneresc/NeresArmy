@@ -24,7 +24,10 @@ evidence_summary:
 ```
 
 `profile_status` só pode ser `provisional` ou `user_confirmed`. Datas devem ser
-ISO-8601. A confirmação do usuário é necessária antes de usar `user_confirmed`.
+ISO-8601. `valid_until` aceita data ISO ou `null`; contadores são inteiros não
+negativos; consentimentos são booleanos; `subjects` e `goals` são listas; e
+`overall_confidence` aceita `low`, `moderate` ou `high`. A confirmação do usuário é
+necessária antes de usar `user_confirmed`.
 
 ## Seções obrigatórias
 

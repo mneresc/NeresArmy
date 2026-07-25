@@ -41,8 +41,11 @@ atualiza `updated_at` e não cria histórico clínico desnecessário.
 ## Validar
 
 ```powershell
-python scripts/validate_profile.py learning/LEARNING_PROFILE.md
+python "<skill-root>/scripts/validate_profile.py" learning/LEARNING_PROFILE.md
 ```
+
+Substitua `<skill-root>` pela pasta em que a skill foi instalada. O caminho do
+perfil continua relativo ao workspace do usuário.
 
 O validador rejeita frontmatter incompleto, seções ausentes, escala MDAR inválida,
 conclusão clínica, VARK/estilo fixo e recomendações sem evidência ou incerteza.

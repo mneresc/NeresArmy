@@ -1,8 +1,8 @@
 ---
 profile_schema: learning-profile/v1
 profile_status: provisional
-created_at: 2026-01-01
-updated_at: 2026-01-01
+created_at: YYYY-MM-DD
+updated_at: YYYY-MM-DD
 scope:
   subjects: []
   goals: []
