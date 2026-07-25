@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import re
 import subprocess
 import sys
 import tempfile
@@ -6,57 +7,16 @@ import unittest
 from pathlib import Path
 
 
+SKILL_ROOT = Path(__file__).parents[1]
 SCRIPT = Path(__file__).with_name("validate_profile.py")
+TEMPLATE = SKILL_ROOT / "assets" / "LEARNING_PROFILE.template.md"
 
 
 def valid_profile() -> str:
-    sections = "\n".join(
-        [
-            "# Perfil Operacional de Aprendizagem",
-            "## 1. Como usar este documento\n[OBSERVADO] Uso consultivo.",
-            "## 2. Escopo, objetivo e prazo\n[DESCONHECIDO] Prazo ainda não informado.",
-            "## 3. Fontes e evidências analisadas\n[DESCONHECIDO] Nenhum arquivo analisado.",
-            "## 4. Síntese operacional\n[INFERÊNCIA — confiança baixa] Ainda não há amostra.",
-            "## 5. Forças e teto de desafio\n[DESCONHECIDO] A medir.",
-            "## 6. Barreiras funcionais e de acesso\n[DESCONHECIDO] A investigar somente se relevante.",
-            "## 7. Apoios eficazes, ineficazes e ainda não testados\n[DESCONHECIDO] Nenhum apoio testado.",
-            "## 8. MDAR por competência\n| Competência | Evidência | I | Q | G | R | Fluência | Acesso/contexto | Incerteza | Próxima medição |\n| --- | --- | ---: | ---: | ---: | ---: | --- | --- | --- | --- |\n| COMP-001 | [DESCONHECIDO] | — | — | — | — | — | — | alta | microamostra |",
-            "## 9. Recomendações para desenho de materiais\n- [DESCONHECIDO] Não personalizar sem evidência.",
-            "## 10. Recomendações para questões e feedback\n- [DESCONHECIDO] A definir após amostra.",
-            "## 11. Recomendações para sessões e revisões\n- [DESCONHECIDO] A definir após objetivo.",
-            "## 12. Acessibilidade sem redução de expectativa\n- [DESCONHECIDO] Registrar apenas necessidade funcional autorizada.",
-            "## 13. Compactação, enriquecimento ou aceleração\n- [DESCONHECIDO] Não decidir sem retenção e transferência.",
-            "## 14. Contextos que alteram o desempenho\n- [DESCONHECIDO] Contexto ainda não observado.",
-            "## 15. Regras de adaptação para outras skills\n```yaml\nconsumer_contract:\n  may_use:\n    - confirmed_goals\n    - observed_strengths\n    - functional_access_needs\n    - evidence_backed_supports\n    - competency_specific_mdar\n  must_not_infer:\n    - clinical_diagnosis\n    - intelligence_level\n    - fixed_learning_style\n    - global_capacity_from_one_subject\n  adaptation_rules: []\n  recheck_when: []\n```",
-            "## 16. Incertezas, contradições e dados faltantes\n[DESCONHECIDO] Dados insuficientes.",
-            "## 17. Gatilhos para reavaliação\n[DESCONHECIDO] Nova amostra, mudança de objetivo ou prazo.",
-            "## 18. Limites não clínicos e consentimento\n[CONFIRMADO PELO USUÁRIO] Dados sensíveis não serão armazenados sem autorização.",
-        ]
-    )
-    return f"""---
-profile_schema: learning-profile/v1
-profile_status: provisional
-created_at: 2026-01-01
-updated_at: 2026-01-01
-scope:
-  subjects: []
-  goals: []
-  valid_until: null
-consent:
-  sensitive_data_storage: false
-  artifact_analysis: true
-evidence_summary:
-  observed_artifacts: 0
-  self_report_items: 0
-  micro_assessments: 0
-  overall_confidence: low
----
-
-{sections}
-"""
+    return TEMPLATE.read_text(encoding="utf-8").replace("YYYY-MM-DD", "2026-01-01")
 
 
-def run_validator(content: str):
+def run_validator(content: str) -> subprocess.CompletedProcess[str]:
     with tempfile.TemporaryDirectory(prefix="inclusive-profile-") as directory:
         profile = Path(directory) / "LEARNING_PROFILE.md"
         profile.write_text(content, encoding="utf-8")
@@ -69,34 +29,124 @@ def run_validator(content: str):
 
 
 class ValidateProfileTests(unittest.TestCase):
+    def assert_invalid(self, content: str, expected: str) -> None:
+        result = run_validator(content)
+        self.assertNotEqual(result.returncode, 0, result.stdout)
+        self.assertIn(expected.lower(), result.stderr.lower())
+
     def test_valid_profile(self):
         result = run_validator(valid_profile())
         self.assertEqual(result.returncode, 0, result.stderr)
 
     def test_missing_required_section(self):
-        result = run_validator(valid_profile().replace("## 18. Limites não clínicos e consentimento", "## 18. Seção removida"))
-        self.assertNotEqual(result.returncode, 0)
-        self.assertIn("Limites não clínicos", result.stderr)
+        content = valid_profile().replace(
+            "## 18. Limites não clínicos e consentimento",
+            "## 18. Seção removida",
+        )
+        self.assert_invalid(content, "Limites não clínicos")
 
     def test_clinical_conclusion_is_rejected(self):
-        result = run_validator(valid_profile().replace("[DESCONHECIDO] Dados insuficientes.", "[INFERÊNCIA — confiança alta] a pessoa tem diagnóstico clínico de TDAH."))
-        self.assertNotEqual(result.returncode, 0)
-        self.assertIn("clínic", result.stderr.lower())
+        content = valid_profile().replace(
+            "[DESCONHECIDO] Dados insuficientes.",
+            "[INFERÊNCIA — confiança alta] A pessoa tem diagnóstico clínico de TDAH.",
+        )
+        self.assert_invalid(content, "clínic")
+
+    def test_diagnostic_label_inference_is_rejected(self):
+        content = valid_profile().replace(
+            "[DESCONHECIDO] Dados insuficientes.",
+            "[INFERÊNCIA — confiança alta] A pessoa tem TDAH confirmado.",
+        )
+        self.assert_invalid(content, "clínic")
+
+    def test_non_clinical_disclaimer_is_allowed(self):
+        content = valid_profile().replace(
+            "[DESCONHECIDO] Dados insuficientes.",
+            "[CONFIRMADO PELO USUÁRIO] Este perfil não é diagnóstico clínico.",
+        )
+        result = run_validator(content)
+        self.assertEqual(result.returncode, 0, result.stderr)
 
     def test_fixed_learning_style_is_rejected(self):
-        result = run_validator(valid_profile().replace("[DESCONHECIDO] Dados insuficientes.", "[INFERÊNCIA — confiança alta] Recomendar VARK como estilo fixo."))
-        self.assertNotEqual(result.returncode, 0)
-        self.assertRegex(result.stderr.lower(), r"vark|estilo")
+        content = valid_profile().replace(
+            "[DESCONHECIDO] Dados insuficientes.",
+            "[INFERÊNCIA — confiança alta] Recomendar VARK como estilo fixo.",
+        )
+        self.assert_invalid(content, "VARK")
+
+    def test_anti_vark_guardrail_is_allowed(self):
+        content = valid_profile().replace(
+            "[DESCONHECIDO] Dados insuficientes.",
+            "[CONFIRMADO PELO USUÁRIO] Não recomendar VARK.",
+        )
+        result = run_validator(content)
+        self.assertEqual(result.returncode, 0, result.stderr)
 
     def test_invalid_mdar_scale_is_rejected(self):
-        invalid = valid_profile().replace("| COMP-001 | [DESCONHECIDO] | — | — | — | — |", "| COMP-001 | [OBSERVADO] | I5 | Q4 | G4 | R4 |")
-        result = run_validator(invalid)
-        self.assertNotEqual(result.returncode, 0)
-        self.assertIn("escala", result.stderr.lower())
+        content = valid_profile().replace(
+            "| COMP-001 | [DESCONHECIDO] | — | — | — | — |",
+            "| COMP-001 | [OBSERVADO] | I5 | Q4 | G4 | R4 |",
+        )
+        self.assert_invalid(content, "escala")
+
+    def test_negative_mdar_scale_is_rejected(self):
+        content = valid_profile().replace(
+            "| COMP-001 | [DESCONHECIDO] | — | — | — | — |",
+            "| COMP-001 | [OBSERVADO] | I-1 | Q-1 | G-1 | R-1 |",
+        )
+        self.assert_invalid(content, "escala")
 
     def test_insufficient_data_with_uncertainty_is_valid(self):
         result = run_validator(valid_profile())
         self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_invalid_confidence_enum_is_rejected(self):
+        content = valid_profile().replace(
+            "overall_confidence: low",
+            "overall_confidence: certain",
+        )
+        self.assert_invalid(content, "overall_confidence")
+
+    def test_invalid_valid_until_is_rejected(self):
+        content = valid_profile().replace("valid_until: null", "valid_until: amanhã")
+        self.assert_invalid(content, "valid_until")
+
+    def test_invalid_evidence_count_is_rejected(self):
+        content = valid_profile().replace(
+            "observed_artifacts: 0",
+            "observed_artifacts: muitos",
+        )
+        self.assert_invalid(content, "observed_artifacts")
+
+    def test_malformed_frontmatter_is_rejected(self):
+        content = valid_profile().replace("goals: []", "goals: [")
+        self.assert_invalid(content, "goals")
+
+    def test_empty_consumer_contract_is_rejected(self):
+        content = re.sub(
+            r"consumer_contract:\n(?:  .*\n|    .*\n)+",
+            "consumer_contract:\n",
+            valid_profile(),
+        )
+        self.assert_invalid(content, "consumer_contract")
+
+    def test_incomplete_consumer_contract_is_rejected(self):
+        content = valid_profile().replace("    - clinical_diagnosis\n", "")
+        self.assert_invalid(content, "clinical_diagnosis")
+
+    def test_prose_recommendation_without_provenance_is_rejected(self):
+        content = valid_profile().replace(
+            "- [DESCONHECIDO] Não personalizar sem evidência.",
+            "Use sempre mapas mentais.",
+        )
+        self.assert_invalid(content, "marcador")
+
+    def test_adaptation_rule_without_provenance_is_rejected(self):
+        content = valid_profile().replace(
+            "  adaptation_rules: []",
+            "  adaptation_rules:\n    - Sempre reduzir a dificuldade.",
+        )
+        self.assert_invalid(content, "marcador")
 
 
 if __name__ == "__main__":

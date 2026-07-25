@@ -31,3 +31,20 @@ Autorização humana registrada: “baseado nesse plano execute o prompt anexo�
 - Nenhuma alteração no runtime `neres-study-refinery`.
 - Nenhuma dependência Python ou JavaScript nova.
 - Nenhum dado de pessoa real.
+
+## Remediação pós-auditoria
+
+Após a prova RED registrada em `RED_TEST_REPORT.md`, aplicar o menor diff:
+
+1. substituir a leitura regex do frontmatter por parser estrito do subconjunto YAML
+   do schema v1, sem dependência nova;
+2. tipar listas, booleanos, contadores, datas e enumerações;
+3. validar a estrutura estável completa de `consumer_contract`;
+4. ampliar guardrails clínicos e MDAR sem rejeitar declarações negativas legítimas;
+5. exigir proveniência em prosa, bullets e regras adaptativas;
+6. usar o template real como fixture de teste;
+7. integrar testes Python ao gate npm por um runner Node multiplataforma;
+8. completar privacidade, expertise reversal, fontes rastreáveis e simulações;
+9. registrar o comando UTF-8 exato usado por `quick_validate.py` no Windows.
+
+Não adicionar pacote Python, alterar o schema público ou publicar npm.
