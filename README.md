@@ -72,6 +72,9 @@ node scripts/install-skill.mjs --skill neres-study-refinery --target codex
 node scripts/install-skill.mjs --all --target all
 ```
 
+Contribuições destinadas à `main` seguem o
+[fluxo de Pull Request e CI](docs/GITHUB-WORKFLOW.md).
+
 ## Licença
 
 MIT.

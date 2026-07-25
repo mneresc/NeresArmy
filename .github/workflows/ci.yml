@@ -1,0 +1,89 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate, test and build
+        run: npm run check
+
+      - name: Verify generated catalog
+        run: |
+          npm run generate:catalog
+          git diff --exit-code -- docs/CATALOG.md
+
+      - name: Upload skill bundles
+        uses: actions/upload-artifact@v7
+        with:
+          name: skill-bundles
+          path: skills/*/dist/*
+          if-no-files-found: error
+          retention-days: 7
+
+  windows-compat:
+    name: windows-compat
+    runs-on: windows-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate skill contracts
+        run: npm run validate:skills
+
+      - name: Test Python skill scripts
+        run: npm run test:skill-scripts
+
+      - name: Build workspaces
+        run: npm run build
