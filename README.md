@@ -36,6 +36,7 @@ Consulte o [catálogo completo](docs/CATALOG.md) e a
 | Skill | Finalidade | Documentação |
 | --- | --- | --- |
 | `neres-study-refinery` | Refina notas autorizadas do Obsidian em V2 rastreável, sem usar fontes factuais externas. | [README](skills/neres-study-refinery/README.md) · [Cookbook](skills/neres-study-refinery/docs/COOKBOOK.md) |
+| `neres-inclusive-learner-profile` | Conduz uma anamnese pedagógica adaptativa e cria um perfil operacional inclusivo, não clínico. | [README](skills/neres-inclusive-learner-profile/README.md) · [Cookbook](skills/neres-inclusive-learner-profile/docs/COOKBOOK.md) |
 
 ## Convenção do catálogo
 

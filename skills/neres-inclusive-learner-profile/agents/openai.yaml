@@ -1,0 +1,4 @@
+interface:
+  display_name: "Inclusive Learner Profile"
+  short_description: "Mapeie necessidades de aprendizagem uma pergunta por vez"
+  default_prompt: "Conduza uma anamnese pedagógica adaptativa e produza um perfil operacional reutilizável."
