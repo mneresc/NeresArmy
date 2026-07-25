@@ -31,3 +31,22 @@ Os seis cenários exigidos no prompt foram registrados em
 competências distintas, recusa de dados sensíveis, atualização de perfil e
 percentual sem contexto. Cada fluxo mantém uma pergunta por turno e handoff
 incerto quando faltam dados.
+
+## Fechamento da auditoria de remediação
+
+| Achado | Fechamento |
+| --- | --- |
+| testes Python fora do gate | runner Node multiplataforma integrado a `npm test` e `npm run check` |
+| frontmatter superficial | parser estrito do subconjunto YAML do schema v1 |
+| contrato vazio/incompleto | estrutura e enumerações estáveis validadas |
+| conclusão clínica variante | padrões contextuais e consentimento adicionados |
+| MDAR negativa | limites inferior e superior validados |
+| recomendação sem proveniência | prosa, bullets e regras adaptativas cobertos |
+| privacidade parcial | proibições explícitas movidas para `SKILL.md` |
+| simulação apenas resumida | diálogos fictícios completos com uma pergunta por turno |
+| ciência pouco rastreável | expertise reversal e links primários adicionados |
+| fixture duplicada | testes agora renderizam o template real |
+
+O problema histórico de fases agrupadas não foi corrigido reescrevendo commits já
+publicados. A remediação atual foi separada em RED, implementação GREEN e QA para
+preservar histórico verificável sem force-push.

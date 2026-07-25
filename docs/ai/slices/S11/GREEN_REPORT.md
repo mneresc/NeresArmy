@@ -17,16 +17,30 @@
 
 | Verificação | Resultado |
 | --- | --- |
-| `test_validate_profile.py` | 6/6 testes passaram |
-| Template `LEARNING_PROFILE.md` | Perfil válido |
-| `quick_validate.py` | Skill is valid |
+| `test_validate_profile.py` | 18/18 testes passaram |
+| Template `LEARNING_PROFILE.md` | Renderização com datas válida |
+| `python -X utf8 .../quick_validate.py` | Skill is valid |
 | `npm run validate:skills` | 2 skills validadas |
 | `npm run generate:catalog` | Catálogo gerado com 2 skills |
 | Testes do catálogo | 3/3 passaram |
-| `npm run check` | typecheck, 69 testes Vitest e build passaram |
-| Simulações manuais | 6/6 cenários do prompt conferidos |
+| `npm run check` | 18 testes Python, 3 testes de catálogo, typecheck, 69 testes Vitest e build passaram |
+| Simulações manuais | 6/6 diálogos fictícios, uma pergunta por turno |
+
+## Remediação da auditoria
+
+- Frontmatter v1 agora possui parser estrito e valida tipos, datas, listas, enums,
+  contadores, duplicações, campos desconhecidos e indentação.
+- `consumer_contract` exige estrutura e valores estáveis.
+- Inferências clínicas variantes e MDAR fora dos limites são rejeitadas.
+- Declarações negativas legítimas sobre diagnóstico ou VARK são aceitas.
+- Proveniência cobre bullets, prosa e regras adaptativas.
+- Testes Python fazem parte de `npm test` e `npm run check`.
+- Privacidade explícita, expertise reversal e fontes rastreáveis foram adicionados.
+- As fases de remediação foram separadas em commits RED, GREEN e QA.
 
 ## Limite conhecido
 
-O validador verifica o contrato estrutural e guardrails textuais; ele não é teste
-psicométrico, diagnóstico ou substituto de julgamento pedagógico humano.
+O validador verifica schema, estrutura e guardrails textuais. Ele não interpreta
+semântica clínica livre, não é teste psicométrico e não substitui julgamento
+pedagógico humano. No Windows, o validador oficial de estrutura da skill precisa ser
+executado em modo UTF-8 porque o script externo usa a codificação padrão do sistema.
