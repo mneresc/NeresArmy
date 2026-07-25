@@ -23,3 +23,11 @@
 - Nenhuma documentação da skill contém caminho de pasta real do usuário.
 - Não há dependência nova de runtime.
 - A skill é instalável como unidade pelo catálogo NeresArmy.
+
+## Simulações manuais
+
+Os seis cenários exigidos no prompt foram registrados em
+`MANUAL_SCENARIOS.md`: iniciante sem amostra, TDAH autorrelatado, idioma com
+competências distintas, recusa de dados sensíveis, atualização de perfil e
+percentual sem contexto. Cada fluxo mantém uma pergunta por turno e handoff
+incerto quando faltam dados.

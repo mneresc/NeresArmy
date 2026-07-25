@@ -24,6 +24,7 @@
 | `npm run generate:catalog` | Catálogo gerado com 2 skills |
 | Testes do catálogo | 3/3 passaram |
 | `npm run check` | typecheck, 69 testes Vitest e build passaram |
+| Simulações manuais | 6/6 cenários do prompt conferidos |
 
 ## Limite conhecido
 
