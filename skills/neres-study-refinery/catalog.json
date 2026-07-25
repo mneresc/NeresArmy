@@ -1,0 +1,6 @@
+{
+  "category": "study",
+  "status": "stable",
+  "invocation": "model",
+  "npmPackage": "@mneresc/neres-study-refinery"
+}

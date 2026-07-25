@@ -62,4 +62,4 @@ Diagramas usam uma instalação externa confiável do `tt-a1i/archify`, quando
 detectada. Valide-a com `node <archify>/bin/archify.mjs doctor`. Sem Archify, a
 nota textual continua e recebe um aviso.
 
-Consulte o [Cookbook](../../docs/COOKBOOK.md) para receitas completas.
+Consulte o [Cookbook](docs/COOKBOOK.md) para receitas completas.

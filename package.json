@@ -6,11 +6,13 @@
     "skills/*"
   ],
   "scripts": {
-    "build": "npm run build --workspace @mneresc/neres-study-refinery",
-    "check": "npm run check --workspace @mneresc/neres-study-refinery",
-    "install:skill": "node scripts/install-skill.mjs --target codex",
-    "install:skill:all": "node scripts/install-skill.mjs --target all",
-    "test": "npm test --workspace @mneresc/neres-study-refinery",
-    "typecheck": "npm run typecheck --workspace @mneresc/neres-study-refinery"
+    "build": "npm run build --workspaces --if-present",
+    "check": "npm run check --workspaces --if-present",
+    "generate:catalog": "node scripts/generate-catalog.mjs",
+    "install:skill": "node scripts/install-skill.mjs",
+    "install:skill:all": "node scripts/install-skill.mjs --all --target all",
+    "test": "node --test scripts/tests/*.test.mjs && npm test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "validate:skills": "node scripts/validate-skills.mjs"
   }
 }

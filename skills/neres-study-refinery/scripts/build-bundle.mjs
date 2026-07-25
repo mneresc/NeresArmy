@@ -1,13 +1,14 @@
 import { chmod } from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { build } from "esbuild";
 
-const packageRoot = path.resolve(import.meta.dirname, "..");
+const packageRoot = fileURLToPath(new URL("../", import.meta.url));
 const output = path.join(packageRoot, "dist", "neres-study-refinery.mjs");
 
 await build({
   absWorkingDir: packageRoot,
-  entryPoints: ["./src/cli.ts"],
+  entryPoints: [path.join(packageRoot, "src", "cli.ts")],
   outfile: output,
   bundle: true,
   platform: "node",

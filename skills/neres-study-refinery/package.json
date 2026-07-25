@@ -30,6 +30,7 @@
   },
   "files": [
     "config",
+    "docs",
     "dist",
     "prompts",
     "schemas",
