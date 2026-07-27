@@ -48,4 +48,3 @@ publicação npm ou autorização de merge.
 - `quick_validate.py` da skill-creator.
 - Scripts npm documentados pelo repositório.
 - `git diff --check`, diff completo e staged diff antes de cada commit.
-

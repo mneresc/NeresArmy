@@ -19,13 +19,13 @@ npx skills@latest add mneresc/NeresArmy
 Instale uma skill específica:
 
 ```powershell
-npx skills@latest add mneresc/NeresArmy --skill neres-study-refinery
+npx skills@latest add mneresc/NeresArmy --skill ob-study-visual-mapper
 ```
 
 Também é possível apontar diretamente para a pasta de uma skill:
 
 ```powershell
-npx skills@latest add https://github.com/mneresc/NeresArmy/tree/main/skills/neres-study-refinery
+npx skills@latest add https://github.com/mneresc/NeresArmy/tree/main/skills/ob-study-visual-mapper
 ```
 
 Consulte o [catálogo completo](docs/CATALOG.md) e a
@@ -35,6 +35,7 @@ Consulte o [catálogo completo](docs/CATALOG.md) e a
 
 | Skill | Finalidade | Documentação |
 | --- | --- | --- |
+| `ob-study-visual-mapper` | Agent Skill para Obsidian que cria mapas JSON Canvas de estudo e recall, com relações semânticas, proveniência e fallback local. | [README](skills/ob-study-visual-mapper/README.md) · [Cookbook](skills/ob-study-visual-mapper/docs/COOKBOOK.md) |
 | `neres-study-refinery` | Refina notas autorizadas do Obsidian em V2 rastreável, sem usar fontes factuais externas. | [README](skills/neres-study-refinery/README.md) · [Cookbook](skills/neres-study-refinery/docs/COOKBOOK.md) |
 | `neres-inclusive-learner-profile` | Conduz uma anamnese pedagógica adaptativa e cria um perfil operacional inclusivo, não clínico. | [README](skills/neres-inclusive-learner-profile/README.md) · [Cookbook](skills/neres-inclusive-learner-profile/docs/COOKBOOK.md) |
 

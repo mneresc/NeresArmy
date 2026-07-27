@@ -1,5 +1,25 @@
 # Compatibilidade de agentes
 
+## Agent Skills portáteis
+
+`ob-study-visual-mapper` é uma Agent Skill para Obsidian baseada no formato aberto:
+`SKILL.md`, referências, assets e scripts locais. A criação dos Canvas depende apenas
+da capacidade do agente de ler/escrever arquivos; os validadores opcionais requerem
+Python 3 e não exigem que o Obsidian esteja aberto.
+
+Instale por catálogo:
+
+```powershell
+npx skills@latest add mneresc/NeresArmy --skill ob-study-visual-mapper
+```
+
+JSON Canvas 1.0 permanece disponível em todos os clientes. Archify e o MCP
+`sequential-thinking` são sugestões opcionais: a ausência deles não bloqueia a skill.
+O MCP é útil para routing/ambiguidade complexos, mas não fornece fatos nem recebe o
+vault automaticamente.
+
+## Neres Study Refinery
+
 `neres-study-refinery` segue a estrutura aberta de Agent Skills: uma pasta com
 `SKILL.md`, recursos auxiliares e um executável local. O bundle requer Node.js
 22.12 ou superior e não requer `npm install` no diretório instalado.

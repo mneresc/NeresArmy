@@ -24,4 +24,3 @@ update, proveniência e CLI.
 
 Nenhum teste foi skipped, relaxado ou acoplado a função privada. A implementação
 deve preservar as asserções atuais e levar este mesmo comando a GREEN.
-

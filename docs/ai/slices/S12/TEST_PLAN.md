@@ -46,4 +46,3 @@ npm run check
 Antes da produção, o teste deve falhar ao importar `visual_map` e
 `validate_canvas`, provando que o comportamento ainda não existe. Falhas de setup,
 testes skipped ou placeholders não contam como RED.
-

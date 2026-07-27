@@ -62,4 +62,3 @@ segura e fallback local.
 - Runtime determinístico: Python 3 standard library, seguindo o runner já existente.
 - Publicação: branch e Pull Request, conforme `docs/GITHUB-WORKFLOW.md`; sem merge
   automático.
-

@@ -59,4 +59,3 @@ rastreabilidade e validação determinística.
 
 Autorização registrada no pedido de 2026-07-27: “Crie e publique essa skill ... chame
 de ob-study-visual-mapper”.
-
