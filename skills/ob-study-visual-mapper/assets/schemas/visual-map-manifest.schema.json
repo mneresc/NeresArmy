@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/mneresc/NeresArmy/skills/ob-study-visual-mapper/assets/schemas/visual-map-manifest.schema.json",
+  "title": "Obsidian Study Visual Map Manifest",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "canvas",
+    "sources",
+    "nodeSources",
+    "edgeSources",
+    "omittedPropositions",
+    "unresolvedAmbiguities",
+    "archify"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "visual-map-manifest/v1"
+    },
+    "skillVersion": {
+      "type": "string"
+    },
+    "canvas": {
+      "type": "string",
+      "minLength": 1
+    },
+    "intent": {
+      "type": "string"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "subpaths": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^#"
+            }
+          }
+        }
+      }
+    },
+    "nodeSources": {
+      "$ref": "#/$defs/sourceMap"
+    },
+    "edgeSources": {
+      "$ref": "#/$defs/sourceMap"
+    },
+    "syntheticIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "coverage": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "default": []
+    },
+    "omittedPropositions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "unresolvedAmbiguities": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "validationWarnings": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "default": []
+    },
+    "archify": {
+      "type": "object",
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "not-used",
+            "selected",
+            "generated",
+            "fallback",
+            "failed"
+          ]
+        }
+      }
+    },
+    "sequentialThinking": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "not-used",
+            "suggested",
+            "used",
+            "unavailable"
+          ]
+        }
+      }
+    }
+  },
+  "$defs": {
+    "sourceMap": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path"
+          ],
+          "properties": {
+            "path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "subpath": {
+              "type": "string",
+              "pattern": "^#"
+            }
+          }
+        }
+      }
+    }
+  }
+}

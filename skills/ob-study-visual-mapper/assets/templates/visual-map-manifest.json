@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "visual-map-manifest/v1",
+  "skillVersion": "1.0.0",
+  "canvas": "Tema.study.canvas",
+  "intent": "concept-map",
+  "sources": [],
+  "nodeSources": {},
+  "edgeSources": {},
+  "syntheticIds": [
+    "037b83ab7a4b3ce7",
+    "4421751b08a2ea0e",
+    "8505bf535399b0a5"
+  ],
+  "coverage": [],
+  "omittedPropositions": [],
+  "unresolvedAmbiguities": [],
+  "validationWarnings": [],
+  "archify": {
+    "status": "not-used"
+  },
+  "sequentialThinking": {
+    "status": "not-used"
+  }
+}

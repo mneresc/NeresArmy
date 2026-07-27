@@ -1,0 +1,35 @@
+{
+  "nodes": [
+    {
+      "id": "037b83ab7a4b3ce7",
+      "type": "text",
+      "x": 0,
+      "y": 0,
+      "width": 320,
+      "height": 120,
+      "text": "# Conceito central\n\nSubstitua pelo conteúdo sustentado pela fonte.",
+      "color": "5"
+    },
+    {
+      "id": "4421751b08a2ea0e",
+      "type": "text",
+      "x": 420,
+      "y": 0,
+      "width": 320,
+      "height": 120,
+      "text": "# Conceito relacionado\n\nPreserve qualificadores.",
+      "color": "6"
+    }
+  ],
+  "edges": [
+    {
+      "id": "8505bf535399b0a5",
+      "fromNode": "037b83ab7a4b3ce7",
+      "fromSide": "right",
+      "toNode": "4421751b08a2ea0e",
+      "toSide": "left",
+      "toEnd": "arrow",
+      "label": "nomeie a relação"
+    }
+  ]
+}
