@@ -1,0 +1,4 @@
+interface:
+  display_name: "Obsidian Study Visual Mapper"
+  short_description: "Crie mapas de estudo e recall no Obsidian"
+  default_prompt: "Use $ob-study-visual-mapper to turn my authorized Obsidian notes into validated study and recall canvases."
