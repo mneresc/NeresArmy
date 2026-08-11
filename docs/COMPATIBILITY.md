@@ -1,5 +1,21 @@
 # Compatibilidade de agentes
 
+## Neres Agentic BMAD
+
+`neres-agentic-bmad` é específico para OpenCode e foi validado com a sintaxe v1 do
+OpenCode `1.18.15`: agentes Markdown, `permission`, `steps`, `mode`, `hidden`,
+`model`, skills sob demanda e `permission.task`. Requer OpenCode `1.1.1` ou superior.
+
+O bundle instala agentes em `~/.config/opencode/agents` e o protocolo em
+`~/.config/opencode/skills/agentic-bmad`. Ele não modifica `opencode.jsonc`, não
+reinstala BMAD e falha se os IDs `opencode-go` configurados não aparecerem em
+`opencode models`.
+
+BMAD `6.10.0` foi a versão usada no smoke test, mas a integração seleciona skills
+BMAD pela descoberta real; nomes ausentes devem bloquear ou reduzir o fluxo, nunca
+ser inventados. OpenCode V2 usa outro contrato (`agents`, `permissions`, `subagent`)
+e ainda não é alvo deste bundle.
+
 ## Agent Skills portáteis
 
 `ob-study-visual-mapper` é uma Agent Skill para Obsidian baseada no formato aberto:

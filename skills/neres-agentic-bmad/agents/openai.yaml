@@ -1,0 +1,4 @@
+interface:
+  display_name: "Neres Agentic BMAD"
+  short_description: "Orquestra BMAD multiagente no OpenCode"
+  default_prompt: "Use $neres-agentic-bmad para instalar e operar os agentes BMAD otimizados no OpenCode."
