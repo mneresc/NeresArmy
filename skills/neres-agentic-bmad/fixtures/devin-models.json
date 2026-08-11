@@ -1,0 +1,7 @@
+{
+  "families": [
+    { "name": "Cognition", "models": [{ "id": "swe-1.7" }, { "id": "swe-1.6-fast" }] },
+    { "name": "Anthropic", "models": [{ "id": "claude-opus-5" }] },
+    { "name": "Open", "models": [{ "id": "kimi-k" }, { "id": "glm" }, { "id": "deepseek-v4-pro" }, { "id": "mimo" }] }
+  ]
+}
