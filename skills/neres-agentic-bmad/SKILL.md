@@ -141,6 +141,7 @@ for this validation.
 
 ## Troubleshoot
 
+Read [the usage guide](docs/USAGE.md) for client-specific invocation and examples.
 Read [the cookbook](docs/COOKBOOK.md) for discovery, overwrite, model and smoke-test
 failures. Do not duplicate the shared protocol into profiles, agents, AGENTS.md or
 project documentation.

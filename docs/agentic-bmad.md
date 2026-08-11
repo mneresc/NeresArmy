@@ -1,5 +1,8 @@
 # Agentic BMAD no OpenCode
 
+Para exemplos completos de TUI e execução não interativa, consulte o
+[guia de uso por cliente](../skills/neres-agentic-bmad/docs/USAGE.md).
+
 ## Como planejar
 
 Selecione `neres-planner`. Ele classifica tamanho/risco, usa as skills BMAD instaladas
