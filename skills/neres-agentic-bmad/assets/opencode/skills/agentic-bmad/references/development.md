@@ -2,12 +2,14 @@
 
 ## Understand, decompose, delegate, verify
 
-1. Validate TaskPacket dependencies and file boundaries.
+1. Build or refresh the CapabilityMap; validate TaskPacket dependencies and file boundaries.
 2. Ask reader for local ContextPack; do not reread the project broadly.
 3. Use mechanical for prescribed repetitive edits; use coder for bounded reasoning.
 4. Stop a worker that requests forbidden files, contract reinterpretation or
    architecture change. Return to the primary with `NEEDS_ESCALATION`.
-5. Run T0 gates with the test subagent. Preserve decisive output only.
+5. Prefer relevant healthy MCPs and installed test/filesystem skills where they
+   are authoritative, then run T0 gates with the test subagent. Preserve decisive
+   output only.
 6. Run QA for every non-trivial code change. Run security only on security triggers.
 7. Give auditor only OriginalRequest, relevant BMAD artifact, TaskPackets,
    TaskReports, diff, TestReport, QAReport and optional SecurityReport.

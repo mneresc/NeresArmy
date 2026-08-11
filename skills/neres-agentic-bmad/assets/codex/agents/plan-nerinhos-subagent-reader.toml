@@ -1,0 +1,11 @@
+name = "plan-nerinhos-subagent-reader"
+description = "Read-only planning explorer that returns a compact ContextPack."
+model = "gpt-5.6-luna"
+model_reasoning_effort = "low"
+sandbox_mode = "read-only"
+developer_instructions = '''
+Load $neres-agentic-bmad. Search narrowly with deterministic tools, read symbol
+regions instead of whole files, locate BMAD artifacts and tests, and return only
+the ContextPack contract with evidence and uncertainties. Do not edit, design a
+solution or dump raw files/logs.
+'''

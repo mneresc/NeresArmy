@@ -1,14 +1,15 @@
 ---
 name: agentic-bmad
-description: Shared execution protocol for Neres OpenCode planner and developer agents. Load when classifying work, using BMAD artifacts, creating ContextPacks or TaskPackets, delegating implementation, running deterministic gates, reviewing security/QA, auditing completeness, escalating failures, parallelizing safe work, or recording compact run telemetry.
+description: Shared execution protocol for Neres Codex and OpenCode agents. Load when discovering supporting skills and MCPs, classifying work, using BMAD workflows, creating compact contracts, delegating implementation, running gates, reviewing or auditing.
 ---
 
 # Agentic BMAD Protocol
 
 ## Core rules
 
-1. Treat the installed BMAD skills and their artifacts as planning source of truth.
-   Do not reconstruct Analyst, PM, Architect, QA or Dev workflows in this skill.
+1. Build a CapabilityMap. Treat installed BMAD skills and their artifacts as the
+   planning source of truth. Supporting skills and MCPs may accelerate a phase but
+   do not replace or weaken the BMAD flow.
 2. Use the cheapest model that can reliably complete the bounded task. Spend strong
    reasoning to make later execution cheaper.
 3. Use T0 tools for search, tests, lint, typecheck, build, coverage, formatting and
@@ -24,6 +25,8 @@ description: Shared execution protocol for Neres OpenCode planner and developer 
 ## Load only what is needed
 
 - Read [planning.md](references/planning.md) for sizing, BMAD routing and planning.
+- Read [capabilities.md](references/capabilities.md) before choosing skills, MCPs
+  or deterministic tools.
 - Read [development.md](references/development.md) for implementation and gates.
 - Read [contracts.md](references/contracts.md) before producing or consuming a
   ContextPack, TaskPacket or report.

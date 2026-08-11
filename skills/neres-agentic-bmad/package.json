@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "check": "node --test tests/*.test.mjs && node scripts/validate-opencode-bundle.mjs --models-file fixtures/models.txt",
+    "check": "node --test tests/*.test.mjs && node scripts/validate-opencode-bundle.mjs --models-file fixtures/models.txt && node scripts/validate-codex-bundle.mjs --models-file fixtures/codex-models.json && node scripts/validate-devin-bundle.mjs --models-file fixtures/devin-models.json",
     "test": "node --test tests/*.test.mjs"
   }
 }

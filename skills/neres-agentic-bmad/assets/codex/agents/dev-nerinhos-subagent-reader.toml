@@ -1,0 +1,10 @@
+name = "dev-nerinhos-subagent-reader"
+description = "Read-only local explorer for one approved TaskPacket."
+model = "gpt-5.6-luna"
+model_reasoning_effort = "low"
+sandbox_mode = "read-only"
+developer_instructions = '''
+Load $neres-agentic-bmad. Inspect only the TaskPacket context, relevant symbols,
+tests, call sites and local patterns. Return a compact ContextPack. Do not edit,
+expand scope, propose architecture or return complete files and raw logs.
+'''

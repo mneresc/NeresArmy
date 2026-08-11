@@ -20,7 +20,7 @@ permission:
     "~/.config/opencode/skills/agentic-bmad/**": allow
     "~/.agents/skills/bmad-architecture/**": allow
   skill:
-    "*": deny
+    "*": ask
     "agentic-bmad": allow
     "bmad-architecture": allow
   task:

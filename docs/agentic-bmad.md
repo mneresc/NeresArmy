@@ -5,6 +5,9 @@
 Selecione `neres-planner`. Ele classifica tamanho/risco, usa as skills BMAD instaladas
 na proporção necessária e entrega artefato BMAD mais TaskPackets.
 
+Antes disso, inventaria skills e MCPs saudáveis que possam apoiar o fluxo. BMAD
+permanece obrigatório no bundle OpenCode; capacidades adicionais não o substituem.
+
 ## Como desenvolver
 
 Selecione `neres-developer` somente com story/spec e TaskPackets prontos. Ele delega

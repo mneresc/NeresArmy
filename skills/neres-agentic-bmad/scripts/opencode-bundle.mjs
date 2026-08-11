@@ -70,6 +70,7 @@ const WRITE_AGENTS = new Set([
 
 const REQUIRED_PROTOCOL_FILES = [
   "SKILL.md",
+  "references/capabilities.md",
   "references/contracts.md",
   "references/planning.md",
   "references/development.md",

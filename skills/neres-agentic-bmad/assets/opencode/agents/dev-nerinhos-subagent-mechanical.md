@@ -30,7 +30,7 @@ permission:
     "*": ask
     "~/.config/opencode/skills/agentic-bmad/**": allow
   skill:
-    "*": deny
+    "*": ask
     "agentic-bmad": allow
   task:
     "*": deny
