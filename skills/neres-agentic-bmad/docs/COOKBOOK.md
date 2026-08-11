@@ -1,5 +1,9 @@
 # Cookbook — Neres Agentic BMAD
 
+Para o fluxo cotidiano e exemplos por Codex CLI/Desktop, OpenCode e Devin
+CLI/Desktop, comece pelo [guia de uso](USAGE.md). Este cookbook concentra
+atualização, falhas e diagnóstico.
+
 ## Entry points Codex
 
 ```powershell

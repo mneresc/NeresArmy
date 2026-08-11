@@ -1,5 +1,8 @@
 # Neres Agentic BMAD no Codex
 
+Para exemplos completos de Codex CLI e Desktop, consulte o
+[guia de uso por cliente](../skills/neres-agentic-bmad/docs/USAGE.md).
+
 ## Entry points
 
 | Profile | Use quando | Comando |
