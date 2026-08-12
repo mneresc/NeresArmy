@@ -19,6 +19,9 @@ publicação. A instalação não depende de clone: o tarball contém o core BMA
 | configurações Claude | `settings.json` e `.mcp.json` não foram criados nem alterados |
 | relatório supply chain | 0 vulnerabilidades runtime em todos os níveis; SBOM CycloneDX gerado |
 | `npm publish --dry-run --access public` | aprovado para a versão 0.2.0 |
+| CI remota | CI geral e Supply Chain Security aprovados |
+| `npm publish --access public` | publicou `@mneresc/neres-agentic-bmad@0.2.0` |
+| contraprova fora do monorepo | registro retornou 0.2.0; `npx ... --version` e dry-run Claude Code passaram |
 
 ## Contratos preservados
 
@@ -29,5 +32,5 @@ publicação. A instalação não depende de clone: o tarball contém o core BMA
 - Operações multi-cliente executam preflight em todos os destinos antes da escrita.
 - Falhas inesperadas durante a cópia removem somente os destinos recém-criados.
 
-Os diretórios temporários e o tarball do smoke devem ser removidos após o registro
-das evidências.
+Os diretórios temporários, caches isolados e tarballs usados nos smokes foram
+removidos após o registro das evidências.
