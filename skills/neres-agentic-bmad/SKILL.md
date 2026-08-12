@@ -1,13 +1,13 @@
 ---
 name: neres-agentic-bmad
-description: Install, validate, operate, and troubleshoot the Neres multi-agent architecture for Codex, OpenCode or Devin CLI/Desktop. Use for Neres entry points, specialized subagents, adaptive model routing, capability discovery, MCP/skill preference, least privilege, compact handoffs, deterministic gates, BMAD workflows, Devin equivalents, installation or smoke tests.
+description: Install, validate, operate, and troubleshoot the self-contained Neres multi-agent architecture for Codex, OpenCode, Devin CLI/Desktop or Claude Code, including bundled BMAD, capability discovery, deterministic gates and supply-chain evidence.
 ---
 
 # Neres Agentic BMAD
 
 ## Purpose
 
-Install and operate native Codex, OpenCode or Devin entry points backed by eleven
+Install and operate native Codex, OpenCode, Devin or Claude Code entry points backed by eleven
 specialized subagents. Preserve installed BMAD workflows as the planning source of
 truth. Use compact contracts, deterministic tools and independent review to reduce
 cost and context growth.
@@ -25,10 +25,10 @@ only when using `neres-quick-dev`.
 
 ## Install Codex safely
 
-1. Confirm Codex and BMAD are installed; never update or reinstall them here.
+1. Confirm Codex is installed. BMAD 6.11.0 is bundled and is installed only when absent.
 2. Run `codex --version`, `codex debug models` and `codex doctor --json`.
-3. Preview with `node scripts/install-codex.mjs --dry-run`.
-4. Install with `node scripts/install-codex.mjs`.
+3. Preview with `npx -y @mneresc/neres-agentic-bmad install codex --dry-run`.
+4. Install with `npx -y @mneresc/neres-agentic-bmad install codex`.
 5. Existing managed names require `--force`, which creates a recoverable backup.
 6. Never edit the user's base `config.toml`; install only three profile files,
    eleven custom agents and this skill.
@@ -43,19 +43,18 @@ codex --profile neres-quick-dev
 
 ## Install OpenCode safely
 
-1. Confirm OpenCode and BMAD are already installed; never reinstall or update them
-   as part of this skill.
+1. Confirm OpenCode is installed. Preserve an existing BMAD; otherwise install the bundled 6.11.0 assets.
 2. Run `opencode --version` and `opencode models`. Do not invent model IDs.
 3. Preview changes:
 
    ```text
-   node scripts/install-opencode.mjs --dry-run
+   npx -y @mneresc/neres-agentic-bmad install opencode --dry-run
    ```
 
 4. Install only after the preview is correct:
 
    ```text
-   node scripts/install-opencode.mjs
+   npx -y @mneresc/neres-agentic-bmad install opencode
    ```
 
 5. If a managed destination exists, inspect it first. Use `--force` only for a
@@ -67,12 +66,20 @@ codex --profile neres-quick-dev
 
 1. On the target work machine, run `devin --version`, `devin models list --format
    json`, `devin skills list` and `devin mcp list`. Never install/update Devin here.
-2. Preview a repository installation with `node scripts/install-devin.mjs --target
-   project --dry-run` or a user installation with `--target user --dry-run`.
+2. Preview a repository installation with `npx -y @mneresc/neres-agentic-bmad
+   install devin --scope project --dry-run` or a user installation with `--scope
+   user --dry-run`.
 3. Project mode writes only `.agents/skills` and `.agents/agents`; user mode writes
    only the Devin user `skills` and `agents` directories.
 4. Existing managed names require `--force`, which creates a recoverable backup.
 5. Never edit Devin config, MCP configuration, credentials or organization policy.
+
+## Install Claude Code safely
+
+1. Preview with `npx -y @mneresc/neres-agentic-bmad install claude-code --scope project --dry-run`.
+2. Install to a repository with `--scope project` or to `~/.claude` with `--scope user`.
+3. Never edit `settings.json`, `.mcp.json`, credentials or organization policy.
+4. Start an entry point with `claude --agent neres-planner`, `neres-developer` or `neres-quick-dev`.
 
 ## Validate Codex
 

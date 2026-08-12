@@ -1,0 +1,15 @@
+{
+  "name": "bmad-method",
+  "version": "6.11.0",
+  "license": "MIT",
+  "repository": "https://github.com/bmad-code-org/BMAD-METHOD",
+  "registry": "https://registry.npmjs.org/bmad-method/-/bmad-method-6.11.0.tgz",
+  "integrity": "sha512-xP+ZFPa8eA/xa9O9LSW7u8xq3/cVqEaCfdRHYwqti/JFm9+F8/Zmp+UwhHUMPAoBhyOCbDtwOJedCEnFTqqz0Q==",
+  "shasum": "9e61bc08eacadb2f2323f9d08f756950406b1823",
+  "generatedWith": "npx -y bmad-method@6.11.0 install --modules bmm --tools codex,opencode,claude-code --yes",
+  "contents": {
+    "skills": 49,
+    "coreDirectory": "_bmad",
+    "runtimeDependenciesShipped": false
+  }
+}

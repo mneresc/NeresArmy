@@ -1,8 +1,21 @@
 # Cookbook — Neres Agentic BMAD
 
+[Português](COOKBOOK.md) · [English](COOKBOOK.en.md) · [Español](COOKBOOK.es.md)
+
 Para o fluxo cotidiano e exemplos por Codex CLI/Desktop, OpenCode e Devin
 CLI/Desktop, comece pelo [guia de uso](USAGE.md). Este cookbook concentra
 atualização, falhas e diagnóstico.
+
+## Instalação rápida e atualização via npx
+
+```powershell
+npx -y @mneresc/neres-agentic-bmad
+npx -y @mneresc/neres-agentic-bmad install <codex|opencode|devin|claude-code> --dry-run
+```
+
+Remova `--dry-run` para instalar. Para atualizar destinos já gerenciados, mantenha
+o mesmo comando e acrescente `--force`; o instalador cria backup antes da troca.
+Use `npx -y @mneresc/neres-agentic-bmad --help` para opções específicas.
 
 ## Entry points Codex
 
@@ -67,6 +80,23 @@ node scripts/install-devin.mjs --target project --destination-root <repo-de-trab
 
 Para o usuário do Devin CLI/Desktop, troque por `--target user`. O instalador não
 altera a configuração nem o catálogo MCP do Devin.
+
+## Preview e instalação Claude Code
+
+```powershell
+npx -y @mneresc/neres-agentic-bmad install claude-code --scope project --dry-run
+npx -y @mneresc/neres-agentic-bmad install claude-code --scope project
+claude --agent neres-planner
+```
+
+Use `--scope user` para `~/.claude`. O instalador não toca `settings.json` nem
+`.mcp.json`.
+
+## BMAD ausente ou parcial
+
+Ausente: o pacote copia BMAD 6.11.0 e 49 skills localmente. Existente com manifest:
+preserva. `_bmad` sem manifest ou skills `bmad-*` sem core: interrompe como estado
+parcial. Corrija/restaure esse estado antes de repetir; `--force` não mistura BMADs.
 
 ## Descobrir capacidades no Devin
 

@@ -1,4 +1,4 @@
 interface:
   display_name: "Neres Agentic BMAD"
-  short_description: "Orquestra agentes no Codex, OpenCode e Devin"
+  short_description: "Orquestra agentes no Codex, OpenCode, Devin e Claude Code"
   default_prompt: "Use $neres-agentic-bmad para instalar e validar a arquitetura multiagente adequada ao meu runtime."
