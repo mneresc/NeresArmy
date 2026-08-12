@@ -5,6 +5,29 @@ suportada: Codex CLI, Codex Desktop, OpenCode, Devin CLI e Devin Desktop. Para
 instalação detalhada, routing e diagnóstico, consulte também o
 [README](../README.md) e o [Cookbook](COOKBOOK.md).
 
+## Instalação sem clonar o repositório
+
+Faça primeiro um preview e depois a instalação:
+
+```powershell
+npx -y @mneresc/neres-agentic-bmad install codex --dry-run
+npx -y @mneresc/neres-agentic-bmad install codex
+```
+
+```powershell
+npx -y @mneresc/neres-agentic-bmad install opencode --dry-run
+npx -y @mneresc/neres-agentic-bmad install opencode
+```
+
+```powershell
+npx -y @mneresc/neres-agentic-bmad install devin --scope project --dry-run
+npx -y @mneresc/neres-agentic-bmad install devin --scope project
+```
+
+O Devin também aceita `--scope user`. Se os destinos gerenciados já existirem, o
+comando falha sem alterar nada; repita com `--force` somente depois de conferir o
+preview. A atualização cria um backup recuperável.
+
 ## Escolha o entry point
 
 | Entry point | Use quando | Resultado esperado |

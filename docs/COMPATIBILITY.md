@@ -5,6 +5,12 @@
 `neres-agentic-bmad` suporta Codex, OpenCode e Devin CLI/Desktop com assets
 separados e contratos compactos compartilhados.
 
+A distribuição npm exige Node.js `22.12.0` ou superior e oferece o mesmo bundle
+por `npx -y @mneresc/neres-agentic-bmad@latest install <destino>`. O dispatcher
+não usa shell e delega aos instaladores versionados no pacote; por isso, os
+limites de escrita, o `--dry-run`, o backup de `--force` e as validações de
+modelos são idênticos aos da instalação pelo repositório.
+
 No Codex `0.146.1`, os três entry points são profiles em
 `$CODEX_HOME/<nome>.config.toml`, enquanto os onze Nerinhos são custom agents TOML
 em `$CODEX_HOME/agents`. O bundle usa `name`, `description`,

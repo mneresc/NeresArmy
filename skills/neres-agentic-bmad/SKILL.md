@@ -27,8 +27,8 @@ only when using `neres-quick-dev`.
 
 1. Confirm Codex and BMAD are installed; never update or reinstall them here.
 2. Run `codex --version`, `codex debug models` and `codex doctor --json`.
-3. Preview with `node scripts/install-codex.mjs --dry-run`.
-4. Install with `node scripts/install-codex.mjs`.
+3. Preview with `npx -y @mneresc/neres-agentic-bmad install codex --dry-run`.
+4. Install with `npx -y @mneresc/neres-agentic-bmad install codex`.
 5. Existing managed names require `--force`, which creates a recoverable backup.
 6. Never edit the user's base `config.toml`; install only three profile files,
    eleven custom agents and this skill.
@@ -49,13 +49,13 @@ codex --profile neres-quick-dev
 3. Preview changes:
 
    ```text
-   node scripts/install-opencode.mjs --dry-run
+   npx -y @mneresc/neres-agentic-bmad install opencode --dry-run
    ```
 
 4. Install only after the preview is correct:
 
    ```text
-   node scripts/install-opencode.mjs
+   npx -y @mneresc/neres-agentic-bmad install opencode
    ```
 
 5. If a managed destination exists, inspect it first. Use `--force` only for a
@@ -67,8 +67,9 @@ codex --profile neres-quick-dev
 
 1. On the target work machine, run `devin --version`, `devin models list --format
    json`, `devin skills list` and `devin mcp list`. Never install/update Devin here.
-2. Preview a repository installation with `node scripts/install-devin.mjs --target
-   project --dry-run` or a user installation with `--target user --dry-run`.
+2. Preview a repository installation with `npx -y @mneresc/neres-agentic-bmad
+   install devin --scope project --dry-run` or a user installation with `--scope
+   user --dry-run`.
 3. Project mode writes only `.agents/skills` and `.agents/agents`; user mode writes
    only the Devin user `skills` and `agents` directories.
 4. Existing managed names require `--force`, which creates a recoverable backup.

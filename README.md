@@ -10,6 +10,20 @@ componíveis e distribuição por seleção.
 
 ## Instalar
 
+Para instalar a arquitetura multiagente completa sem clonar o repositório:
+
+```powershell
+npx -y @mneresc/neres-agentic-bmad install codex
+npx -y @mneresc/neres-agentic-bmad install opencode
+npx -y @mneresc/neres-agentic-bmad install devin --scope project
+```
+
+Use `--dry-run` para visualizar os destinos e `--force` somente para atualizar uma
+instalação existente com backup. Veja o
+[guia do Neres Agentic](skills/neres-agentic-bmad/docs/USAGE.md).
+
+Para as demais skills do catálogo, use o instalador aberto de Agent Skills.
+
 Escolha skills interativamente para o agente atual:
 
 ```powershell

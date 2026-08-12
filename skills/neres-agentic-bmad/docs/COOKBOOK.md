@@ -4,6 +4,16 @@ Para o fluxo cotidiano e exemplos por Codex CLI/Desktop, OpenCode e Devin
 CLI/Desktop, comece pelo [guia de uso](USAGE.md). Este cookbook concentra
 atualização, falhas e diagnóstico.
 
+## Instalação rápida e atualização via npx
+
+```powershell
+npx -y @mneresc/neres-agentic-bmad install <codex|opencode|devin> --dry-run
+```
+
+Remova `--dry-run` para instalar. Para atualizar destinos já gerenciados, mantenha
+o mesmo comando e acrescente `--force`; o instalador cria backup antes da troca.
+Use `npx -y @mneresc/neres-agentic-bmad --help` para opções específicas.
+
 ## Entry points Codex
 
 ```powershell

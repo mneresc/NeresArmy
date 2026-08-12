@@ -36,7 +36,35 @@ Os instaladores não atualizam essas ferramentas e não modificam `config.toml` 
 Ele recusa sobrescrever os destinos por padrão. Com `--force`, salva cópias em
 `<config-dir>/backups/neres-agentic-bmad-<timestamp>` antes da atualização.
 
-## Instalação Codex pelo repositório
+## Instalação rápida via npx
+
+Não é necessário clonar o NeresArmy:
+
+```powershell
+npx -y @mneresc/neres-agentic-bmad install codex --dry-run
+npx -y @mneresc/neres-agentic-bmad install codex
+```
+
+```powershell
+npx -y @mneresc/neres-agentic-bmad install opencode --dry-run
+npx -y @mneresc/neres-agentic-bmad install opencode
+```
+
+```powershell
+npx -y @mneresc/neres-agentic-bmad install devin --scope project --dry-run
+npx -y @mneresc/neres-agentic-bmad install devin --scope project
+```
+
+Para disponibilizar o bundle Devin em todos os projetos do usuário, use `--scope
+user`. Uma atualização consciente usa `--force` e cria backup antes de substituir
+somente os destinos gerenciados.
+
+## Instalação avançada pelo repositório
+
+Os comandos abaixo são destinados a desenvolvimento do pacote e ambientes sem
+acesso ao npm.
+
+### Codex
 
 ```powershell
 git clone https://github.com/mneresc/NeresArmy.git
@@ -57,7 +85,7 @@ O instalador adiciona 3 profiles, 11 agentes e a skill em `$CODEX_HOME`, com cap
 6 threads por profile e `approval_policy = "on-request"`. O base `config.toml`
 permanece intacto.
 
-## Instalação OpenCode pelo repositório
+### OpenCode
 
 ```powershell
 git clone https://github.com/mneresc/NeresArmy.git
@@ -76,7 +104,7 @@ Depois execute `scripts/install-opencode.mjs` a partir da pasta instalada. Use
 `--config-dir <diretório>` para projeto/teste e `--force` somente após inspecionar os
 destinos; atualizações forçadas criam backup.
 
-## Instalação Devin pelo repositório
+### Devin
 
 Use o modo projeto no repositório de trabalho:
 

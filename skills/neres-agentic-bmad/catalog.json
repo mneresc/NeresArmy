@@ -2,5 +2,5 @@
   "category": "engineering",
   "status": "experimental",
   "invocation": "model",
-  "npmPackage": null
+  "npmPackage": "@mneresc/neres-agentic-bmad"
 }
