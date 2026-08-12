@@ -16,5 +16,6 @@ Data: 2026-08-12
 
 ## Conclusão
 
-READY FOR PUBLICATION AND DRAFT PR. A publicação da versão `0.1.0` foi
-explicitamente solicitada pelo usuário. Nenhum merge automático é autorizado.
+PUBLICATION COMPLETE AND READY FOR DRAFT PR REVIEW. A versão pública `0.1.0`
+foi confirmada no registro e executada fora do monorepo. Nenhum merge automático
+é autorizado.

@@ -15,6 +15,8 @@ os limites de escrita dos instaladores existentes.
 | smoke do `.tgz` via `npx --package` | ajuda e dry-run Codex/OpenCode/Devin passaram |
 | `npm run check` | 4 skills, 3 testes de catálogo, 21 testes do agente, 69 Vitest, 38 Python, typecheck e build passaram |
 | `npm publish --dry-run --access public` | aprovou `@mneresc/neres-agentic-bmad@0.1.0` |
+| `npm publish --access public` | publicou `@mneresc/neres-agentic-bmad@0.1.0` |
+| contraprova fora do monorepo | registro retornou `latest: 0.1.0`; `npx ... --version` e dry-run Codex passaram |
 
 ## Contratos preservados
 
