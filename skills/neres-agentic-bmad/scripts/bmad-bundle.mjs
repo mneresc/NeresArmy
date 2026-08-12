@@ -1,6 +1,7 @@
-import { createHash } from "node:crypto";
 import { access, cp, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
+
+import { vendorFileEvidence } from "./vendor-integrity.mjs";
 
 export const BMAD_VERSION = "6.11.0";
 
@@ -42,8 +43,8 @@ export async function validateBundledBmad({ bundleRoot }) {
         continue;
       }
       const content = await readFile(file);
-      const digest = createHash("sha256").update(content).digest("hex");
-      if (digest !== item.sha256 || content.length !== item.size) diagnostics.push(`Vendor integrity mismatch: ${item.path}.`);
+      const evidence = vendorFileEvidence(content);
+      if (evidence.sha256 !== item.sha256 || evidence.size !== item.size) diagnostics.push(`Vendor integrity mismatch: ${item.path}.`);
     }
   }
 

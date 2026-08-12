@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
-import { createHash } from "node:crypto";
 import { readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+
+import { vendorFileEvidence } from "./vendor-integrity.mjs";
 
 const packageRoot = path.resolve(import.meta.dirname, "..");
 const vendorRoot = path.join(packageRoot, "vendor", "bmad");
@@ -13,7 +14,7 @@ for (const file of await walk(vendorRoot)) {
   const relative = path.relative(vendorRoot, file).replaceAll("\\", "/");
   if (relative === "VENDOR_MANIFEST.json") continue;
   const content = await readFile(file);
-  files.push({ path: relative, sha256: createHash("sha256").update(content).digest("hex"), size: content.length });
+  files.push({ path: relative, ...vendorFileEvidence(content) });
 }
 
 files.sort((left, right) => left.path.localeCompare(right.path));

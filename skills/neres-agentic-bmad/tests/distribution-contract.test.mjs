@@ -21,7 +21,9 @@ test("ships complete Portuguese, English and Spanish documentation", async () =>
 
 test("automates dependency review, runtime audit, SBOM and retained reports", async () => {
   const workflow = await readFile(path.join(repositoryRoot, ".github", "workflows", "supply-chain-security.yml"), "utf8");
-  assert.match(workflow, /actions\/dependency-review-action@v4/);
+  assert.match(workflow, /actions\/dependency-review-action@[0-9a-f]{40}/);
+  assert.match(workflow, /continue-on-error: true/);
+  assert.match(workflow, /runtime npm audit remains mandatory/);
   assert.match(workflow, /security:report/);
   assert.match(workflow, /retention-days: 90/);
   const manifest = JSON.parse(await readFile(path.join(packageRoot, "package.json"), "utf8"));

@@ -35,7 +35,8 @@ package itself. The vendored source is `bmad-method@6.11.0` under MIT, with npm
 integrity and per-file SHA-256 checksums.
 
 The package has no runtime dependencies or npm install scripts. CI performs runtime
-`npm audit`, CycloneDX SBOM generation, GitHub Dependency Review and vendor
+`npm audit`, CycloneDX SBOM generation, GitHub Dependency Review when the
+repository Dependency Graph is enabled, and vendor
 integrity validation. See [Security](docs/SECURITY.en.md),
 [Usage](docs/USAGE.en.md), [Cookbook](docs/COOKBOOK.en.md) and the public
 [Socket report](https://socket.dev/npm/package/%40mneresc%2Fneres-agentic-bmad).

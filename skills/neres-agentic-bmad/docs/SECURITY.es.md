@@ -3,9 +3,13 @@
 [Português](SECURITY.md) · [English](SECURITY.en.md) · [Español](SECURITY.es.md)
 
 El workflow `Supply Chain Security` se ejecuta en pull requests, pushes a main y
-manualmente. Realiza GitHub Dependency Review con señales OpenSSF, bloquea nuevas
-vulnerabilidades runtime high/critical, valida cada archivo vendorizado y genera
+manualmente. Intenta GitHub Dependency Review con señales OpenSSF, bloquea
+vulnerabilidades runtime high/critical mediante `npm audit`, valida cada archivo vendorizado y genera
 auditoría npm, SBOM CycloneDX e informe legible conservados durante 90 días.
+
+Dependency Review requiere que Dependency Graph esté habilitado. Cuando no está
+disponible, el workflow registra una advertencia y mantiene como gates obligatorios
+la auditoría runtime, el SBOM y la validación del vendor.
 
 El paquete público también tiene análisis independiente en
 [Socket](https://socket.dev/npm/package/%40mneresc%2Fneres-agentic-bmad).

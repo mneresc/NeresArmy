@@ -3,9 +3,13 @@
 [Português](SECURITY.md) · [English](SECURITY.en.md) · [Español](SECURITY.es.md)
 
 The `Supply Chain Security` workflow runs on pull requests, main pushes and manual
-dispatch. It performs GitHub Dependency Review with OpenSSF signals, blocks new
-high/critical runtime vulnerabilities, validates every vendored file, and creates
+dispatch. It attempts GitHub Dependency Review with OpenSSF signals, blocks
+high/critical runtime vulnerabilities through `npm audit`, validates every vendored file, and creates
 an npm audit result, CycloneDX SBOM and readable report retained for 90 days.
+
+Dependency Review requires the repository Dependency Graph. When unavailable, the
+workflow records a warning while runtime audit, SBOM and vendor validation remain
+mandatory gates.
 
 The public package also has an independent
 [Socket analysis](https://socket.dev/npm/package/%40mneresc%2Fneres-agentic-bmad).

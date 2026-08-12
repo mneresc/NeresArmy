@@ -55,7 +55,7 @@ misturar arquivos.
 
 - zero dependências runtime e zero scripts de instalação npm;
 - `npm audit` de runtime e SBOM CycloneDX em cada PR/push;
-- GitHub Dependency Review bloqueando vulnerabilidades high/critical novas;
+- GitHub Dependency Review quando o Dependency Graph estiver habilitado;
 - validação integral do BMAD vendorizado e rejeição de `.pyc`/`__pycache__`;
 - relatório e SBOM armazenados por 90 dias como artefatos do workflow;
 - análise externa pública no [Socket](https://socket.dev/npm/package/%40mneresc%2Fneres-agentic-bmad).

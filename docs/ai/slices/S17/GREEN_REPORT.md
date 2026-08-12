@@ -10,9 +10,9 @@ publicação. A instalação não depende de clone: o tarball contém o core BMA
 
 | Evidência | Resultado |
 | --- | --- |
-| testes e validadores do workspace | 33/33 testes; Codex, OpenCode, Devin, Claude Code e BMAD aprovados |
-| gate completo `npm run check` | 4 skills, 3 testes de catálogo, 33 testes do agente, 69 Vitest, 38 Python, typecheck e build aprovados |
-| inspeção de `npm pack` | 382 arquivos, aproximadamente 542 KB; sem testes, fixtures, caches Python ou configuração pessoal |
+| testes e validadores do workspace | 34/34 testes; Codex, OpenCode, Devin, Claude Code e BMAD aprovados |
+| gate completo `npm run check` | 4 skills, 3 testes de catálogo, 34 testes do agente, 69 Vitest, 38 Python, typecheck e build aprovados |
+| inspeção de `npm pack` | 383 arquivos, aproximadamente 542 KB; sem testes, fixtures, caches Python ou configuração pessoal |
 | smoke do `.tgz` | versão 0.2.0 e instalação Claude Code real aprovadas |
 | conteúdo instalado pelo `.tgz` | 14 agentes, 49 skills BMAD, protocolo Neres e core `_bmad` |
 | idioma | `--language pt` configurou `Portuguese (Brazil)` no BMAD instalado |

@@ -5,8 +5,13 @@ import path from "node:path";
 import test from "node:test";
 
 import { BMAD_VERSION, installBundledBmad, validateBundledBmad } from "../scripts/bmad-bundle.mjs";
+import { vendorFileEvidence } from "../scripts/vendor-integrity.mjs";
 
 const packageRoot = path.resolve(import.meta.dirname, "..");
+
+test("uses the same vendor evidence across LF and CRLF checkouts", () => {
+  assert.deepEqual(vendorFileEvidence(Buffer.from("alpha\nbeta\n")), vendorFileEvidence(Buffer.from("alpha\r\nbeta\r\n")));
+});
 
 test("vendors a complete, licensed and cache-free BMAD 6.11.0", async () => {
   assert.equal(BMAD_VERSION, "6.11.0");

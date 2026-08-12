@@ -14,7 +14,7 @@ Data: 2026-08-12
 | falha de cópia deixar instalação nova incompleta | rollback limitado aos destinos recém-criados | PASS |
 | Claude Code permitir delegação recursiva | entry agents têm allowlists; especialistas não possuem ferramenta Agent | PASS |
 | mutação de MCP ou configuração Claude | teste e smoke confirmam ausência de `settings.json` e `.mcp.json` | PASS |
-| supply chain sem evidência persistente | audit runtime, SBOM, relatório, Dependency Review e artifact de 90 dias | PASS |
+| supply chain sem evidência persistente | audit runtime, SBOM, relatório e artifact de 90 dias; Dependency Review adicional quando o Graph estiver habilitado | PASS |
 | vazamento de nome/caminho da máquina de build | placeholders neutros e busca negativa no vendor | PASS |
 | documentação divergir por idioma | README, uso, cookbook e segurança em português, inglês e espanhol | PASS |
 

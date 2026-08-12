@@ -88,8 +88,8 @@
     },
     {
       "path": "LICENSE",
-      "sha256": "96b1b4037d087937452caf4ab4625aa1f875414837f38cf89547d19635c43068",
-      "size": 1605
+      "sha256": "a5ba2fc3d9bfc9a9fcf7ed9f8b0e28194b29224e8b9908a895c324017d98bf39",
+      "size": 1575
     },
     {
       "path": "PROVENANCE.json",
@@ -213,8 +213,8 @@
     },
     {
       "path": "skills/bmad-brainstorming/assets/brain-methods.csv",
-      "sha256": "fff112eabca1a9cb8b190f8314bc47678becc5782a2372e11c83daa0e33b6dfd",
-      "size": 19519
+      "sha256": "150536f3f3d56e08262b27a2abd6b36f266538e2c929ef4aaf183491da33f0eb",
+      "size": 19410
     },
     {
       "path": "skills/bmad-brainstorming/assets/brain-selector.html",
