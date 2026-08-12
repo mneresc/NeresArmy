@@ -1,5 +1,8 @@
 # Neres Agentic no Devin CLI/Desktop
 
+Para exemplos completos de Devin CLI e Desktop, consulte o
+[guia de uso por cliente](../skills/neres-agentic-bmad/docs/USAGE.md).
+
 ## Escopo
 
 O bundle Devin oferece três entry skills, uma skill de protocolo e onze custom

@@ -4,6 +4,9 @@
 Devin CLI/Desktop. Codex e OpenCode preservam BMAD como source of truth. O bundle
 Devin é neutro e pode usar BMAD, skills equivalentes ou o fallback proporcional.
 
+Para instruções de operação por cliente, consulte o
+[guia de uso para Codex, OpenCode e Devin](docs/USAGE.md).
+
 ## Arquitetura
 
 ```text
@@ -145,7 +148,7 @@ doctor --json` separadamente. O validador do bundle faz o parse estrito dos TOML
 gerenciados; `--strict-config` também valida a configuração-base do usuário e pode
 falhar por campos preexistentes fora do escopo Neres.
 
-Veja [o cookbook](docs/COOKBOOK.md) e o
+Veja [o guia de uso](docs/USAGE.md), [o cookbook](docs/COOKBOOK.md) e o
 [guia OpenCode](../../docs/agentic-bmad.md), o
 [guia Codex](../../docs/neres-agentic-codex.md) e o
 [guia Devin](../../docs/neres-agentic-devin.md).
