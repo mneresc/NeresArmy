@@ -13,14 +13,25 @@ componíveis e distribuição por seleção.
 Para instalar a arquitetura multiagente completa sem clonar o repositório:
 
 ```powershell
+npx -y @mneresc/neres-agentic-bmad
 npx -y @mneresc/neres-agentic-bmad install codex
 npx -y @mneresc/neres-agentic-bmad install opencode
 npx -y @mneresc/neres-agentic-bmad install devin --scope project
+npx -y @mneresc/neres-agentic-bmad install claude-code --scope project
 ```
+
+O primeiro comando abre um seletor para um ou vários clientes. O pacote contém
+BMAD Method 6.11.0 e todos os artefatos construídos, sem clone ou download adicional
+durante a instalação. A documentação está em
+[português](skills/neres-agentic-bmad/README.md),
+[inglês](skills/neres-agentic-bmad/README.en.md) e
+[espanhol](skills/neres-agentic-bmad/README.es.md).
 
 Use `--dry-run` para visualizar os destinos e `--force` somente para atualizar uma
 instalação existente com backup. Veja o
 [guia do Neres Agentic](skills/neres-agentic-bmad/docs/USAGE.md).
+Para detalhes específicos do Claude Code, consulte o
+[guia dedicado](docs/neres-agentic-claude.md).
 
 Para as demais skills do catálogo, use o instalador aberto de Agent Skills.
 
@@ -49,7 +60,7 @@ Consulte o [catálogo completo](docs/CATALOG.md) e a
 
 | Skill | Finalidade | Documentação |
 | --- | --- | --- |
-| `neres-agentic-bmad` | Instala entry points e onze subagentes no Codex, OpenCode ou Devin CLI/Desktop, com contexto compacto, gates determinísticos e routing adequado a cada runtime. | [README](skills/neres-agentic-bmad/README.md) · [Guia de uso](skills/neres-agentic-bmad/docs/USAGE.md) · [Cookbook](skills/neres-agentic-bmad/docs/COOKBOOK.md) |
+| `neres-agentic-bmad` | Instala entry points e onze subagentes no Codex, OpenCode, Devin ou Claude Code, com BMAD autocontido, gates e supply-chain report. | [README](skills/neres-agentic-bmad/README.md) · [Guia de uso](skills/neres-agentic-bmad/docs/USAGE.md) · [Segurança](skills/neres-agentic-bmad/docs/SECURITY.md) |
 | `ob-study-visual-mapper` | Agent Skill para Obsidian que cria mapas JSON Canvas de estudo e recall, com relações semânticas, proveniência e fallback local. | [README](skills/ob-study-visual-mapper/README.md) · [Cookbook](skills/ob-study-visual-mapper/docs/COOKBOOK.md) |
 | `neres-study-refinery` | Refina notas autorizadas do Obsidian em V2 rastreável, sem usar fontes factuais externas. | [README](skills/neres-study-refinery/README.md) · [Cookbook](skills/neres-study-refinery/docs/COOKBOOK.md) |
 | `neres-inclusive-learner-profile` | Conduz uma anamnese pedagógica adaptativa e cria um perfil operacional inclusivo, não clínico. | [README](skills/neres-inclusive-learner-profile/README.md) · [Cookbook](skills/neres-inclusive-learner-profile/docs/COOKBOOK.md) |

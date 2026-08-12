@@ -1,11 +1,19 @@
 # Guia de uso — Neres Agentic BMAD
 
+[Português](USAGE.md) · [English](USAGE.en.md) · [Español](USAGE.es.md)
+
 Este guia mostra como iniciar e operar o Neres Agentic em cada superfície
-suportada: Codex CLI, Codex Desktop, OpenCode, Devin CLI e Devin Desktop. Para
+suportada: Codex CLI/Desktop, OpenCode, Devin CLI/Desktop e Claude Code. Para
 instalação detalhada, routing e diagnóstico, consulte também o
 [README](../README.md) e o [Cookbook](COOKBOOK.md).
 
 ## Instalação sem clonar o repositório
+
+O caminho recomendado abre o seletor de clientes:
+
+```powershell
+npx -y @mneresc/neres-agentic-bmad
+```
 
 Faça primeiro um preview e depois a instalação:
 
@@ -23,6 +31,15 @@ npx -y @mneresc/neres-agentic-bmad install opencode
 npx -y @mneresc/neres-agentic-bmad install devin --scope project --dry-run
 npx -y @mneresc/neres-agentic-bmad install devin --scope project
 ```
+
+```powershell
+npx -y @mneresc/neres-agentic-bmad install claude-code --scope project --dry-run
+npx -y @mneresc/neres-agentic-bmad install claude-code --scope project
+```
+
+O pacote contém BMAD `6.11.0`; se `_bmad/_config/manifest.yaml` não existir no
+`--project-root`, ele copia `_bmad` e 49 skills sem rede. Uma instalação existente
+é preservada e um estado parcial bloqueia a operação.
 
 O Devin também aceita `--scope user`. Se os destinos gerenciados já existirem, o
 comando falha sem alterar nada; repita com `--force` somente depois de conferir o
@@ -211,6 +228,22 @@ protocolo para o prompt.
 O Devin CLI e o Devin cloud são produtos distintos. Este bundle não promete acesso
 a Playbooks, Knowledge ou Secrets da conta cloud e não altera controles da
 organização.
+
+## Claude Code
+
+No modo projeto, os entry agents ficam em `.claude/agents` e as skills em
+`.claude/skills`. No modo usuário, ficam em `~/.claude`.
+
+```powershell
+claude --agent neres-planner
+claude --agent neres-developer
+claude --agent neres-quick-dev
+```
+
+Também é possível mencionar um especialista com `@agent-<nome>`. Os entry agents
+restringem a lista que podem delegar; subagentes não recebem delegação aninhada.
+Claude Code herda MCPs disponíveis e usa skills relevantes após CapabilityMap,
+sem alterar `settings.json` ou `.mcp.json`.
 
 ## Fluxo recomendado de ponta a ponta
 

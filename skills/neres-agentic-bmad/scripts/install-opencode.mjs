@@ -4,6 +4,7 @@ import os from "node:os";
 import path from "node:path";
 import process from "node:process";
 
+import { installBundledBmad } from "./bmad-bundle.mjs";
 import { installBundle } from "./opencode-bundle.mjs";
 import { modelInventory, opencodeVersion } from "./runtime.mjs";
 
@@ -16,6 +17,8 @@ try {
   } else {
     const version = options.modelsFile ? "fixture" : opencodeVersion();
     const modelIds = await modelInventory(options.modelsFile);
+    const bmadOptions = { bundleRoot, projectRoot: options.projectRoot, skillRoot: path.join(options.configDir, "skills"), language: options.language, skip: options.skipBmad };
+    const bmadPreview = await installBundledBmad({ ...bmadOptions, dryRun: true });
     const result = await installBundle({
       bundleRoot,
       configDir: options.configDir,
@@ -24,10 +27,12 @@ try {
       force: options.force,
       backupDirectory: options.backupDirectory
     });
+    const bmad = options.dryRun ? bmadPreview : await installBundledBmad(bmadOptions);
     if (options.json) {
-      process.stdout.write(`${JSON.stringify({ version, ...result }, null, 2)}\n`);
+      process.stdout.write(`${JSON.stringify({ version, ...result, bmad }, null, 2)}\n`);
     } else {
       process.stdout.write(`OpenCode: ${version}\n`);
+      process.stdout.write(`BMAD: ${bmad.status}${bmad.version ? ` (${bmad.version})` : ""}\n`);
       for (const target of result.installed) {
         process.stdout.write(`${result.dryRun ? "Would install" : "Installed"}: ${target}\n`);
       }
@@ -47,16 +52,22 @@ function parseArguments(argv) {
     dryRun: false,
     force: false,
     json: false,
-    help: false
+    help: false,
+    projectRoot: process.cwd(),
+    language: "en",
+    skipBmad: false
   };
   for (let index = 0; index < argv.length; index += 1) {
     const value = argv[index];
     if (value === "--config-dir") options.configDir = path.resolve(requiredValue(argv, ++index, value));
+    else if (value === "--project-root") options.projectRoot = path.resolve(requiredValue(argv, ++index, value));
+    else if (value === "--language") options.language = requiredValue(argv, ++index, value);
     else if (value === "--models-file") options.modelsFile = path.resolve(requiredValue(argv, ++index, value));
     else if (value === "--backup-dir") options.backupDirectory = path.resolve(requiredValue(argv, ++index, value));
     else if (value === "--dry-run") options.dryRun = true;
     else if (value === "--force") options.force = true;
     else if (value === "--json") options.json = true;
+    else if (value === "--skip-bmad") options.skipBmad = true;
     else if (value === "--help" || value === "-h") options.help = true;
     else throw new Error(`Unknown argument: ${value}`);
   }
@@ -76,6 +87,9 @@ Usage:
 
 Options:
   --config-dir <directory>  OpenCode config root (default: ~/.config/opencode)
+  --project-root <directory> Project receiving bundled _bmad (default: current)
+  --language <pt|en|es>     BMAD document language (default: en)
+  --skip-bmad               Install only Neres assets
   --models-file <file>      Validate against a saved model inventory
   --backup-dir <directory>  Explicit backup root when using --force
   --dry-run                 Validate and show targets without writing

@@ -2,7 +2,7 @@
 
 ## Neres Agentic BMAD
 
-`neres-agentic-bmad` suporta Codex, OpenCode e Devin CLI/Desktop com assets
+`neres-agentic-bmad` suporta Codex, OpenCode, Devin CLI/Desktop e Claude Code com assets
 separados e contratos compactos compartilhados.
 
 A distribuição npm exige Node.js `22.12.0` ou superior e oferece o mesmo bundle
@@ -10,6 +10,11 @@ por `npx -y @mneresc/neres-agentic-bmad@latest install <destino>`. O dispatcher
 não usa shell e delega aos instaladores versionados no pacote; por isso, os
 limites de escrita, o `--dry-run`, o backup de `--force` e as validações de
 modelos são idênticos aos da instalação pelo repositório.
+
+O pacote inclui BMAD Method `6.11.0` construído, 49 skills e `_bmad`. Ele instala
+esse conteúdo a partir do próprio tarball quando o projeto não tem um manifest
+BMAD válido. Claude Code usa `.claude/agents` e `.claude/skills`, com escopo projeto
+ou usuário, e não altera `settings.json` nem `.mcp.json`.
 
 No Codex `0.146.1`, os três entry points são profiles em
 `$CODEX_HOME/<nome>.config.toml`, enquanto os onze Nerinhos são custom agents TOML
@@ -22,9 +27,16 @@ No OpenCode `1.18.15`, usa a sintaxe v1: agentes Markdown, `permission`, `steps`
 `1.1.1` ou superior.
 
 O bundle instala agentes em `~/.config/opencode/agents` e o protocolo em
-`~/.config/opencode/skills/agentic-bmad`. Ele não modifica `opencode.jsonc`, não
-reinstala BMAD e falha se os IDs `opencode-go` configurados não aparecerem em
+`~/.config/opencode/skills/agentic-bmad`. Ele não modifica `opencode.jsonc` e
+falha se os IDs `opencode-go` configurados não aparecerem em
 `opencode models`.
+
+No Claude Code, instala 14 agentes em `.claude/agents`, o protocolo em
+`.claude/skills/neres-agentic-bmad` e as 49 skills BMAD em `.claude/skills`.
+Os três entry agents usam allowlists explícitas de subagentes; os especialistas
+não delegam novamente, respeitando o limite nativo do Claude Code. O instalador
+não altera `settings.json` nem `.mcp.json`, portanto skills e MCPs adicionais
+continuam sob controle do projeto ou do usuário.
 
 No Devin, instala quatro skills em `.agents/skills` e onze custom subagents em
 `.agents/agents` no modo projeto. O modo usuário usa o diretório global do Devin
@@ -41,10 +53,12 @@ outros modelos só podem ser selecionados depois que seus IDs reais aparecerem n
 inventário da conta. Promoções temporárias, inclusive disponibilidade gratuita até
 uma data, não são codificadas como política durável.
 
-BMAD `6.10.0` foi a versão usada no smoke test, mas a integração seleciona skills
-BMAD pela descoberta real; nomes ausentes devem bloquear ou reduzir o fluxo, nunca
-ser inventados. OpenCode V2 usa outro contrato (`agents`, `permissions`, `subagent`)
-e ainda não é alvo deste bundle.
+BMAD `6.11.0` é a versão estável incorporada e validada por hashes SHA-256. Uma
+instalação completa existente é preservada. Quando o mesmo projeto adiciona outro
+cliente, as skills desse cliente são estendidas apenas se a versão do core for
+compatível; estados parciais ou versões divergentes falham antes de qualquer escrita.
+OpenCode V2 usa outro contrato (`agents`, `permissions`, `subagent`) e ainda não é
+alvo deste bundle.
 
 ## Agent Skills portáteis
 

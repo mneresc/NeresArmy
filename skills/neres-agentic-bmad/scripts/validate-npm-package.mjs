@@ -27,19 +27,33 @@ const required = [
   "package.json",
   "LICENSE",
   "README.md",
+  "README.en.md",
+  "README.es.md",
   "SKILL.md",
   "docs/USAGE.md",
+  "docs/USAGE.en.md",
+  "docs/USAGE.es.md",
+  "docs/SECURITY.md",
   "scripts/neres-agentic.mjs",
   "scripts/install-codex.mjs",
   "scripts/install-opencode.mjs",
   "scripts/install-devin.mjs",
+  "scripts/install-claude.mjs",
+  "vendor/bmad/PROVENANCE.json",
+  "vendor/bmad/VENDOR_MANIFEST.json",
+  "vendor/bmad/_bmad/_config/manifest.yaml",
+  "vendor/bmad/skills/bmad-help/SKILL.md",
   "assets/codex/profiles/neres-planner.config.toml",
   "assets/opencode/agents/neres-planner.md",
-  "assets/devin/skills/neres-planner/SKILL.md"
+  "assets/devin/skills/neres-planner/SKILL.md",
+  "assets/claude/agents/neres-planner.md",
+  "assets/claude/skills/neres-agentic-bmad/SKILL.md"
 ];
 const forbiddenPrefixes = ["tests/", "fixtures/", "docs/ai/", "node_modules/"];
 const missing = required.filter((file) => !files.has(file));
 const forbidden = [...files].filter((file) => forbiddenPrefixes.some((prefix) => file.startsWith(prefix)));
+forbidden.push(...[...files].filter((file) => file.endsWith(".pyc") || file.includes("/__pycache__/")));
+forbidden.push(...[...files].filter((file) => file.endsWith("config.user.toml")));
 
 if (missing.length || forbidden.length) {
   if (missing.length) process.stderr.write(`Missing package files: ${missing.join(", ")}\n`);
