@@ -1,6 +1,6 @@
 {
   "name": "@mneresc/neres-agentic-bmad",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Self-contained multi-agent installer for Codex, OpenCode, Devin and Claude Code with bundled BMAD.",
   "private": false,
   "type": "module",
