@@ -6,6 +6,8 @@
 - Preview: append `--dry-run` to an explicit client command.
 - Managed update: inspect preview, then append `--force`; read the reported backup.
 - Claude Code: `install claude-code --scope project`, then `claude --agent neres-planner`.
+- Bug diagnosis: run `neres-bug-doctor` read-only; it emits a `BugReport` and may
+  hand a proven small fix to `neres-quick-dev`, whose QuickPlan approval remains mandatory.
 - Existing BMAD: preserved when `_bmad/_config/manifest.yaml` exists.
 - Partial BMAD: restore or remove the partial `_bmad` and `bmad-*` skills; force
   intentionally does not merge installations.

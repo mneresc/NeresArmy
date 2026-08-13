@@ -35,14 +35,19 @@ ambientes que já fornecem o workflow por outro mecanismo.
 
 | Destino | Entradas | Especialistas | Skills |
 | --- | ---: | ---: | --- |
-| Codex | 3 profiles | 11 custom agents | Neres + 49 BMAD |
-| OpenCode | 2 primary agents | 11 subagents | Neres + 49 BMAD |
-| Devin | 3 entry skills | 11 custom subagents | Neres + 49 BMAD |
-| Claude Code | 3 entry agents | 11 subagents | Neres + 49 BMAD |
+| Codex | 4 profiles | 11 custom agents | Neres + 49 BMAD |
+| OpenCode | 4 primary agents | 11 subagents | Neres + 49 BMAD |
+| Devin | 4 entry skills | 11 custom subagents | Neres + 49 BMAD |
+| Claude Code | 4 entry agents | 11 subagents | Neres + 49 BMAD |
 
 No Claude Code, os arquivos ficam em `.claude/agents` e `.claude/skills` no modo
 projeto, ou em `~/.claude` no modo usuário. Inicie com `claude --agent
-neres-planner`, `neres-developer` ou `neres-quick-dev`.
+neres-planner`, `neres-developer`, `neres-quick-dev` ou `neres-bug-doctor`.
+
+`neres-bug-doctor` reproduz o problema em modo read-only, separa sintoma de
+causa-raiz, usa a lente BMAD de edge cases e entrega um `BugReport`. Um fix local
+confirmado segue para o nosso `neres-quick-dev`, que ainda cria o QuickPlan e
+aguarda autorização antes de editar.
 
 ## BMAD incluído
 

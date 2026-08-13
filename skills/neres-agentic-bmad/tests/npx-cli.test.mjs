@@ -49,7 +49,7 @@ test("dispatches Codex dry-run from the packaged CLI", async (t) => {
   ]);
   assert.equal(result.status, 0, result.stderr);
   assert.match(result.stdout, /Codex: fixture/);
-  assert.equal((result.stdout.match(/Would install:/g) ?? []).length, 15);
+  assert.equal((result.stdout.match(/Would install:/g) ?? []).length, 16);
 });
 
 test("dispatches OpenCode dry-run from the packaged CLI", async (t) => {
@@ -60,7 +60,7 @@ test("dispatches OpenCode dry-run from the packaged CLI", async (t) => {
   ]);
   assert.equal(result.status, 0, result.stderr);
   assert.match(result.stdout, /OpenCode: 1\.18\.15|OpenCode: fixture/);
-  assert.equal((result.stdout.match(/Would install:/g) ?? []).length, 14);
+  assert.equal((result.stdout.match(/Would install:/g) ?? []).length, 16);
 });
 
 test("dispatches Devin project dry-run from the packaged CLI", async (t) => {
@@ -72,7 +72,7 @@ test("dispatches Devin project dry-run from the packaged CLI", async (t) => {
   assert.equal(result.status, 0, result.stderr);
   assert.match(result.stdout, /Devin: fixture/);
   assert.match(result.stdout, /Target: project/);
-  assert.equal((result.stdout.match(/Would install:/g) ?? []).length, 15);
+  assert.equal((result.stdout.match(/Would install:/g) ?? []).length, 16);
 });
 
 test("dispatches Claude Code project dry-run from the packaged CLI", async (t) => {
@@ -81,7 +81,7 @@ test("dispatches Claude Code project dry-run from the packaged CLI", async (t) =
   assert.equal(result.status, 0, result.stderr);
   assert.match(result.stdout, /Claude Code/);
   assert.match(result.stdout, /BMAD: would-install \(6\.11\.0\)/);
-  assert.equal((result.stdout.match(/Would install:/g) ?? []).length, 15);
+  assert.equal((result.stdout.match(/Would install:/g) ?? []).length, 16);
 });
 
 test("rejects partial BMAD before writing Claude Code assets", async (t) => {

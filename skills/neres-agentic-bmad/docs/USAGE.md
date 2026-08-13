@@ -52,6 +52,7 @@ preview. A atualização cria um backup recuperável.
 | `neres-planner` | O trabalho ainda precisa de entendimento, escopo ou plano | Artefato BMAD proporcional e TaskPackets executáveis |
 | `neres-developer` | Story/spec e TaskPackets já estão prontos | Implementação, testes, QA e AuditReport |
 | `neres-quick-dev` | Mudança pequena, local e de baixo risco | Primeiro QuickPlan; implementação somente após autorização posterior |
+| `neres-bug-doctor` | Há um bug cuja causa ainda precisa ser provada | `BugReport` read-only e rota para quick-dev, planner ou mais evidência |
 
 Não selecione os Nerinhos diretamente no uso normal. O entry point escolhe os
 subagentes de leitura, escrita, arquitetura, implementação, teste, QA, segurança e
@@ -80,6 +81,7 @@ primeira rodada deve terminar sem edição.
 codex --profile neres-planner -C <repo>
 codex --profile neres-developer -C <repo>
 codex --profile neres-quick-dev -C <repo>
+codex --profile neres-bug-doctor -C <repo>
 ```
 
 Exemplos de primeira mensagem:
@@ -116,7 +118,7 @@ fase BMAD selecionada e não a substituem.
 
 1. Abra a pasta do repositório como projeto no Codex Desktop.
 2. Inicie uma task e invoque a skill pelo nome `$neres-agentic-bmad`.
-3. Declare qual papel deseja: planner, developer ou quick-dev.
+3. Declare qual papel deseja: planner, developer, quick-dev ou bug-doctor.
 4. Revise pedidos de permissão antes de autorizar escrita ou acesso externo.
 
 Exemplos:
@@ -133,23 +135,29 @@ Use $neres-agentic-bmad como neres-developer. Consuma a story e os TaskPackets a
 Use $neres-agentic-bmad como neres-quick-dev. Faça apenas o diagnóstico e o QuickPlan nesta rodada.
 ```
 
+```text
+Use $neres-agentic-bmad como neres-bug-doctor. Reproduza o bug, gere BugReport e não edite o projeto.
+```
+
 Os profiles `neres-*` são entry points nativos da CLI. Na interface Desktop, use a
 skill explicitamente como acima; não presuma que um profile CLI foi selecionado
 pela interface.
 
 ## OpenCode TUI
 
-O OpenCode possui dois entry points: `neres-planner` e `neres-developer`.
+O OpenCode possui quatro entry points: `neres-planner`, `neres-developer`,
+`neres-quick-dev` e `neres-bug-doctor`.
 
 ```powershell
 opencode --agent neres-planner <repo>
 opencode --agent neres-developer <repo>
+opencode --agent neres-quick-dev <repo>
+opencode --agent neres-bug-doctor <repo>
 ```
 
 Também é possível abrir o TUI normalmente e escolher o agente no seletor da
-interface. Para trabalho pequeno, use o planner com o workflow BMAD mínimo e depois
-entregue o TaskPacket ao developer; o bundle OpenCode não possui um entry point
-`neres-quick-dev` separado.
+interface. Bug Doctor permanece read-only e encaminha apenas o `BugReport`; o
+quick-dev continua exigindo QuickPlan e autorização posterior.
 
 ### OpenCode não interativo
 
@@ -175,6 +183,7 @@ No Devin, os entry points são skills invocadas por slash command:
 /neres-planner Planeje esta feature, gere TaskPackets e não implemente.
 /neres-developer Implemente os TaskPackets aprovados e entregue AuditReport.
 /neres-quick-dev Diagnostique este bug e pare após o QuickPlan.
+/neres-bug-doctor Reproduza este bug, identifique a causa e gere BugReport sem editar.
 ```
 
 Abra o CLI dentro do repositório de trabalho:
@@ -221,7 +230,7 @@ devin skills list
 ```
 
 Se a conversa do Desktop expuser slash commands, use `/neres-planner`,
-`/neres-developer` ou `/neres-quick-dev` diretamente. Se a interface não listar as
+`/neres-developer`, `/neres-quick-dev` ou `/neres-bug-doctor` diretamente. Se a interface não listar as
 skills, use o terminal com o CLI incluído no Desktop; não copie manualmente o
 protocolo para o prompt.
 
@@ -238,6 +247,7 @@ No modo projeto, os entry agents ficam em `.claude/agents` e as skills em
 claude --agent neres-planner
 claude --agent neres-developer
 claude --agent neres-quick-dev
+claude --agent neres-bug-doctor
 ```
 
 Também é possível mencionar um especialista com `@agent-<nome>`. Os entry agents
@@ -262,6 +272,12 @@ Para uma mudança pequena com quick-dev:
 
 ```text
 pedido pequeno -> QuickPlan sem edição -> autorização humana -> implementação -> testes -> QA
+```
+
+Para investigar antes do quick-dev:
+
+```text
+bug -> neres-bug-doctor -> BugReport -> neres-quick-dev -> QuickPlan -> autorização
 ```
 
 ## Checklist de saída

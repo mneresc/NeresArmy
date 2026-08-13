@@ -44,9 +44,14 @@ const required = [
   "vendor/bmad/_bmad/_config/manifest.yaml",
   "vendor/bmad/skills/bmad-help/SKILL.md",
   "assets/codex/profiles/neres-planner.config.toml",
+  "assets/codex/profiles/neres-bug-doctor.config.toml",
   "assets/opencode/agents/neres-planner.md",
+  "assets/opencode/agents/neres-quick-dev.md",
+  "assets/opencode/agents/neres-bug-doctor.md",
   "assets/devin/skills/neres-planner/SKILL.md",
+  "assets/devin/skills/neres-bug-doctor/SKILL.md",
   "assets/claude/agents/neres-planner.md",
+  "assets/claude/agents/neres-bug-doctor.md",
   "assets/claude/skills/neres-agentic-bmad/SKILL.md"
 ];
 const forbiddenPrefixes = ["tests/", "fixtures/", "docs/ai/", "node_modules/"];

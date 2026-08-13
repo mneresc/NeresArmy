@@ -1,7 +1,7 @@
 import { access, copyFile, cp, mkdir, readdir, readFile, rm } from "node:fs/promises";
 import path from "node:path";
 
-export const DEVIN_ENTRY_SKILLS = ["neres-planner", "neres-developer", "neres-quick-dev"];
+export const DEVIN_ENTRY_SKILLS = ["neres-planner", "neres-developer", "neres-quick-dev", "neres-bug-doctor"];
 export const DEVIN_PROTOCOL_SKILL = "neres-agentic-bmad";
 
 export const EXPECTED_DEVIN_AGENTS = [
@@ -51,6 +51,7 @@ const WRITE_AGENTS = new Set([
 const REQUIRED_PROTOCOL_FILES = [
   "SKILL.md",
   "references/capabilities.md",
+  "references/bug-doctor.md",
   "references/contracts.md",
   "references/development.md",
   "references/planning.md",
