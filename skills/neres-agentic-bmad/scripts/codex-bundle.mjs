@@ -1,7 +1,7 @@
 import { access, copyFile, cp, mkdir, readdir, readFile, rm } from "node:fs/promises";
 import path from "node:path";
 
-export const CODEX_PROFILES = ["neres-planner", "neres-developer", "neres-quick-dev"];
+export const CODEX_PROFILES = ["neres-planner", "neres-developer", "neres-quick-dev", "neres-bug-doctor"];
 
 export const EXPECTED_CODEX_AGENTS = [
   "plan-nerinhos-subagent-reader",
@@ -34,7 +34,8 @@ export const CODEX_AGENT_MODELS = {
 const PROFILE_ROUTES = {
   "neres-planner": route("gpt-5.6-terra", "medium", "read-only"),
   "neres-developer": route("gpt-5.6-terra", "medium", "workspace-write"),
-  "neres-quick-dev": route("gpt-5.6-terra", "low", "workspace-write")
+  "neres-quick-dev": route("gpt-5.6-terra", "low", "workspace-write"),
+  "neres-bug-doctor": route("gpt-5.6-terra", "medium", "read-only")
 };
 
 export async function validateCodexBundle({ bundleRoot, modelIds }) {

@@ -23,6 +23,7 @@ Use `npx -y @mneresc/neres-agentic-bmad --help` para opções específicas.
 codex --profile neres-planner
 codex --profile neres-developer
 codex --profile neres-quick-dev
+codex --profile neres-bug-doctor
 ```
 
 Profiles são as interfaces principais. Os TOMLs em `$CODEX_HOME/agents` são
@@ -43,6 +44,13 @@ edita `config.toml`.
 Use somente para mudança tiny/small, local e de baixo risco. A primeira rodada deve
 terminar em QuickPlan sem editar. Inicie uma segunda rodada com autorização explícita
 para implementar. Se o escopo crescer, use `neres-planner`.
+
+## Bug Doctor
+
+Use `neres-bug-doctor` para reproduzir e identificar a causa antes do reparo. Ele
+não edita arquivos: entrega `BugReport` e direciona para `neres-quick-dev`,
+`neres-planner` ou `needs-more-evidence`. O handoff para quick-dev não elimina o
+QuickPlan nem a autorização posterior.
 
 ## Planejar uma mudança pequena
 
@@ -106,7 +114,8 @@ devin skills list
 devin mcp list
 ```
 
-Use `/neres-planner`, `/neres-developer` ou `/neres-quick-dev`. A neutralidade de
+Use `/neres-planner`, `/neres-developer`, `/neres-quick-dev` ou
+`/neres-bug-doctor`. A neutralidade de
 skills, modelos e MCPs é exclusiva do Devin: BMAD pode ser substituído por uma skill
 equivalente que cubra a fase. Codex e OpenCode permanecem BMAD-first.
 

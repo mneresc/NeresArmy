@@ -19,11 +19,20 @@ test("validates the exact Devin skills, agents, routing and capability contract"
   const result = await validateDevinBundle({ bundleRoot, modelIds });
 
   assert.equal(result.valid, true, result.diagnostics.join("\n"));
-  assert.equal(DEVIN_ENTRY_SKILLS.length, 3);
+  assert.equal(DEVIN_ENTRY_SKILLS.length, 4);
   assert.equal(EXPECTED_DEVIN_AGENTS.length, 11);
   assert.equal(DEVIN_MODELS["plan-nerinhos-subagent-reader"], "swe");
   assert.equal(DEVIN_MODELS["plan-nerinhos-subagent-architect"], "opus");
   assert.equal(result.skills.every((skill) => skill.triggers.includes("user")), true);
+  const bugDoctor = await readFile(
+    path.join(bundleRoot, "assets", "devin", "skills", "neres-bug-doctor", "SKILL.md"),
+    "utf8"
+  );
+  assert.match(bugDoctor, /BugReport/);
+  assert.match(bugDoctor, /edge-case-hunter/);
+  assert.match(bugDoctor, /neres-quick-dev/);
+  assert.match(bugDoctor, /neres-planner/);
+  assert.match(bugDoctor, /needs-more-evidence/);
 });
 
 test("rejects a required model family missing from the Devin inventory", async () => {
@@ -37,7 +46,7 @@ test("project dry-run reports managed targets without writing", async (t) => {
   const root = await makeRoot(t, "project");
   const result = await installDevinBundle({ bundleRoot, target: "project", destinationRoot: root, modelIds, dryRun: true });
 
-  assert.equal(result.installed.length, 15);
+  assert.equal(result.installed.length, 16);
   await assert.rejects(access(path.join(root, ".agents", "skills", "neres-planner", "SKILL.md")));
   await assert.rejects(access(path.join(root, ".agents", "agents", "dev-nerinhos-subagent-coder.md")));
 });
@@ -55,7 +64,8 @@ test("project install preserves Devin config, MCP config and unrelated files", a
 
   const result = await installDevinBundle({ bundleRoot, target: "project", destinationRoot: root, modelIds });
 
-  assert.equal(result.installed.length, 15);
+  assert.equal(result.installed.length, 16);
+  await assert.doesNotReject(access(path.join(root, ".agents", "skills", "neres-bug-doctor", "SKILL.md")));
   assert.equal(await readFile(config, "utf8"), "{\"permissions\":{}}\n");
   assert.equal(await readFile(mcp, "utf8"), "{\"mcpServers\":{}}\n");
   assert.equal(await readFile(unrelated, "utf8"), "keep\n");

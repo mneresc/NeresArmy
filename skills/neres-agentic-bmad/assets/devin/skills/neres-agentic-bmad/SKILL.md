@@ -1,6 +1,6 @@
 ---
 name: neres-agentic-bmad
-description: Shared Neres multi-agent execution protocol for Devin CLI/Desktop planning, implementation, quick development, capability discovery and compact handoffs.
+description: Shared Neres multi-agent execution protocol for Devin CLI/Desktop planning, implementation, quick development, bug diagnosis, capability discovery and compact handoffs.
 triggers: [user, model]
 ---
 
@@ -13,6 +13,7 @@ bundled proportional fallback for uncovered stages.
 Read only the needed references:
 
 - `references/capabilities.md` before selecting skills, MCPs or local tools.
+- `references/bug-doctor.md` for read-only reproduction, BugReport and routing.
 - `references/planning.md` for planning and fallback workflow selection.
 - `references/development.md` for TaskPacket execution and gates.
 - `references/quick-dev.md` for the mandatory two-phase quick flow.

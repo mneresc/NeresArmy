@@ -11,6 +11,8 @@ test("ships complete Portuguese, English and Spanish documentation", async () =>
     const source = await readFile(path.join(packageRoot, file), "utf8");
     assert.match(source, /Claude Code/i, file);
     assert.match(source, /BMAD/i, file);
+    assert.match(source, /neres-bug-doctor/i, file);
+    assert.match(source, /neres-quick-dev/i, file);
   }
   for (const file of ["docs/SECURITY.md", "docs/SECURITY.en.md", "docs/SECURITY.es.md"]) {
     const source = await readFile(path.join(packageRoot, file), "utf8");

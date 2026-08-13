@@ -27,7 +27,10 @@ description: Shared BMAD-first execution protocol for Neres Claude Code agents, 
 - Read [planning.md](references/planning.md) for sizing, BMAD routing and planning.
 - Read [capabilities.md](references/capabilities.md) before choosing skills, MCPs
   or deterministic tools.
+- Read [bug-doctor.md](references/bug-doctor.md) for read-only reproduction,
+  BugReport and routing.
 - Read [development.md](references/development.md) for implementation and gates.
+- Read [quick-dev.md](references/quick-dev.md) for the mandatory two-phase quick flow.
 - Read [contracts.md](references/contracts.md) before producing or consuming a
   ContextPack, TaskPacket or report.
 - Read [routing.md](references/routing.md) when choosing or escalating a model.

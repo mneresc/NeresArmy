@@ -34,6 +34,12 @@ protocol. When BMAD is absent, the installer copies `_bmad` plus 49 skills from 
 package itself. The vendored source is `bmad-method@6.11.0` under MIT, with npm
 integrity and per-file SHA-256 checksums.
 
+The four entry points are `neres-planner`, `neres-developer`, `neres-quick-dev`
+and `neres-bug-doctor`. Bug Doctor diagnoses read-only, challenges the root-cause
+hypothesis with the BMAD edge-case lens and emits a `BugReport`. A proven local
+fix is handed to the Neres quick-dev, which still stops after its QuickPlan for
+explicit approval.
+
 The package has no runtime dependencies or npm install scripts. CI performs runtime
 `npm audit`, CycloneDX SBOM generation, GitHub Dependency Review when the
 repository Dependency Graph is enabled, and vendor

@@ -14,16 +14,18 @@ or network call. Use `--project-root`, `--language pt|en|es`, or `--skip-bmad`.
 
 ## Entry points
 
-| Client | Planner | Developer | Quick change |
-| --- | --- | --- | --- |
-| Codex | `codex --profile neres-planner` | `codex --profile neres-developer` | `codex --profile neres-quick-dev` |
-| OpenCode | `opencode --agent neres-planner` | `opencode --agent neres-developer` | minimal BMAD through planner |
-| Devin | `/neres-planner` | `/neres-developer` | `/neres-quick-dev` |
-| Claude Code | `claude --agent neres-planner` | `claude --agent neres-developer` | `claude --agent neres-quick-dev` |
+| Client | Planner | Developer | Quick change | Bug diagnosis |
+| --- | --- | --- | --- | --- |
+| Codex | `codex --profile neres-planner` | `codex --profile neres-developer` | `codex --profile neres-quick-dev` | `codex --profile neres-bug-doctor` |
+| OpenCode | `opencode --agent neres-planner` | `opencode --agent neres-developer` | `opencode --agent neres-quick-dev` | `opencode --agent neres-bug-doctor` |
+| Devin | `/neres-planner` | `/neres-developer` | `/neres-quick-dev` | `/neres-bug-doctor` |
+| Claude Code | `claude --agent neres-planner` | `claude --agent neres-developer` | `claude --agent neres-quick-dev` | `claude --agent neres-bug-doctor` |
 
 Planner creates proportional BMAD artifacts and TaskPackets. Developer implements
 only approved TaskPackets and returns test, QA, security and audit evidence. Quick
 dev stops after a QuickPlan until explicit implementation approval.
+Bug Doctor reproduces and diagnoses read-only, emits a `BugReport`, and routes a
+proven small fix to the Neres quick-dev without skipping its approval gate.
 
 All clients build a CapabilityMap and prefer healthy relevant MCPs and skills.
 Only Devin is provider/model/skill neutral. Base configuration, credentials and

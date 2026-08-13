@@ -1,7 +1,7 @@
 import { access, copyFile, cp, mkdir, readdir, readFile, rm } from "node:fs/promises";
 import path from "node:path";
 
-export const CLAUDE_ENTRY_AGENTS = ["neres-planner", "neres-developer", "neres-quick-dev"];
+export const CLAUDE_ENTRY_AGENTS = ["neres-planner", "neres-developer", "neres-quick-dev", "neres-bug-doctor"];
 export const CLAUDE_SUBAGENTS = [
   "plan-nerinhos-subagent-reader", "plan-nerinhos-subagent-writer", "plan-nerinhos-subagent-architect", "plan-nerinhos-subagent-critic",
   "dev-nerinhos-subagent-reader", "dev-nerinhos-subagent-mechanical", "dev-nerinhos-subagent-coder", "dev-nerinhos-subagent-test",

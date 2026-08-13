@@ -16,6 +16,9 @@ const agents = [
     "dev-nerinhos-subagent-reader", "dev-nerinhos-subagent-mechanical", "dev-nerinhos-subagent-coder", "dev-nerinhos-subagent-test", "dev-nerinhos-subagent-qa", "dev-nerinhos-subagent-security", "dev-nerinhos-subagent-auditor"
   ], "Implement only approved scope. Preserve RED tests, public contracts and unrelated edits. Never commit, push, publish or merge unless explicitly authorized."),
   entry("neres-quick-dev", "Handle a tiny low-risk local change with a compact plan and deterministic verification.", "inherit", "medium", [], "Use only for small local work. Stop after the QuickPlan until explicit implementation authorization. Escalate when scope or risk grows."),
+  entry("neres-bug-doctor", "Reproduce bugs, identify evidence-backed root cause and emit a read-only BugReport.", "inherit", "high", [
+    "dev-nerinhos-subagent-reader", "dev-nerinhos-subagent-test", "dev-nerinhos-subagent-qa"
+  ], "Diagnose without editing source, tests or configuration. Read the bug-doctor reference, use BMAD edge-case-hunter as a supporting lens, emit one BugReport and route only to neres-quick-dev, neres-planner or needs-more-evidence.", true),
   worker("plan-nerinhos-subagent-reader", "Read repository context for a bounded planning question.", "haiku", "low", true, "Return a compact ContextPack with evidence. Do not modify files."),
   worker("plan-nerinhos-subagent-writer", "Write only approved planning artifacts from established decisions.", "sonnet", "medium", false, "Write the assigned planning documents only. Do not decide architecture or implement production code."),
   worker("plan-nerinhos-subagent-architect", "Analyze material architecture and cross-cutting tradeoffs.", "opus", "high", true, "Return options, tradeoffs, risks and a recommendation grounded in repository evidence. Do not edit files."),
@@ -41,8 +44,9 @@ const protocol = (await readFile(protocolFile, "utf8"))
 await writeFile(protocolFile, `${protocol.trim()}\n\nClaude Code entry agents may delegate only to their declared Agent allowlists. Subagents cannot delegate further. Preserve settings.json, .mcp.json, credentials and organization policy.\n`, "utf8");
 process.stdout.write(`Built ${agents.length} Claude Code agents and protocol assets.\n`);
 
-function entry(name, description, model, effort, delegates, prompt) {
-  const tools = delegates.length ? `Agent(${delegates.join(", ")}), Read, Glob, Grep, Bash, Edit, Write, Skill, WebFetch, WebSearch` : "Read, Glob, Grep, Bash, Edit, Write, Skill, WebFetch, WebSearch";
+function entry(name, description, model, effort, delegates, prompt, readOnly = false) {
+  const baseTools = readOnly ? "Read, Glob, Grep, Bash, Skill, WebFetch, WebSearch" : "Read, Glob, Grep, Bash, Edit, Write, Skill, WebFetch, WebSearch";
+  const tools = delegates.length ? `Agent(${delegates.join(", ")}), ${baseTools}` : baseTools;
   return { name, description, model, effort, tools, prompt: `${prompt}\n\nRead the neres-agentic-bmad skill first. Build a CapabilityMap and prefer suitable available MCPs and skills. Use BMAD as the source of truth. Respect least privilege and repository instructions.` };
 }
 

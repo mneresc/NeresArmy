@@ -4,6 +4,8 @@ import path from "node:path";
 export const EXPECTED_AGENTS = [
   "neres-planner",
   "neres-developer",
+  "neres-quick-dev",
+  "neres-bug-doctor",
   "plan-nerinhos-subagent-reader",
   "plan-nerinhos-subagent-writer",
   "plan-nerinhos-subagent-architect",
@@ -32,12 +34,28 @@ export const PRIMARY_TASK_ALLOWLIST = {
     "dev-nerinhos-subagent-qa",
     "dev-nerinhos-subagent-security",
     "dev-nerinhos-subagent-auditor"
+  ],
+  "neres-quick-dev": [
+    "dev-nerinhos-subagent-reader",
+    "dev-nerinhos-subagent-mechanical",
+    "dev-nerinhos-subagent-coder",
+    "dev-nerinhos-subagent-test",
+    "dev-nerinhos-subagent-qa",
+    "dev-nerinhos-subagent-security",
+    "dev-nerinhos-subagent-auditor"
+  ],
+  "neres-bug-doctor": [
+    "dev-nerinhos-subagent-reader",
+    "dev-nerinhos-subagent-test",
+    "dev-nerinhos-subagent-qa"
   ]
 };
 
 export const EXPECTED_MODELS = {
   "neres-planner": "opencode-go/deepseek-v4-pro",
   "neres-developer": "opencode-go/deepseek-v4-pro",
+  "neres-quick-dev": "opencode-go/deepseek-v4-pro",
+  "neres-bug-doctor": "opencode-go/glm-5.2",
   "plan-nerinhos-subagent-reader": "opencode-go/deepseek-v4-flash",
   "plan-nerinhos-subagent-writer": "opencode-go/glm-5.2",
   "plan-nerinhos-subagent-architect": "opencode-go/glm-5.2",
@@ -52,6 +70,7 @@ export const EXPECTED_MODELS = {
 };
 
 const READ_ONLY_AGENTS = new Set([
+  "neres-bug-doctor",
   "plan-nerinhos-subagent-reader",
   "plan-nerinhos-subagent-architect",
   "plan-nerinhos-subagent-critic",
@@ -64,6 +83,7 @@ const READ_ONLY_AGENTS = new Set([
 
 const WRITE_AGENTS = new Set([
   "neres-developer",
+  "neres-quick-dev",
   "dev-nerinhos-subagent-mechanical",
   "dev-nerinhos-subagent-coder"
 ]);
@@ -71,12 +91,14 @@ const WRITE_AGENTS = new Set([
 const REQUIRED_PROTOCOL_FILES = [
   "SKILL.md",
   "references/capabilities.md",
+  "references/bug-doctor.md",
   "references/contracts.md",
   "references/planning.md",
   "references/development.md",
   "references/routing.md",
   "references/security.md",
   "references/observability.md",
+  "references/quick-dev.md",
   "templates/run-log-entry.json"
 ];
 

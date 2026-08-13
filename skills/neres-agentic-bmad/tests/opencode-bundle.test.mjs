@@ -23,11 +23,12 @@ test("validates the complete agent bundle and routing contract", async () => {
   const result = await validateBundle({ bundleRoot, modelIds: models });
 
   assert.equal(result.valid, true, result.diagnostics.join("\n"));
-  assert.equal(EXPECTED_AGENTS.length, 13);
-  assert.equal(result.agents.filter((agent) => agent.mode === "primary").length, 2);
+  assert.equal(EXPECTED_AGENTS.length, 15);
+  assert.equal(result.agents.filter((agent) => agent.mode === "primary").length, 4);
   assert.equal(result.agents.filter((agent) => agent.mode === "subagent").length, 11);
   assert.equal(EXPECTED_MODELS["neres-planner"], "opencode-go/deepseek-v4-pro");
   assert.equal(EXPECTED_MODELS["neres-developer"], "opencode-go/deepseek-v4-pro");
+  assert.equal(EXPECTED_MODELS["neres-bug-doctor"], "opencode-go/glm-5.2");
   assert.deepEqual(result.primaryTaskAllowlist["neres-planner"], [
     "plan-nerinhos-subagent-reader",
     "plan-nerinhos-subagent-writer",
@@ -43,6 +44,15 @@ test("validates the complete agent bundle and routing contract", async () => {
     "dev-nerinhos-subagent-security",
     "dev-nerinhos-subagent-auditor"
   ]);
+  const bugDoctor = await readFile(
+    path.join(bundleRoot, "assets", "opencode", "agents", "neres-bug-doctor.md"),
+    "utf8"
+  );
+  assert.match(bugDoctor, /BugReport/);
+  assert.match(bugDoctor, /edge-case-hunter/);
+  assert.match(bugDoctor, /neres-quick-dev/);
+  assert.match(bugDoctor, /neres-planner/);
+  assert.match(bugDoctor, /needs-more-evidence/);
 });
 
 test("rejects a configured model missing from the OpenCode inventory", async () => {
@@ -59,7 +69,7 @@ test("dry-run reports targets without writing", async (t) => {
   const configDir = await makeConfigFixture(t);
   const result = await installBundle({ bundleRoot, configDir, modelIds: models, dryRun: true });
 
-  assert.equal(result.installed.length, 14);
+  assert.equal(result.installed.length, 16);
   await assert.rejects(access(path.join(configDir, "agents", "neres-planner.md")));
   await assert.rejects(access(path.join(configDir, "skills", "agentic-bmad", "SKILL.md")));
 });
@@ -71,8 +81,10 @@ test("installs agents and protocol without modifying opencode.jsonc", async (t) 
 
   const result = await installBundle({ bundleRoot, configDir, modelIds: models });
 
-  assert.equal(result.installed.length, 14);
+  assert.equal(result.installed.length, 16);
   await assert.doesNotReject(access(path.join(configDir, "agents", "neres-developer.md")));
+  await assert.doesNotReject(access(path.join(configDir, "agents", "neres-quick-dev.md")));
+  await assert.doesNotReject(access(path.join(configDir, "agents", "neres-bug-doctor.md")));
   await assert.doesNotReject(access(path.join(configDir, "skills", "agentic-bmad", "SKILL.md")));
   assert.equal(await readFile(configFile, "utf8"), before);
 });

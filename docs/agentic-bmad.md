@@ -16,6 +16,10 @@ permanece obrigatório no bundle OpenCode; capacidades adicionais não o substit
 Selecione `neres-developer` somente com story/spec e TaskPackets prontos. Ele delega
 leitura, implementação, testes, QA, security condicional e auditoria.
 
+Para um bug ainda sem causa comprovada, use `neres-bug-doctor`. Ele reproduz em
+modo read-only, aplica a lente BMAD de edge cases, gera `BugReport` e encaminha um
+fix pequeno confirmado ao nosso `neres-quick-dev` sem pular o QuickPlan.
+
 ## Fluxo
 
 ```text

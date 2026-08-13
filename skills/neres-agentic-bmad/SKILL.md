@@ -1,6 +1,6 @@
 ---
 name: neres-agentic-bmad
-description: Install, validate, operate, and troubleshoot the self-contained Neres multi-agent architecture for Codex, OpenCode, Devin CLI/Desktop or Claude Code, including bundled BMAD, capability discovery, deterministic gates and supply-chain evidence.
+description: Install, validate, operate, and troubleshoot the self-contained Neres multi-agent architecture for Codex, OpenCode, Devin CLI/Desktop or Claude Code, including planning, development, quick changes, read-only bug diagnosis, bundled BMAD and deterministic gates.
 ---
 
 # Neres Agentic BMAD
@@ -22,6 +22,8 @@ Read the shared contracts under
 read [runtime.md](assets/codex/skills/neres-agentic-bmad/references/runtime.md).
 Read [quick-dev.md](assets/codex/skills/neres-agentic-bmad/references/quick-dev.md)
 only when using `neres-quick-dev`.
+Read [bug-doctor.md](assets/codex/skills/neres-agentic-bmad/references/bug-doctor.md)
+only when using `neres-bug-doctor`.
 
 ## Install Codex safely
 
@@ -30,7 +32,7 @@ only when using `neres-quick-dev`.
 3. Preview with `npx -y @mneresc/neres-agentic-bmad install codex --dry-run`.
 4. Install with `npx -y @mneresc/neres-agentic-bmad install codex`.
 5. Existing managed names require `--force`, which creates a recoverable backup.
-6. Never edit the user's base `config.toml`; install only three profile files,
+6. Never edit the user's base `config.toml`; install only four profile files,
    eleven custom agents and this skill.
 
 Invoke the native entry points with:
@@ -39,6 +41,7 @@ Invoke the native entry points with:
 codex --profile neres-planner
 codex --profile neres-developer
 codex --profile neres-quick-dev
+codex --profile neres-bug-doctor
 ```
 
 ## Install OpenCode safely
@@ -79,7 +82,8 @@ codex --profile neres-quick-dev
 1. Preview with `npx -y @mneresc/neres-agentic-bmad install claude-code --scope project --dry-run`.
 2. Install to a repository with `--scope project` or to `~/.claude` with `--scope user`.
 3. Never edit `settings.json`, `.mcp.json`, credentials or organization policy.
-4. Start an entry point with `claude --agent neres-planner`, `neres-developer` or `neres-quick-dev`.
+4. Start an entry point with `claude --agent neres-planner`, `neres-developer`,
+   `neres-quick-dev` or `neres-bug-doctor`.
 
 ## Validate Codex
 
@@ -90,6 +94,7 @@ node scripts/validate-codex-bundle.mjs
 codex --profile neres-planner exec --ephemeral --skip-git-repo-check "Reply PROFILE_OK only."
 codex --profile neres-developer exec --ephemeral --skip-git-repo-check "Reply PROFILE_OK only."
 codex --profile neres-quick-dev exec --ephemeral --skip-git-repo-check "Reply PROFILE_OK only."
+codex --profile neres-bug-doctor exec --ephemeral --skip-git-repo-check "Reply PROFILE_OK only."
 codex doctor --json
 ```
 
@@ -110,6 +115,8 @@ node scripts/validate-opencode-bundle.mjs
 opencode agent list
 opencode debug agent neres-planner
 opencode debug agent neres-developer
+opencode debug agent neres-quick-dev
+opencode debug agent neres-bug-doctor
 opencode debug skill
 ```
 
@@ -126,7 +133,7 @@ node scripts/install-devin.mjs --target project --dry-run
 ```
 
 On the authenticated work machine, also run `devin models list --format json`,
-`devin skills list` and `devin mcp list`, then smoke the three entry skills in a
+`devin skills list` and `devin mcp list`, then smoke the four entry skills in a
 safe repository. Do not install or authenticate Devin on a personal environment
 for this validation.
 
@@ -136,6 +143,9 @@ for this validation.
 - Use `neres-developer` only after a BMAD story/spec and TaskPackets are ready.
 - Use `neres-quick-dev` only for a tiny/small local low-risk change. It must stop
   after QuickPlan until a later explicit authorization.
+- Use `neres-bug-doctor` to reproduce and diagnose read-only. It emits BugReport
+  and routes only to the Neres quick-dev, planner or needs-more-evidence; it never
+  authorizes implementation.
 - Let entry points call specialized subagents. Do not select workers normally.
 - Build a CapabilityMap and prefer suitable healthy MCPs and installed skills.
 - Codex and OpenCode keep BMAD as the workflow source of truth; supporting skills
