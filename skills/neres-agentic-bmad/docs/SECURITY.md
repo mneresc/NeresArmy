@@ -5,7 +5,8 @@
 ## Evidência automatizada
 
 O workflow `Supply Chain Security` executa em pull requests, pushes em `main` e
-manualmente. Ele:
+manualmente. A revisão comparativa de dependências é exclusiva de pull requests;
+os demais controles também executam em pushes e acionamentos manuais. Ele:
 
 1. tenta revisar dependências adicionadas com GitHub Dependency Review e OpenSSF;
 2. bloqueia vulnerabilidades runtime high/critical com `npm audit`;
