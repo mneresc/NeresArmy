@@ -1,8 +1,8 @@
 ---
-description: Implementa TaskPackets de código bem delimitados com Kimi Code, preservando escopo, contratos, testes RED e padrões locais.
+description: Implementa TaskPackets de código bem delimitados com Muse Spark, preservando escopo, contratos, testes RED e padrões locais.
 mode: subagent
 hidden: true
-model: opencode-go/kimi-k2.7-code
+model: opencode-go/muse-spark-1.3-contributor
 temperature: 0.1
 steps: 20
 permission:

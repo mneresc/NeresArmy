@@ -13,10 +13,22 @@ import {
 
 const bundleRoot = path.resolve(import.meta.dirname, "..");
 const models = [
-  "opencode-go/deepseek-v4-flash",
-  "opencode-go/deepseek-v4-pro",
-  "opencode-go/glm-5.2",
-  "opencode-go/kimi-k2.7-code"
+  "opencode-go/muse-spark-1.3-contributor",
+  "opencode-go/glm-5.2"
+];
+
+const museAgents = [
+  "neres-planner",
+  "neres-developer",
+  "neres-quick-dev",
+  "plan-nerinhos-subagent-reader",
+  "plan-nerinhos-subagent-critic",
+  "dev-nerinhos-subagent-reader",
+  "dev-nerinhos-subagent-mechanical",
+  "dev-nerinhos-subagent-coder",
+  "dev-nerinhos-subagent-test",
+  "dev-nerinhos-subagent-qa",
+  "dev-nerinhos-subagent-security"
 ];
 
 test("validates the complete agent bundle and routing contract", async () => {
@@ -26,9 +38,24 @@ test("validates the complete agent bundle and routing contract", async () => {
   assert.equal(EXPECTED_AGENTS.length, 15);
   assert.equal(result.agents.filter((agent) => agent.mode === "primary").length, 4);
   assert.equal(result.agents.filter((agent) => agent.mode === "subagent").length, 11);
-  assert.equal(EXPECTED_MODELS["neres-planner"], "opencode-go/deepseek-v4-pro");
-  assert.equal(EXPECTED_MODELS["neres-developer"], "opencode-go/deepseek-v4-pro");
   assert.equal(EXPECTED_MODELS["neres-bug-doctor"], "opencode-go/glm-5.2");
+  for (const agent of museAgents) {
+    assert.equal(EXPECTED_MODELS[agent], "opencode-go/muse-spark-1.3-contributor");
+  }
+  const routing = await readFile(
+    path.join(bundleRoot, "assets", "opencode", "skills", "agentic-bmad", "references", "routing.md"),
+    "utf8"
+  );
+  assert.match(routing, /opencode-go\/muse-spark-1\.3-contributor/);
+  const modelPolicySources = await Promise.all([
+    "assets/opencode/agents/dev-nerinhos-subagent-coder.md",
+    "assets/opencode/agents/dev-nerinhos-subagent-auditor.md",
+    "assets/opencode/skills/agentic-bmad/references/security.md"
+  ].map((file) => readFile(path.join(bundleRoot, file), "utf8")));
+  assert.doesNotMatch(
+    [routing, ...modelPolicySources].join("\n"),
+    /deepseek|kimi/i
+  );
   assert.deepEqual(result.primaryTaskAllowlist["neres-planner"], [
     "plan-nerinhos-subagent-reader",
     "plan-nerinhos-subagent-writer",

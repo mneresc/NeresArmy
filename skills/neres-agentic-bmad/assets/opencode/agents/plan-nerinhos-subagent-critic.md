@@ -2,7 +2,7 @@
 description: Faz crítica adversarial read-only do plano e aponta omissões, contradições, ambiguidades, dependências e critérios fracos.
 mode: subagent
 hidden: true
-model: opencode-go/deepseek-v4-pro
+model: opencode-go/muse-spark-1.3-contributor
 temperature: 0.1
 steps: 8
 permission:

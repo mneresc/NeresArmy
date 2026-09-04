@@ -2,7 +2,7 @@
 description: Revisa TaskPacket, diff e TestReport para encontrar regressões, gaps de aceitação, edge cases, scope drift e complexidade indevida.
 mode: subagent
 hidden: true
-model: opencode-go/deepseek-v4-pro
+model: opencode-go/muse-spark-1.3-contributor
 temperature: 0.1
 steps: 10
 permission:

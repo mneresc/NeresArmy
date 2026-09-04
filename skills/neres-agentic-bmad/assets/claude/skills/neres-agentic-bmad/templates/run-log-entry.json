@@ -2,7 +2,7 @@
   "agent": "dev-nerinhos-subagent-coder",
   "task": "TASK-001",
   "tier": "T3",
-  "model": "opencode-go/kimi-k2.7-code",
+  "model": "opencode-go/muse-spark-1.3-contributor",
   "reason_for_model": "bounded code change",
   "retry_count": 0,
   "escalated": false,

@@ -2,7 +2,7 @@
 description: Escolhe e executa ferramentas determinísticas de teste, lint, typecheck, build e coverage, retornando TestReport sem ruído.
 mode: subagent
 hidden: true
-model: opencode-go/deepseek-v4-flash
+model: opencode-go/muse-spark-1.3-contributor
 temperature: 0.1
 steps: 8
 permission:

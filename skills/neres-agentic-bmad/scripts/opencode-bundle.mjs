@@ -52,20 +52,20 @@ export const PRIMARY_TASK_ALLOWLIST = {
 };
 
 export const EXPECTED_MODELS = {
-  "neres-planner": "opencode-go/deepseek-v4-pro",
-  "neres-developer": "opencode-go/deepseek-v4-pro",
-  "neres-quick-dev": "opencode-go/deepseek-v4-pro",
+  "neres-planner": "opencode-go/muse-spark-1.3-contributor",
+  "neres-developer": "opencode-go/muse-spark-1.3-contributor",
+  "neres-quick-dev": "opencode-go/muse-spark-1.3-contributor",
   "neres-bug-doctor": "opencode-go/glm-5.2",
-  "plan-nerinhos-subagent-reader": "opencode-go/deepseek-v4-flash",
+  "plan-nerinhos-subagent-reader": "opencode-go/muse-spark-1.3-contributor",
   "plan-nerinhos-subagent-writer": "opencode-go/glm-5.2",
   "plan-nerinhos-subagent-architect": "opencode-go/glm-5.2",
-  "plan-nerinhos-subagent-critic": "opencode-go/deepseek-v4-pro",
-  "dev-nerinhos-subagent-reader": "opencode-go/deepseek-v4-flash",
-  "dev-nerinhos-subagent-mechanical": "opencode-go/deepseek-v4-flash",
-  "dev-nerinhos-subagent-coder": "opencode-go/kimi-k2.7-code",
-  "dev-nerinhos-subagent-test": "opencode-go/deepseek-v4-flash",
-  "dev-nerinhos-subagent-qa": "opencode-go/deepseek-v4-pro",
-  "dev-nerinhos-subagent-security": "opencode-go/deepseek-v4-pro",
+  "plan-nerinhos-subagent-critic": "opencode-go/muse-spark-1.3-contributor",
+  "dev-nerinhos-subagent-reader": "opencode-go/muse-spark-1.3-contributor",
+  "dev-nerinhos-subagent-mechanical": "opencode-go/muse-spark-1.3-contributor",
+  "dev-nerinhos-subagent-coder": "opencode-go/muse-spark-1.3-contributor",
+  "dev-nerinhos-subagent-test": "opencode-go/muse-spark-1.3-contributor",
+  "dev-nerinhos-subagent-qa": "opencode-go/muse-spark-1.3-contributor",
+  "dev-nerinhos-subagent-security": "opencode-go/muse-spark-1.3-contributor",
   "dev-nerinhos-subagent-auditor": "opencode-go/glm-5.2"
 };
 

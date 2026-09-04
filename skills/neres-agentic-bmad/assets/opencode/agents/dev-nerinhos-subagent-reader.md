@@ -2,7 +2,7 @@
 description: Busca implementação, testes e padrões locais para um único TaskPacket e devolve ContextPack mínimo.
 mode: subagent
 hidden: true
-model: opencode-go/deepseek-v4-flash
+model: opencode-go/muse-spark-1.3-contributor
 temperature: 0.1
 steps: 6
 permission:
