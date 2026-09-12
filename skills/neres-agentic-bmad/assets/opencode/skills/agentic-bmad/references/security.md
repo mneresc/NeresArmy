@@ -14,6 +14,6 @@ Inspect adversarially:
 - unsafe filesystem, subprocess and network behavior;
 - replay, race, expiry, rollback and failure modes.
 
-Use DeepSeek V4 Pro for normal risk. Return `NEEDS_ESCALATION` to a GLM-5.2 auditor
+Use Muse Spark 1.3 for normal risk. Return `NEEDS_ESCALATION` to a GLM-5.2 auditor
 or explicit session override for high risk. Require evidence and exploit/impact, not
 generic checklists.

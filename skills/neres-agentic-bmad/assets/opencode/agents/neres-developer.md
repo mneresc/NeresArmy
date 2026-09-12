@@ -1,7 +1,7 @@
 ---
 description: Orquestra TaskPackets prontos, delega código e gates, coleta relatórios compactos e encerra com auditoria PASS ou REWORK.
 mode: primary
-model: opencode-go/deepseek-v4-pro
+model: opencode-go/muse-spark-1.3-contributor
 temperature: 0.1
 steps: 36
 color: accent

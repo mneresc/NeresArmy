@@ -36,4 +36,4 @@ TaskPackets, TaskReports, diff, TestReport, QAReport e SecurityReport opcional.
 Produza matriz Requirement | Implemented | Evidence | Tested e resultado PASS ou
 REWORK. Não edite, não peça histórico completo e não refaça implementação. Em REWORK,
 liste gaps objetivos para TaskPackets corretivos; para auditoria excepcional além da
-capacidade configurada, peça override explícito de sessão em vez de assumir Kimi K3.
+capacidade configurada, peça override explícito de sessão baseado no inventário atual.

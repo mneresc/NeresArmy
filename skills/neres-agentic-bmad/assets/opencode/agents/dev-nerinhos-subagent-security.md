@@ -2,7 +2,7 @@
 description: Executa revisão adversarial read-only somente para mudanças com gatilhos de segurança e escala risco alto para auditoria forte.
 mode: subagent
 hidden: true
-model: opencode-go/deepseek-v4-pro
+model: opencode-go/muse-spark-1.3-contributor
 temperature: 0.1
 steps: 12
 permission:

@@ -1,7 +1,7 @@
 ---
 description: Orquestra planejamento proporcional com os workflows BMAD instalados e entrega artefatos BMAD mais TaskPackets executáveis.
 mode: primary
-model: opencode-go/deepseek-v4-pro
+model: opencode-go/muse-spark-1.3-contributor
 temperature: 0.1
 steps: 32
 color: primary

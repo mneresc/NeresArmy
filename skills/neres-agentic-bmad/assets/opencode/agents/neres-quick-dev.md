@@ -1,7 +1,7 @@
 ---
 description: Planeja uma mudança pequena e de baixo risco, pausa para autorização e só então executa o fix com gates determinísticos.
 mode: primary
-model: opencode-go/deepseek-v4-pro
+model: opencode-go/muse-spark-1.3-contributor
 temperature: 0.1
 steps: 28
 color: accent

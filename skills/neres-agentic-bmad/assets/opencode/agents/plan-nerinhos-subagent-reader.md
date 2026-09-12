@@ -2,7 +2,7 @@
 description: Localiza código e artefatos BMAD com leitura seletiva e devolve ContextPack compacto ao planner.
 mode: subagent
 hidden: true
-model: opencode-go/deepseek-v4-flash
+model: opencode-go/muse-spark-1.3-contributor
 temperature: 0.1
 steps: 6
 permission:
